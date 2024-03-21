@@ -271,9 +271,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Vigencia de 1 a&#xf1;o"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbnVigencia1ActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbnVigencia2">
           <Properties>
