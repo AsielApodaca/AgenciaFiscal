@@ -135,9 +135,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rbnVigencia1 = new javax.swing.JRadioButton();
+        rbnVigencia2 = new javax.swing.JRadioButton();
+        rbnVigencia3 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -265,19 +265,19 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Vigencia de 1 año");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(rbnVigencia1);
+        rbnVigencia1.setText("Vigencia de 1 año");
+        rbnVigencia1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                rbnVigencia1ActionPerformed(evt);
             }
         });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Vigencia de 2 años");
+        buttonGroup1.add(rbnVigencia2);
+        rbnVigencia2.setText("Vigencia de 2 años");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Vigencia de 3 años");
+        buttonGroup1.add(rbnVigencia3);
+        rbnVigencia3.setText("Vigencia de 3 años");
 
         jLabel6.setText("600$");
 
@@ -291,9 +291,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(rbnVigencia1)
+                    .addComponent(rbnVigencia2)
+                    .addComponent(rbnVigencia3))
                 .addGap(0, 28, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
@@ -307,15 +307,15 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addComponent(rbnVigencia1)
                 .addGap(2, 2, 2)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(rbnVigencia2)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel7)
                 .addGap(1, 1, 1)
-                .addComponent(jRadioButton3)
+                .addComponent(rbnVigencia3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
@@ -344,9 +344,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     
     
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void rbnVigencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbnVigencia1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_rbnVigencia1ActionPerformed
 
     private void txtRfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRfcActionPerformed
         registrarLicencia();
@@ -375,9 +375,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton rbnVigencia1;
+    private javax.swing.JRadioButton rbnVigencia2;
+    private javax.swing.JRadioButton rbnVigencia3;
     private javax.swing.JLabel txtAdvertencia;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombreCompleto;

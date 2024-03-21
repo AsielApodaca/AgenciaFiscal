@@ -13,6 +13,7 @@ public class Ventanas extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(640 + getInsets().top, 360);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
