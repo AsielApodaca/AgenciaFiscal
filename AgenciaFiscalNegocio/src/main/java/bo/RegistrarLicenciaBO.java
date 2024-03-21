@@ -15,7 +15,13 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     
     @Override
     public PersonaDTO consultarPersonaPorRfc(String Rfc) {
+        return null;
+    }
+
+    @Override
+    public Boolean registrarLicencia() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
     
 }

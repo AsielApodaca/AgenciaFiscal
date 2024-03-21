@@ -1,10 +1,13 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import bo.RegistrarLicenciaBO;
 import com.mycompany.agenciafiscalpresentacion.validaciones.Validaciones;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
+import negocioDTO.PersonaDTO;
 
 /**
  *
@@ -12,16 +15,26 @@ import javax.swing.text.JTextComponent;
  */
 public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
+    private RegistrarLicenciaBO registrarLicenciaBO;
+    private PersonaDTO persona;
+    
     /**
      * Creates new form ModuloLicenciasJpanel
      */
     public ModuloLicenciasJpanel() {
         initComponents();
         
+        registrarLicenciaBO = new RegistrarLicenciaBO();
+        persona = null;
         
-        
+        iniciar();
+    }
+    
+    public void iniciar(){
         Validaciones.limitarCaracteres(txtRfc, 13);
         validarRfc();
+        btnPagar.setEnabled(false);
+        txtAdvertencia.setVisible(false);
     }
     
     public void validarRfc() {
@@ -47,6 +60,13 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 if (doc.getLength() >= 12) {
                     
                     // Lógica para validar rfc
+                    persona = registrarLicenciaBO.consultarPersonaPorRfc(txtRfc.getText());
+                    if(persona == null){
+                        mostrarAdvertenciaRfc();
+                    } else {
+                        btnPagar.setEnabled(true);
+                        mostrarDatos();
+                    }
                     
                 } else {
                     limpiarDatos();
@@ -59,7 +79,37 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         txtNombreCompleto.setText("");
         txtFechaNacimiento.setText((""));
         txtTelefono.setText("");
+        txtAdvertencia.setVisible(false);
+        persona = null;
+        btnPagar.setEnabled(false);
+        cbxDiscapacidad.setSelected(false);
+        cbxDiscapacidad.setEnabled(true);
     }
+    
+    public void mostrarAdvertenciaRfc(){
+        txtAdvertencia.setVisible(true);
+        btnPagar.setEnabled(false);
+    }
+    
+    public void mostrarDatos(){
+        txtNombreCompleto.setText(persona.getNombreCompleto());
+        txtFechaNacimiento.setText(persona.getFechaNacimiento().getTime().toString());
+        txtTelefono.setText(persona.getTelefono());
+        if(persona.getDiscapaciad()){
+            cbxDiscapacidad.setSelected(true);
+            cbxDiscapacidad.setEnabled(false);
+            
+        }
+    }
+    
+    public void registrarLicencia(){
+        persona.setDiscapaciad(cbxDiscapacidad.isSelected());
+        if(registrarLicenciaBO.registrarLicencia()){
+            JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
+            ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,10 +141,13 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         btnRegresar = new javax.swing.JButton();
         btnPagar = new javax.swing.JButton();
+        txtAdvertencia = new javax.swing.JLabel();
+        cbxDiscapacidad = new javax.swing.JCheckBox();
 
+        setMinimumSize(new java.awt.Dimension(640, 360));
+        setPreferredSize(new java.awt.Dimension(640, 360));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -147,10 +200,10 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 32, Short.MAX_VALUE))
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 6, -1, -1));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 6, -1, 90));
 
         jLabel2.setText("RFC:");
 
@@ -210,7 +263,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Vigencia de 1 año");
@@ -270,9 +323,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 147, -1, -1));
 
-        jCheckBox1.setText("Discapacitado");
-        add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(384, 125, -1, -1));
-
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,7 +332,14 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         btnPagar.setText("Pagar");
-        add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 320, -1, -1));
+        add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, -1, -1));
+
+        txtAdvertencia.setForeground(new java.awt.Color(255, 51, 51));
+        txtAdvertencia.setText("No coincide con ninguna persona.");
+        add(txtAdvertencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+
+        cbxDiscapacidad.setText("Discapacidad");
+        add(cbxDiscapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -292,7 +349,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void txtRfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRfcActionPerformed
-        // TODO add your handling code here:
+        registrarLicencia();
     }//GEN-LAST:event_txtRfcActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -304,7 +361,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox cbxDiscapacidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -321,6 +378,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JLabel txtAdvertencia;
     private javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtNombreCompleto;
     private javax.swing.JTextField txtRfc;
