@@ -2,9 +2,9 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import com.mycompany.agenciafiscalpresentacion.validaciones.Validaciones;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -18,7 +18,47 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     public ModuloLicenciasJpanel() {
         initComponents();
         
+        
+        
         Validaciones.limitarCaracteres(txtRfc, 13);
+        validarRfc();
+    }
+    
+    public void validarRfc() {
+        Document doc = txtRfc.getDocument();
+        doc.addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            private void validar(javax.swing.event.DocumentEvent e) {
+                Document doc = e.getDocument();
+                if (doc.getLength() >= 12) {
+                    
+                    // Lógica para validar rfc
+                    
+                } else {
+                    limpiarDatos();
+                }
+            }
+        });
+    }
+    
+    public void limpiarDatos() {
+        txtNombreCompleto.setText("");
+        txtFechaNacimiento.setText((""));
+        txtTelefono.setText("");
     }
 
     /**
@@ -39,11 +79,11 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtRfc = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtNombreCompleto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtFechaNacimiento = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -122,15 +162,15 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         jLabel3.setText("Nombre Completo:");
 
-        jTextField2.setEditable(false);
+        txtNombreCompleto.setEditable(false);
 
         jLabel4.setText("Fecha de nacimiento:");
 
-        jTextField3.setEditable(false);
+        txtFechaNacimiento.setEditable(false);
 
         jLabel5.setText("Telefono:");
 
-        jTextField4.setEditable(false);
+        txtTelefono.setEditable(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -144,9 +184,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(txtRfc, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4))
+                    .addComponent(txtNombreCompleto)
+                    .addComponent(txtFechaNacimiento)
+                    .addComponent(txtTelefono))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -159,15 +199,15 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
@@ -230,7 +270,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 147, -1, -1));
 
-        jCheckBox1.setText("Discapacitados");
+        jCheckBox1.setText("Discapacitado");
         add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(384, 125, -1, -1));
 
         btnRegresar.setText("Regresar");
@@ -281,9 +321,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtNombreCompleto;
     private javax.swing.JTextField txtRfc;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
