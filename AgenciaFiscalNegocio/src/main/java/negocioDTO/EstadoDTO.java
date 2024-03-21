@@ -6,7 +6,7 @@ package negocioDTO;
  *
  * @author Asiel Apodaca Monge
  */
-public enum EstadoDto {
+public enum EstadoDTO {
     /**
      * Para tramites de tipo licencia<br>
      * La licencia todavía es válida para realizar trámites.
@@ -27,7 +27,4 @@ public enum EstadoDto {
      * La placa está desactivada.
      */
     INACTIVO // Placa
-    /**
-     * ASD
-     */
 }

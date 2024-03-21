@@ -7,19 +7,19 @@ import java.util.Calendar;
  *
  * @author Asiel Apodaca Monge
  */
-public class TramiteLicenciaDto extends TramiteDto{
+public class TramiteLicenciaDTO extends TramiteDTO{
     private Integer vigencia; 
     private Calendar fechaCaducidad;
 
-    public TramiteLicenciaDto() {
+    public TramiteLicenciaDTO() {
         super();
     }
 
-    public TramiteLicenciaDto(Calendar fechaEmision, Float costoMxn, EstadoDto estado) {
+    public TramiteLicenciaDTO(Calendar fechaEmision, Float costoMxn, EstadoDTO estado) {
         super(fechaEmision, costoMxn, estado);
     }
 
-    public TramiteLicenciaDto(Integer vigencia, Calendar fechaEmision, Float costoMxn, EstadoDto estado) {
+    public TramiteLicenciaDTO(Integer vigencia, Calendar fechaEmision, Float costoMxn, EstadoDTO estado) {
         super(fechaEmision, costoMxn, estado);
         this.vigencia = vigencia;
     }

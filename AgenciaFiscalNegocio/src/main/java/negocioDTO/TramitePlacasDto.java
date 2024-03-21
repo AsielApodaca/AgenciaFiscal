@@ -7,19 +7,19 @@ import java.util.Calendar;
  *
  * @author Asiel Apodaca Monge
  */
-public class TramitePlacasDto extends TramiteDto{
+public class TramitePlacasDTO extends TramiteDTO{
     private String matricula;
-    private VehiculoDto vehiculo;
+    private VehiculoDTO vehiculo;
 
-    public TramitePlacasDto() {
+    public TramitePlacasDTO() {
         super();
     }
 
-    public TramitePlacasDto(Calendar fechaEmision, Float costoMxn, EstadoDto estado) {
+    public TramitePlacasDTO(Calendar fechaEmision, Float costoMxn, EstadoDTO estado) {
         super(fechaEmision, costoMxn, estado);
     }
 
-    public TramitePlacasDto(String matricula, Calendar fechaEmision, Float costoMxn, EstadoDto estado) {
+    public TramitePlacasDTO(String matricula, Calendar fechaEmision, Float costoMxn, EstadoDTO estado) {
         super(fechaEmision, costoMxn, estado);
         this.matricula = matricula;
     }
@@ -32,11 +32,11 @@ public class TramitePlacasDto extends TramiteDto{
         this.matricula = matricula;
     }
 
-    public VehiculoDto getVehiculo() {
+    public VehiculoDTO getVehiculo() {
         return vehiculo;
     }
 
-    public void setVehiculo(VehiculoDto vehiculo) {
+    public void setVehiculo(VehiculoDTO vehiculo) {
         this.vehiculo = vehiculo;
     }
 

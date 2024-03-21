@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Asiel Apodaca Monge
  */
-public class PersonaDto {
+public class PersonaDTO {
     private Long id;
     private String rfc;
     private String nombreCompleto;
@@ -17,15 +17,15 @@ public class PersonaDto {
     private String curp;
     private String telefono;
     private Boolean discapaciad;
-    private List<VehiculoDto> vehiculos;
-    private List<TramiteDto> tramites;
+    private List<VehiculoDTO> vehiculos;
+    private List<TramiteDTO> tramites;
 
-    public PersonaDto() {
+    public PersonaDTO() {
         this.vehiculos = new ArrayList<>();
         this.tramites = new ArrayList<>();
     }
 
-    public PersonaDto(String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, Boolean discapacidad) {
+    public PersonaDTO(String rfc, String nombreCompleto, Calendar fechaNacimiento, String curp, String telefono, Boolean discapacidad) {
         this.rfc = rfc;
         this.nombreCompleto = nombreCompleto;
         this.fechaNacimiento = fechaNacimiento;
@@ -92,28 +92,28 @@ public class PersonaDto {
         this.discapaciad = discapaciad;
     }
     
-    public List<VehiculoDto> getVehiculos() {
+    public List<VehiculoDTO> getVehiculos() {
         return vehiculos;
     }
 
-    public void setVehiculos(List<VehiculoDto> vehiculos) {
+    public void setVehiculos(List<VehiculoDTO> vehiculos) {
         this.vehiculos = vehiculos;
     }
     
-    public void addVehiculo(VehiculoDto vehiculo) {
+    public void addVehiculo(VehiculoDTO vehiculo) {
         vehiculo.setPersona(this);
         this.vehiculos.add(vehiculo);
     }
 
-    public List<TramiteDto> getTramites() {
+    public List<TramiteDTO> getTramites() {
         return tramites;
     }
 
-    public void setTramites(List<TramiteDto> tramites) {
+    public void setTramites(List<TramiteDTO> tramites) {
         this.tramites = tramites;
     }
     
-    public void addTramite(TramiteDto tramite){
+    public void addTramite(TramiteDTO tramite){
         tramite.setPersona(this);
         this.tramites.add(tramite);
     }

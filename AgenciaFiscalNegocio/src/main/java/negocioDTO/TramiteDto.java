@@ -7,17 +7,17 @@ import java.util.Calendar;
  *
  * @author Asiel Apodaca Monge
  */
-public abstract class TramiteDto {
+public abstract class TramiteDTO {
     private Long id;
     private Calendar fechaEmision;
     private Float costoMxn;
-    private EstadoDto estado;
-    private PersonaDto persona;
+    private EstadoDTO estado;
+    private PersonaDTO persona;
 
-    public TramiteDto() {
+    public TramiteDTO() {
     }
 
-    public TramiteDto(Calendar fechaEmision, Float costoMxn, EstadoDto estado) {
+    public TramiteDTO(Calendar fechaEmision, Float costoMxn, EstadoDTO estado) {
         this.fechaEmision = fechaEmision;
         this.costoMxn = costoMxn;
         this.estado = estado;
@@ -47,19 +47,19 @@ public abstract class TramiteDto {
         this.costoMxn = costoMxn;
     }
 
-    public EstadoDto getEstado() {
+    public EstadoDTO getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoDto estado) {
+    public void setEstado(EstadoDTO estado) {
         this.estado = estado;
     }
 
-    public PersonaDto getPersona() {
+    public PersonaDTO getPersona() {
         return persona;
     }
 
-    public void setPersona(PersonaDto persona) {
+    public void setPersona(PersonaDTO persona) {
         this.persona = persona;
     }
 

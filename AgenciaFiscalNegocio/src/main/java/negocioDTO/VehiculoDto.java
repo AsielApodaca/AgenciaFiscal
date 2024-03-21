@@ -7,21 +7,21 @@ import java.util.List;
  *
  * @author Asiel Apodaca Monge
  */
-public class VehiculoDto {
+public class VehiculoDTO {
     private Long id;
     private String serie;
     private String marca;
     private String linea;
     private String color;
     private String modelo;
-    private PersonaDto persona;
-    private List<TramitePlacasDto> tramitesPlacas;
+    private PersonaDTO persona;
+    private List<TramitePlacasDTO> tramitesPlacas;
 
-    public VehiculoDto() {
+    public VehiculoDTO() {
         this.tramitesPlacas = new ArrayList<>();
     }
 
-    public VehiculoDto(String serie, String marca, String linea, String color, String modelo) {
+    public VehiculoDTO(String serie, String marca, String linea, String color, String modelo) {
         this.serie = serie;
         this.marca = marca;
         this.linea = linea;
@@ -78,23 +78,23 @@ public class VehiculoDto {
         this.modelo = modelo;
     }
 
-    public PersonaDto getPersona() {
+    public PersonaDTO getPersona() {
         return persona;
     }
 
-    public void setPersona(PersonaDto persona) {
+    public void setPersona(PersonaDTO persona) {
         this.persona = persona;
     }
 
-    public List<TramitePlacasDto> getTramitesPlacas() {
+    public List<TramitePlacasDTO> getTramitesPlacas() {
         return tramitesPlacas;
     }
 
-    public void setTramitesPlacas(List<TramitePlacasDto> tramitesPlacas) {
+    public void setTramitesPlacas(List<TramitePlacasDTO> tramitesPlacas) {
         this.tramitesPlacas = tramitesPlacas;
     }
     
-    public void addTramitePlacas(TramitePlacasDto tramitePlacas) {
+    public void addTramitePlacas(TramitePlacasDTO tramitePlacas) {
         tramitePlacas.setVehiculo(this);
         this.tramitesPlacas.add(tramitePlacas);
     }
