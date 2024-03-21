@@ -8,6 +8,6 @@ import negocioDTO.PersonaDTO;
  */
 public interface iRegistrarLicenciaBO {
     public PersonaDTO consultarPersonaPorRfc(String Rfc);
-    public Boolean registrarLicencia();
+    public String registrarLicencia();
     
 }
