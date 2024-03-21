@@ -19,8 +19,8 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     }
 
     @Override
-    public Boolean registrarLicencia() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String registrarLicencia() {
+        return null;
     }
     
     
