@@ -18,13 +18,9 @@ public class Ventanas extends JFrame {
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Crear los paneles (ventanas)
-        MenuJpanel panelMenu = new MenuJpanel();
-        ModuloLicenciasJpanel panelModuloLicencias = new ModuloLicenciasJpanel();
-
-        // Añadir los paneles al panel con CardLayout
-        cardPanel.add(panelMenu, "MenuJpanel");
-        cardPanel.add(panelModuloLicencias, "ModuloLicenciasJpanel");
+        // Se crean los paneles (ventanas) y se añaden los paneles al panel con CardLayout
+        cardPanel.add(new MenuJpanel(), "MenuJpanel");
+        cardPanel.add(new ModuloLicenciasJpanel(), "ModuloLicenciasJpanel");
         
         // Añadir el panel con CardLayout
         getContentPane().add(cardPanel, BorderLayout.CENTER);

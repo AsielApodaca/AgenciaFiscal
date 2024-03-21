@@ -73,9 +73,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     
                     // Lógica para validar rfc
                     persona = registrarLicenciaBO.consultarPersonaPorRfc(txtRfc.getText());
-                    if(persona == null){
+                    if(persona == null){ // No se encontró
                         mostrarAdvertenciaRfc();
-                    } else {
+                    } else { // Se encontró
                         btnPagar.setEnabled(true);
                         mostrarDatos();
                     }
@@ -95,7 +95,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         persona = null;
         btnPagar.setEnabled(false);
         cbxDiscapacidad.setSelected(false);
-        cbxDiscapacidad.setEnabled(true);
+        cbxDiscapacidad.setEnabled(false);
     }
     
     public void mostrarAdvertenciaRfc(){
@@ -110,7 +110,8 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         if(persona.getDiscapaciad()){
             cbxDiscapacidad.setSelected(true);
             cbxDiscapacidad.setEnabled(false);
-            
+        }else{
+            cbxDiscapacidad.setEnabled(false);
         }
     }
     
@@ -131,10 +132,23 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
             }
             // Se cambia a la ventana principal
-            ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
+            regresarMenu();
         }
     }
+    
+    public void reiniciarPanel(){
+        txtRfc.setText("");
+        buttonGroup1.clearSelection();
+        cbxDiscapacidad.setSelected(false);
+        limpiarDatos();
+        System.out.println("hola");
+        
+    }
 
+    private void regresarMenu(){
+        reiniciarPanel();
+        ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -369,7 +383,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtRfcActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
+        regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
 
