@@ -35,6 +35,18 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         validarRfc();
         btnPagar.setEnabled(false);
         txtAdvertencia.setVisible(false);
+        
+        rbnVigencia1.addActionListener(e -> actualizarEstadoBtnPagar());
+        rbnVigencia2.addActionListener(e -> actualizarEstadoBtnPagar());
+        rbnVigencia3.addActionListener(e -> actualizarEstadoBtnPagar());
+    }
+    
+    public void actualizarEstadoBtnPagar() {
+        if (rbnVigencia1.isSelected() || rbnVigencia2.isSelected() || rbnVigencia3.isSelected()) {
+            if(persona != null)btnPagar.setEnabled(true);
+        } else {
+            btnPagar.setEnabled(false);
+        }
     }
     
     public void validarRfc() {
@@ -102,14 +114,27 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         }
     }
     
-    public void registrarLicencia(){
-        persona.setDiscapaciad(cbxDiscapacidad.isSelected());
-        if(registrarLicenciaBO.registrarLicencia()){
-            JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
+    public void registrarLicencia() {
+        int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar la licencia?", "Advertencia", JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            // El usuario ha hecho clic en "Sí" o "Continuar"
+            // Aquí puedes poner tu lógica para registrar la licencia
+            persona.setDiscapaciad(cbxDiscapacidad.isSelected());
+            String licencia = registrarLicenciaBO.registrarLicencia();
+            if (licencia == null) {
+                JOptionPane.showMessageDialog(null,
+                        "Licencia nueva registrada con éxito."
+                        + "\n Licencia: " + licencia
+                );
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
+            }
+            // Se cambia a la ventana principal
             ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
         }
     }
-    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -267,11 +292,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         buttonGroup1.add(rbnVigencia1);
         rbnVigencia1.setText("Vigencia de 1 año");
-        rbnVigencia1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbnVigencia1ActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(rbnVigencia2);
         rbnVigencia2.setText("Vigencia de 2 años");
@@ -344,10 +364,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     
     
-    private void rbnVigencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbnVigencia1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbnVigencia1ActionPerformed
-
     private void txtRfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRfcActionPerformed
         registrarLicencia();
     }//GEN-LAST:event_txtRfcActionPerformed
