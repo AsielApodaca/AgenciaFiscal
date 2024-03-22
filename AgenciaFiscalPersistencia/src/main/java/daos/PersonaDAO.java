@@ -8,6 +8,7 @@ import entidades.Persona;
 import entidades.Tramite;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -39,10 +40,13 @@ public class PersonaDAO implements IPersonaDAO{
         criteria.select(root).where(predicate);
         
         TypedQuery<Persona> query=em.createQuery(criteria);
-        Persona personaConsultada=query.getSingleResult();
-        if(personaConsultada!=null)
+        try {
+            Persona personaConsultada=query.getSingleResult();
             return personaConsultada;
-        return null;
+        } catch (NoResultException e) {
+            e.getStackTrace();
+            return null;
+        }
     }
 
     @Override
