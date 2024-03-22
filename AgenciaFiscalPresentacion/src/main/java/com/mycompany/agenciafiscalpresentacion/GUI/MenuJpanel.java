@@ -39,13 +39,13 @@ public class MenuJpanel extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Gobierno del estado de sonora");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 0, -1, 4));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, 20));
 
         jLabel3.setText("Control de placas y licencias automovílisticas");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 10, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
 
         jLabel1.setText("Modulos de Informacion");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 39, 143, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 143, -1));
 
         btnModuloLicencias.setText("Licencias");
         btnModuloLicencias.addActionListener(new java.awt.event.ActionListener() {
@@ -53,7 +53,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 btnModuloLicenciasActionPerformed(evt);
             }
         });
-        add(btnModuloLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 118, -1, -1));
+        add(btnModuloLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 200, -1));
 
         jButton2.setText("Placas para automovil");
         jButton2.setEnabled(false);
@@ -62,7 +62,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 118, -1, -1));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 200, -1));
 
         jButton3.setText("Consultas");
         jButton3.setEnabled(false);
@@ -71,7 +71,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton3ActionPerformed(evt);
             }
         });
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 177, -1, -1));
+        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 200, -1));
 
         jButton4.setText("Reportes");
         jButton4.setEnabled(false);
@@ -80,10 +80,10 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton4ActionPerformed(evt);
             }
         });
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 177, -1, -1));
+        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 200, -1));
 
         jButton5.setText("Insertar registros usuarios");
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 307, 66, 17));
+        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
