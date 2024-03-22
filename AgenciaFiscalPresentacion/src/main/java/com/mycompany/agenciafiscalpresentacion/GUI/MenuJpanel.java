@@ -23,7 +23,6 @@ public class MenuJpanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jLabel2 = new javax.swing.JLabel();
@@ -37,35 +36,16 @@ public class MenuJpanel extends javax.swing.JPanel {
 
         jMenuItem1.setText("jMenuItem1");
 
-        setLayout(new java.awt.GridBagLayout());
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Gobierno del estado de sonora");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(17, 28, 0, 0);
-        add(jLabel2, gridBagConstraints);
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 0, -1, 4));
 
         jLabel3.setText("Control de placas y licencias automovílisticas");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 181, 0, 192);
-        add(jLabel3, gridBagConstraints);
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 10, -1, -1));
 
         jLabel1.setText("Modulos de Informacion");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 59, 0, 0);
-        add(jLabel1, gridBagConstraints);
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 39, 143, -1));
 
         btnModuloLicencias.setText("Licencias");
         btnModuloLicencias.addActionListener(new java.awt.event.ActionListener() {
@@ -73,12 +53,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 btnModuloLicenciasActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(62, 0, 0, 0);
-        add(btnModuloLicencias, gridBagConstraints);
+        add(btnModuloLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(66, 118, -1, -1));
 
         jButton2.setText("Placas para automovil");
         jButton2.setEnabled(false);
@@ -87,13 +62,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(62, 6, 0, 0);
-        add(jButton2, gridBagConstraints);
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 118, -1, -1));
 
         jButton3.setText("Consultas");
         jButton3.setEnabled(false);
@@ -102,13 +71,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton3ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(36, 9, 0, 0);
-        add(jButton3, gridBagConstraints);
+        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 177, -1, -1));
 
         jButton4.setText("Reportes");
         jButton4.setEnabled(false);
@@ -117,22 +80,10 @@ public class MenuJpanel extends javax.swing.JPanel {
                 jButton4ActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(36, 46, 0, 0);
-        add(jButton4, gridBagConstraints);
+        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(209, 177, -1, -1));
 
         jButton5.setText("Insertar registros usuarios");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(107, 6, 6, 0);
-        add(jButton5, gridBagConstraints);
+        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 307, 66, 17));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
