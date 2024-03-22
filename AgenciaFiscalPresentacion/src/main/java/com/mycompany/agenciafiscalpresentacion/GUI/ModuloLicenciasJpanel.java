@@ -207,7 +207,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
-        btnVerPersonasRegistradas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -220,7 +219,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         txtFechaNacimiento = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        txtAdvertencia = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         rbnVigencia1 = new javax.swing.JRadioButton();
         rbnVigencia2 = new javax.swing.JRadioButton();
@@ -230,34 +228,22 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         lblPrecioVigencia3 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnPagar = new javax.swing.JButton();
+        txtAdvertencia = new javax.swing.JLabel();
         cbxDiscapacidad = new javax.swing.JCheckBox();
 
         setMinimumSize(new java.awt.Dimension(640, 360));
         setPreferredSize(new java.awt.Dimension(640, 360));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnVerPersonasRegistradas.setText("ver personas registradas");
-        btnVerPersonasRegistradas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerPersonasRegistradasActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVerPersonasRegistradas)
-                .addContainerGap(17, Short.MAX_VALUE))
+            .addGap(0, 179, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnVerPersonasRegistradas)
-                .addContainerGap(8, Short.MAX_VALUE))
+            .addGap(0, 37, Short.MAX_VALUE)
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 6, -1, -1));
@@ -311,11 +297,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 txtRfcActionPerformed(evt);
             }
         });
-        txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtRfcKeyTyped(evt);
-            }
-        });
 
         jLabel3.setText("Nombre Completo:");
 
@@ -329,37 +310,28 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         txtTelefono.setEditable(false);
 
-        txtAdvertencia.setForeground(new java.awt.Color(255, 51, 51));
-        txtAdvertencia.setText("No coincide con ninguna persona.");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel5)
-                        .addComponent(txtRfc, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                        .addComponent(txtNombreCompleto)
-                        .addComponent(txtFechaNacimiento)
-                        .addComponent(txtTelefono))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtAdvertencia)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(txtRfc, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                    .addComponent(txtNombreCompleto)
+                    .addComponent(txtFechaNacimiento)
+                    .addComponent(txtTelefono))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAdvertencia))
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRfc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -440,7 +412,21 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         btnPagar.setText("Pagar");
+        btnPagar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                btnPagarStateChanged(evt);
+            }
+        });
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
         add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, -1, -1));
+
+        txtAdvertencia.setForeground(new java.awt.Color(255, 51, 51));
+        txtAdvertencia.setText("No coincide con ninguna persona.");
+        add(txtAdvertencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
 
         cbxDiscapacidad.setText("Discapacidad");
         add(cbxDiscapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
@@ -467,11 +453,18 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             evt.consume();
     }//GEN-LAST:event_txtRfcKeyTyped
 
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagarActionPerformed
+
+    private void btnPagarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_btnPagarStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagarStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btnVerPersonasRegistradas;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbxDiscapacidad;
     private javax.swing.JLabel jLabel1;
