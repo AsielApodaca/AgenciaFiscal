@@ -79,7 +79,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     if(persona == null){ // No se encontró
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
-                        limpiarDatos();
                     } else { // Se encontró
                         btnPagar.setEnabled(true);
                         mostrarDatos();
