@@ -86,7 +86,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     }
                     
                 } else {
-                    
+                    limpiarDatos();
                 }
             }
         });
@@ -120,7 +120,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             lblPrecioVigencia2.setText("500$");
             lblPrecioVigencia3.setText("700$");
         }else{
-            cbxDiscapacidad.setEnabled(false);
             cbxDiscapacidad.setEnabled(false);
             lblPrecioVigencia1.setText("600$");
             lblPrecioVigencia2.setText("900$");
