@@ -9,7 +9,7 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public interface iRegistrarLicenciaBO {
     public PersonaDTO consultarPersonaPorRfc(String Rfc);
-    public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia);
+    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia);
     public void cerrarConexiones();
     
 }

@@ -18,8 +18,8 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
 
-    private IPersonaDAO personaDao;
-    private ITramiteLicenciaDAO tramiteLicenciaDao;
+    private static IPersonaDAO personaDao;
+    private static ITramiteLicenciaDAO tramiteLicenciaDao;
     
     public RegistrarLicenciaBO() {
         personaDao=new PersonaDAO();
@@ -44,7 +44,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     }
 
     @Override
-    public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia) {
+    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) {
         Estado estado=null;
         if(tramiteLicencia.getEstado().equals(EstadoDTO.CADUCO))
             estado=Estado.CADUCO;
@@ -61,8 +61,8 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
                 estado,
                 persona
         );
-        tramiteLicenciaDao.agregarTramiteLicencia(tramite);
-        return null;
+        
+        return tramiteLicenciaDao.agregarTramiteLicencia(tramite)!=null;
     }
 
     @Override
