@@ -48,8 +48,8 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar fechaNacimiento;
     
-    @Column(name = "tiene_discacidad")
-    private boolean tieneDiscapacidad;
+    @Column(name = "tiene_discapacidad")
+    private Boolean tieneDiscapacidad;
     
     @OneToMany(mappedBy = "persona",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Tramite> tramites;

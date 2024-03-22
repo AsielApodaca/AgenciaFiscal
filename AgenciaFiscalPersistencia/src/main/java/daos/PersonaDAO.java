@@ -47,10 +47,10 @@ public class PersonaDAO implements IPersonaDAO{
     @Override
     public List<Persona> agregarPersonas() {
         StoredProcedureQuery spq=em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
-        
+        List<Persona> lista=spq.getResultList();
         em.close();
         emf.close();
-        return spq.getResultList();
+        return lista;
     }
 
     @Override
