@@ -45,12 +45,7 @@ public class Prueba {
 
         IPersonaDAO persona=new PersonaDAO();
         
-        List<Persona> personas=persona.agregarPersonas();
-        if(personas!=null){
-            personas.forEach(p -> {
-                p.toString();
-            });
-        }System.out.println("es nula");
+        persona.agregarPersonas();
         
     }
     

@@ -6,11 +6,10 @@ package daos;
 
 import entidades.Persona;
 import entidades.Tramite;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -36,31 +35,23 @@ public class PersonaDAO implements IPersonaDAO{
         CriteriaQuery<Persona> criteria=cb.createQuery(Persona.class);
         Root<Persona> root=criteria.from(Persona.class);
         
-        Predicate predicate=cb.equal(root.get("id"), persona.getId());
+        Predicate predicate=cb.equal(root.get("rfc"), persona.getRfc());
         criteria.select(root).where(predicate);
         
-        em.close();
-        emf.close();
-        return em.createQuery(criteria).getSingleResult();
+        TypedQuery<Persona> query=em.createQuery(criteria);
+        Persona personaConsultada=query.getSingleResult();
+        if(personaConsultada!=null)
+            return personaConsultada;
+        return null;
     }
 
     @Override
-    public List<Persona> agregarPersonas() {
-        StoredProcedureQuery spq=em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
-        List<Persona> lista=spq.getResultList();
-        em.close();
-        emf.close();
-        return lista;
+    public void agregarPersonas() {
+        em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
     }
 
     @Override
-    public void agregarTramite(Persona persona,Tramite tramite) {
-        Persona p=em.find(Persona.class, persona.getId());
-        if(p!=null){
-            p.agregarTramite(tramite);
-            System.out.println("se agrego el tramite correctamente");
-        }else
-            System.out.println("no se encontro a la persona");
+    public void cerrarConexion() {
         em.close();
         emf.close();
     }

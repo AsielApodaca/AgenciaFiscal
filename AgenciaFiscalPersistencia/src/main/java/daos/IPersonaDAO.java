@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface IPersonaDAO {
     public Persona obtenerPersona(Persona persona);
-    public List<Persona> agregarPersonas();
-    public void agregarTramite(Persona persona, Tramite tramite);
+    public void agregarPersonas();
+    public void cerrarConexion();
 }

@@ -43,15 +43,24 @@ public class TramiteLicenciaDAO implements ITramiteLicenciaDAO{
     }
 
     @Override
-    public void agregarTramiteLicencia(TramiteLicencia tramite) {
+    public TramiteLicencia agregarTramiteLicencia(TramiteLicencia tramite) {
         Long id_persona=tramite.getPersona().getId();
         Persona p=em.find(Persona.class, id_persona);
         if(p!=null){
             em.getTransaction().begin();
             em.persist(tramite);
+            p.agregarTramite(tramite);
             em.getTransaction().commit();
-        }else
-            System.out.println("la persona asignada al tramite no se encuentra registrada");
+            return tramite;
+        }
+        System.out.println("la persona asignada al tramite no se encuentra registrada");
+        return null;
+    }
+
+    @Override
+    public void cerrarConexion() {
+        em.close();
+        emf.close();
     }
     
 }

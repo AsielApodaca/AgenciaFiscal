@@ -106,7 +106,7 @@ public class Persona implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public boolean isTieneDiscapacidad() {
+    public boolean esDiscapacitado() {
         return tieneDiscapacidad;
     }
 
@@ -137,6 +137,11 @@ public class Persona implements Serializable {
         this.tramites=new ArrayList<>();
     }
 
+    public Persona(String rfc) {
+        this.rfc = rfc;
+        this.tramites=new ArrayList<>();
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

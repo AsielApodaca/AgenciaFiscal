@@ -2,12 +2,16 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarLicenciaBO;
 import com.mycompany.agenciafiscalpresentacion.validaciones.Validaciones;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
+import negocioDTO.EstadoDTO;
 import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteLicenciaDTO;
 
 /**
  *
@@ -122,7 +126,8 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
             persona.setDiscapaciad(cbxDiscapacidad.isSelected());
-            String licencia = registrarLicenciaBO.registrarLicencia();
+            
+            TramiteLicenciaDTO licencia = registrarLicenciaBO.registrarLicencia(setTramiteLicencia());
             if (licencia == null) {
                 JOptionPane.showMessageDialog(null,
                         "Licencia nueva registrada con éxito."
@@ -136,6 +141,29 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         }
     }
     
+    private TramiteLicenciaDTO setTramiteLicencia(){
+        Integer vigencia=0;
+        Float costo=0.0f;
+        JRadioButton[] radioBtns={rbnVigencia1,rbnVigencia2,rbnVigencia3};
+        Float[][] costos={
+            {600.00f,200.00f},//costos para vigencia de 1 año
+            {900.00f,500.00f},//costos para vigencia de 2 años
+            {1100.00f,700.00f}//costos para vigencia de 3 años
+        };
+        for (int i = 0; i < 3; i++) {
+            if(radioBtns[i].isSelected()){
+                vigencia=i+1;
+                if(persona.getDiscapaciad()){
+                    costo=costos[i][1];
+                }else
+                    costo=costos[i][0];
+            }
+        }
+        TramiteLicenciaDTO tramite=new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.ACTIVO);
+        tramite.setVigencia(vigencia);
+        return tramite;
+    }
+    
     public void reiniciarPanel(){
         txtRfc.setText("");
         buttonGroup1.clearSelection();
@@ -147,6 +175,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private void regresarMenu(){
         reiniciarPanel();
+        registrarLicenciaBO.cerrarConexiones();
         ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
     }
 

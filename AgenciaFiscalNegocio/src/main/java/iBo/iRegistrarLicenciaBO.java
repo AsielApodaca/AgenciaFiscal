@@ -1,6 +1,7 @@
 package iBo;
 
 import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteLicenciaDTO;
 
 /**
  *
@@ -8,6 +9,7 @@ import negocioDTO.PersonaDTO;
  */
 public interface iRegistrarLicenciaBO {
     public PersonaDTO consultarPersonaPorRfc(String Rfc);
-    public String registrarLicencia();
+    public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia);
+    public void cerrarConexiones();
     
 }
