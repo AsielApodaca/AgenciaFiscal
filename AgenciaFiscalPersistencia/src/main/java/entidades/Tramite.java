@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,6 +42,7 @@ public class Tramite implements Serializable {
     @Column(name="costo_mxn")
     private Float costoMxn;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "estado")
     private Estado estado;
 
