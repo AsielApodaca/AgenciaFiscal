@@ -78,6 +78,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     // Lógica para validar rfc
                     persona = registrarLicenciaBO.consultarPersonaPorRfc(txtRfc.getText());
                     if(persona == null){ // No se encontró
+                        limpiarDatos();
                         mostrarAdvertenciaRfc();
                     } else { // Se encontró
                         btnPagar.setEnabled(true);
@@ -85,7 +86,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     }
                     
                 } else {
-                    limpiarDatos();
+                    
                 }
             }
         });
@@ -108,6 +109,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }
     
     public void mostrarDatos(){
+        txtAdvertencia.setVisible(false);
         txtNombreCompleto.setText(persona.getNombreCompleto());
         txtFechaNacimiento.setText(persona.getFechaNacimiento().getTime().toString());
         txtTelefono.setText(persona.getTelefono());
@@ -115,7 +117,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             cbxDiscapacidad.setSelected(true);
             cbxDiscapacidad.setEnabled(false);
         }else{
-            cbxDiscapacidad.setEnabled(false);
+            cbxDiscapacidad.setEnabled(true);
         }
     }
     
