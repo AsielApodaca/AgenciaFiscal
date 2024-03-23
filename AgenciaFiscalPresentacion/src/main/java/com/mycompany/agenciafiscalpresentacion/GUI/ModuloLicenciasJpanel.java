@@ -3,6 +3,8 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 import bo.RegistrarLicenciaBO;
 import iBo.iRegistrarLicenciaBO;
 import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -490,6 +492,11 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         add(txtAdvertencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
 
         cbxDiscapacidad.setText("Discapacidad");
+        cbxDiscapacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDiscapacidadActionPerformed(evt);
+            }
+        });
         add(cbxDiscapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -533,6 +540,27 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         desplegarTablaPersonasRegistradas();
     }//GEN-LAST:event_btnPersonasRegistradasActionPerformed
 
+    private void cbxDiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiscapacidadActionPerformed
+        cbxDiscapacidad.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {//checkbox ha sido seleccionado
+                    lblPrecioVigencia1.setText("$ 200");
+                    lblPrecioVigencia2.setText("$ 500");
+                    lblPrecioVigencia3.setText("$ 700");
+                    //... cambia los demás labels de precios
+                } else {//checkbox ha sido deseleccionado
+                    lblPrecioVigencia1.setText("$ 600");
+                    lblPrecioVigencia2.setText("$ 900");
+                    lblPrecioVigencia3.setText("$ 1100");
+                    //... cambia los demás labels de precios
+                }
+            }
+        });
+
+                  
+    }//GEN-LAST:event_cbxDiscapacidadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPagar;
@@ -563,3 +591,4 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
+                  
