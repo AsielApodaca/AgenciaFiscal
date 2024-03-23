@@ -31,6 +31,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     public PersonaDTO consultarPersonaPorRfc(String Rfc) {
         Persona personaConsultada=personaDao.obtenerPersona(new Persona(Rfc));
         if(personaConsultada!=null){
+            System.out.println("id persona: "+personaConsultada.getId());
             PersonaDTO persona = new PersonaDTO(personaConsultada.getRfc(),
                     personaConsultada.getNombreCompleto(),
                     personaConsultada.getFechaNacimiento(),
@@ -45,12 +46,6 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
 
     @Override
     public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) {
-        Estado estado=null;
-        if(tramiteLicencia.getEstado().equals(EstadoDTO.CADUCO))
-            estado=Estado.CADUCO;
-        else if(tramiteLicencia.getEstado().equals(EstadoDTO.VIGENTE))
-            estado=Estado.VIGENTE;
-        
         PersonaDTO personaEnviada=tramiteLicencia.getPersona();
         Persona persona=personaDao.obtenerPersona(new Persona(personaEnviada.getRfc()));
         
@@ -58,7 +53,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
                 tramiteLicencia.getFechaCaducidad(), 
                 tramiteLicencia.getFechaEmision(), 
                 tramiteLicencia.getCostoMxn(),
-                estado,
+                Estado.VIGENTE,
                 persona
         );
         
@@ -69,6 +64,23 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     public void cerrarConexiones() {
         personaDao.cerrarConexion();
         tramiteLicenciaDao.cerrarConexion();
+    }
+
+    @Override
+    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) {
+        Persona personaAModificar=personaDao.obtenerPersona(new Persona(persona.getRfc()));
+        Persona personaModificada=personaDao.actualizarPersona(personaAModificar);
+        if(personaModificada!=null){
+            return new PersonaDTO(
+                    personaModificada.getRfc(), 
+                    personaModificada.getNombreCompleto(), 
+                    personaModificada.getFechaNacimiento(),
+                    personaModificada.getCurp(),
+                    personaModificada.getTelefono(),
+                    personaModificada.esDiscapacitado()
+            );
+        }
+        return null;
     }
     
     

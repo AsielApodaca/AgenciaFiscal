@@ -11,5 +11,5 @@ public interface iRegistrarLicenciaBO {
     public PersonaDTO consultarPersonaPorRfc(String Rfc);
     public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia);
     public void cerrarConexiones();
-    
+    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona);
 }
