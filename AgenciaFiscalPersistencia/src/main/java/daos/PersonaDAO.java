@@ -47,7 +47,7 @@ public class PersonaDAO implements IPersonaDAO{
         try {
             Persona personaConsultada=query.getSingleResult();
             return personaConsultada;
-        } catch (NoResultException e) {
+        } catch (Exception e) {
             e.getStackTrace();
             return null;
         }
