@@ -2,6 +2,7 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarLicenciaBO;
 import com.mycompany.agenciafiscalpresentacion.validaciones.Validaciones;
+import iBo.iRegistrarLicenciaBO;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -18,7 +19,7 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
-    private static RegistrarLicenciaBO registrarLicenciaBO;
+    private static iRegistrarLicenciaBO registrarLicenciaBO;
     private PersonaDTO persona;
     
     /**
@@ -85,6 +86,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     }
                     
                 } else {
+                    persona=null;
                     limpiarDatos();
                 }
             }
@@ -132,20 +134,18 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         if (opcion == JOptionPane.YES_OPTION) {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
-            persona.setDiscapaciad(cbxDiscapacidad.isSelected());
-            
-            TramiteLicenciaDTO licencia =setTramiteLicencia();
-            if (licencia != null) {
-                if(registrarLicenciaBO.registrarLicencia(licencia))
-                    JOptionPane.showMessageDialog(null,
-                            "Licencia nueva registrada con éxito."
-                            + "\n Licencia: " + licencia
-                    );
-                else
-                    JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Debe seleccionar una vigencia");
+            if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
+                persona=registrarLicenciaBO.actualizarDiscapacidadPersona(persona);
             }
+            
+            TramiteLicenciaDTO licencia = setTramiteLicencia();
+            if (registrarLicenciaBO.registrarLicencia(licencia)) {
+                JOptionPane.showMessageDialog(null,
+                        "Licencia nueva registrada con éxito."
+                );
+            } else 
+                JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
+
             // Se cambia a la ventana principal
             regresarMenu();
         }
@@ -169,11 +169,11 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     costo=costos[i][0];
             }
         }
-        
-        if(costo==0.0f){
-            return null;
-        }
-        TramiteDTO tramite=new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.ACTIVO);
+//        
+//        if(costo==0.0f){
+//            return null;
+//        }
+        TramiteDTO tramite=new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.VIGENTE);
         tramite.setPersona(persona);
         persona.addTramite(tramite);
         ((TramiteLicenciaDTO)tramite).setVigencia(vigencia);
@@ -434,7 +434,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     
     
     private void txtRfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRfcActionPerformed
-        registrarLicencia();
+        //registrarLicencia();
     }//GEN-LAST:event_txtRfcActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -454,6 +454,12 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         // TODO add your handling code here:
+        if(persona!=null){
+            if(rbnVigencia1.isSelected() || rbnVigencia2.isSelected() || rbnVigencia3.isSelected()){
+                registrarLicencia();
+            }else
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una vigencia");
+        }
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void btnPagarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_btnPagarStateChanged
