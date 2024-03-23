@@ -122,14 +122,14 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         txtNombreCompleto.setText(persona.getNombreCompleto());
         txtFechaNacimiento.setText(persona.getFechaNacimiento().getTime().toString());
         txtTelefono.setText(persona.getTelefono());
+        cbxDiscapacidad.setEnabled(true);
         if(persona.getDiscapaciad()){
             cbxDiscapacidad.setSelected(true);
-            cbxDiscapacidad.setEnabled(false);
             lblPrecioVigencia1.setText("200$");
             lblPrecioVigencia2.setText("500$");
             lblPrecioVigencia3.setText("700$");
         }else{
-            cbxDiscapacidad.setEnabled(true);
+            cbxDiscapacidad.setSelected(false);
             lblPrecioVigencia1.setText("600$");
             lblPrecioVigencia2.setText("900$");
             lblPrecioVigencia3.setText("1100$");
