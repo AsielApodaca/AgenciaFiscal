@@ -6,15 +6,18 @@ package daos;
 
 import entidades.Persona;
 import entidades.Tramite;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.eclipse.persistence.queries.StoredProcedureCall;
 
 /**
  *
@@ -51,8 +54,17 @@ public class PersonaDAO implements IPersonaDAO{
     }
 
     @Override
-    public void agregarPersonas() {
-        em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
+    public List<Persona> agregarPersonas() {
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
+        em.getTransaction().begin();
+        if(spc.execute()){
+            List<Persona> personasAgregadas=spc.getResultList();
+            em.getTransaction().commit();
+            return personasAgregadas;
+        }
+        em.getTransaction().commit();
+        System.out.println("no se obtuvo el result set");
+        return null;
     }
 
     @Override
@@ -67,6 +79,7 @@ public class PersonaDAO implements IPersonaDAO{
         if(personaBuscada!=null){
             em.getTransaction().begin();
             personaBuscada.setTieneDiscapacidad(true);
+            em.getTransaction().commit();
             return personaBuscada;
         }
         return null;

@@ -5,7 +5,6 @@
 package daos;
 
 import entidades.Persona;
-import entidades.Tramite;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public interface IPersonaDAO {
     public Persona obtenerPersona(Persona persona);
-    public void agregarPersonas();
+    public List<Persona> agregarPersonas();
     public void cerrarConexion();
     public Persona actualizarPersona(Persona persona);
 }

@@ -9,6 +9,8 @@ import entidades.Persona;
 import entidades.Estado;
 import entidades.TramiteLicencia;
 import iBo.iRegistrarLicenciaBO;
+import java.util.ArrayList;
+import java.util.List;
 import negocioDTO.PersonaDTO;
 import negocioDTO.TramiteLicenciaDTO;
 
@@ -79,6 +81,27 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
                     personaModificada.getTelefono(),
                     personaModificada.esDiscapacitado()
             );
+        }
+        return null;
+    }
+
+    @Override
+    public List<PersonaDTO> obtenerPersonasRegistradas() {
+        List<Persona> personas=personaDao.agregarPersonas();
+        
+        if(personas!=null){
+            List<PersonaDTO> personasDTO=new ArrayList<>();
+            for(Persona p:personas){
+                PersonaDTO persona=new PersonaDTO(
+                        p.getRfc(),
+                        p.getNombreCompleto(), 
+                        p.getFechaNacimiento(), 
+                        p.getCurp(), 
+                        p.getTelefono(), 
+                        p.esDiscapacitado());
+                personasDTO.add(persona);
+            }
+            return personasDTO;
         }
         return null;
     }
