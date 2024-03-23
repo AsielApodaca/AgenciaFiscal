@@ -16,4 +16,5 @@ public interface IPersonaDAO {
     public Persona obtenerPersona(Persona persona);
     public void agregarPersonas();
     public void cerrarConexion();
+    public Persona actualizarPersona(Persona persona);
 }

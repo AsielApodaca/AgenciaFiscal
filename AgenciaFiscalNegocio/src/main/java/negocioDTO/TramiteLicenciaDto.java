@@ -41,7 +41,9 @@ public class TramiteLicenciaDTO extends TramiteDTO{
 
     @Override
     public String toString() {
-        return super.toString() + "TramiteLicencia{" + "vigencia=" + vigencia + ", fechaCaducidad=" + fechaCaducidad + '}';
+        return super.toString() + "TramiteLicencia{" + 
+                "vigencia=" + vigencia + 
+                ", fechaCaducidad=" + fechaCaducidad + '}';
     }
 
     

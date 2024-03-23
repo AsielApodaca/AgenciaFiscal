@@ -24,15 +24,16 @@ public class PersonaDAO implements IPersonaDAO{
 
     private EntityManagerFactory emf;
     private EntityManager em;
+    private CriteriaBuilder cb;
     
     public PersonaDAO(){
         emf=Persistence.createEntityManagerFactory("conexionPU");
         em=emf.createEntityManager();
+        cb=em.getCriteriaBuilder();
     }
     
     @Override
     public Persona obtenerPersona(Persona persona) {
-        CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Persona> criteria=cb.createQuery(Persona.class);
         Root<Persona> root=criteria.from(Persona.class);
         
@@ -58,6 +59,17 @@ public class PersonaDAO implements IPersonaDAO{
     public void cerrarConexion() {
         em.close();
         emf.close();
+    }
+
+    @Override
+    public Persona actualizarPersona(Persona persona) {
+        Persona personaBuscada=em.find(Persona.class, persona.getId());
+        if(personaBuscada!=null){
+            em.getTransaction().begin();
+            personaBuscada.setTieneDiscapacidad(true);
+            return personaBuscada;
+        }
+        return null;
     }
 
 }
