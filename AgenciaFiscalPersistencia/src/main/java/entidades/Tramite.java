@@ -5,6 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -105,14 +106,17 @@ public class Tramite implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Tramite{");
         sb.append("id=").append(id);
-        sb.append(", fechaEmision=").append(fechaEmision);
+        sb.append(", fechaEmision=").append(fechaToString(fechaEmision));
         sb.append(", costoMxn=").append(costoMxn);
         sb.append(", estado=").append(estado);
-        sb.append("persona=").append(persona);
+        sb.append(", persona=").append(persona);
         sb.append('}');
         return sb.toString();
     }
 
-    
+    public String fechaToString(Calendar fecha){
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
+        return formatoFecha.format(fecha.getTime());
+    }
     
 }

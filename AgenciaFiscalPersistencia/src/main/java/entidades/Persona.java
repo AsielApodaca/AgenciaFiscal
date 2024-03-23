@@ -5,6 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -151,11 +152,14 @@ public class Persona implements Serializable {
         sb.append(", curp=").append(curp);
         sb.append(", nombreCompleto=").append(nombreCompleto);
         sb.append(", telefono=").append(telefono);
-        sb.append(", fechaNacimiento=").append(fechaNacimiento);
+        sb.append(", fechaNacimiento=").append(fechaToString());
         sb.append(", tieneDiscapacidad=").append(tieneDiscapacidad);
         sb.append('}');
         return sb.toString();
     }
 
-    
+    public String fechaToString(){
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
+        return formatoFecha.format(getFechaNacimiento().getTime());
+    }
 }

@@ -5,6 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,10 +60,9 @@ public class TramiteLicencia extends Tramite implements Serializable {
         sb.append("TramiteLicencia{");
         sb.append(super.toString());
         sb.append("vigencia=").append(vigencia);
-        sb.append(", fechaCaducidad=").append(fechaCaducidad);
+        sb.append(", fechaCaducidad=").append(fechaToString(fechaCaducidad));
         sb.append('}');
         return sb.toString();
     }
-    
     
 }
