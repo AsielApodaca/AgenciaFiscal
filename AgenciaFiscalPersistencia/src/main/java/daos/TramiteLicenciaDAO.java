@@ -29,18 +29,18 @@ public class TramiteLicenciaDAO implements ITramiteLicenciaDAO{
         em = emf.createEntityManager();
     }
 
-    @Override
-    public TramiteLicencia obtenerTramiteLicencia(TramiteLicencia tramite) {
-        CriteriaBuilder cb=em.getCriteriaBuilder();
-        CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
-        Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
-        
-        
-        Predicate predicate=cb.equal(root.get("id"), tramite.getId());
-        criteria.select(root).where(predicate);
-        
-        return em.createQuery(criteria).getSingleResult();
-    }
+//    @Override
+//    public TramiteLicencia obtenerTramiteLicencia(TramiteLicencia tramite) {
+//        CriteriaBuilder cb=em.getCriteriaBuilder();
+//        CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
+//        Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
+//        
+//        
+//        Predicate predicate=cb.equal(root.get("id"), tramite.getId());
+//        criteria.select(root).where(predicate);
+//        
+//        return em.createQuery(criteria).getSingleResult();
+//    }
 
     @Override
     public TramiteLicencia agregarTramiteLicencia(TramiteLicencia tramite) {

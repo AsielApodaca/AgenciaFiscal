@@ -11,7 +11,7 @@ import entidades.TramiteLicencia;
  * @author luiis
  */
 public interface ITramiteLicenciaDAO {
-    public TramiteLicencia obtenerTramiteLicencia(TramiteLicencia tramite);
+//    public TramiteLicencia obtenerTramiteLicencia(TramiteLicencia tramite);
     public TramiteLicencia agregarTramiteLicencia(TramiteLicencia tramite);
     public void cerrarConexion();
 }

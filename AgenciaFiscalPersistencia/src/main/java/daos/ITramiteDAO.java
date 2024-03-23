@@ -11,6 +11,6 @@ import entidades.Tramite;
  * @author luiis
  */
 public interface ITramiteDAO {
-    public Tramite obtenerTramite(Tramite tramite);
-    public Tramite registrarTramite(Tramite tramite);
+//    public Tramite obtenerTramite(Tramite tramite);
+//    public Tramite registrarTramite(Tramite tramite);
 }
