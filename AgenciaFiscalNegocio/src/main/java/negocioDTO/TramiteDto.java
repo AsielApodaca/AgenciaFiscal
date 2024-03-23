@@ -65,8 +65,24 @@ public abstract class TramiteDTO {
 
     @Override
     public String toString() {
-        return "Tramite{" + "id=" + id + ", fechaEmision=" + fechaEmision + ", costoMxn=" + costoMxn + ", estado=" + estado + ", persona=" + persona + '}';
+        return "Tramite{" + "id=" + id + 
+                ", fechaEmision=" + fechaEmision + 
+                ", costoMxn=" + costoMxn + 
+                ", estado=" + estado + 
+                ", persona=" + toStringPersona() + '}';
     }
     
+    private String toStringPersona(){
+        return persona.toStringReducido();
+    }
     
+    public String toStringReducido(){
+        StringBuilder sb=new StringBuilder();
+        sb.append("{id tramite: ").append(id);
+        sb.append(", fecha emision: ").append(fechaEmision);
+        sb.append(", costo: ").append(costoMxn);
+        sb.append(", estado: ").append(estado);
+        sb.append("}");
+        return sb.toString();
+    }
 }

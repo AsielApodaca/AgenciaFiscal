@@ -120,9 +120,32 @@ public class PersonaDTO {
 
     @Override
     public String toString() {
-        return "Persona{" + "id=" + id + ", rfc=" + rfc + ", nombreCompleto=" + nombreCompleto + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", telefono=" + telefono + ", discapaciad=" + discapaciad + ", vehiculos=" + vehiculos + ", tramites=" + tramites + '}';
+        return "Persona{" + "id=" + id + 
+                ", rfc=" + rfc + 
+                ", nombreCompleto=" + nombreCompleto + 
+                ", fechaNacimiento=" + fechaNacimiento + 
+                ", curp=" + curp +
+                ", telefono=" + telefono + 
+                ", discapaciad=" + discapaciad + 
+                ", vehiculos=" + vehiculos + 
+                ", tramites=[" + toStringTramites() + ']'+'}';
     }
 
+    private String toStringTramites(){
+        StringBuilder sb=new StringBuilder();
+        for(TramiteDTO t:this.tramites){
+            sb.append(t.toStringReducido());
+        }
+        return sb.toString();
+    }
     
+    public String toStringReducido(){
+        StringBuilder sb=new StringBuilder();
+        sb.append('{');
+        sb.append("rfc: ").append(rfc);
+        sb.append(", nombre completo: ").append(nombreCompleto);
+        sb.append('}');
+        return sb.toString();
+    }
     
 }
