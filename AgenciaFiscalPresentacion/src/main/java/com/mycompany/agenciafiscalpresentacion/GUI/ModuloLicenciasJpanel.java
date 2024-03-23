@@ -1,12 +1,21 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarLicenciaBO;
-import com.mycompany.agenciafiscalpresentacion.validaciones.Validaciones;
 import iBo.iRegistrarLicenciaBO;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Document;
 import negocioDTO.EstadoDTO;
 import negocioDTO.PersonaDTO;
@@ -19,7 +28,7 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
-    private static iRegistrarLicenciaBO registrarLicenciaBO;
+   // private static iRegistrarLicenciaBO registrarLicenciaBO;
     private PersonaDTO persona;
     
     /**
@@ -28,9 +37,8 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     public ModuloLicenciasJpanel() {
         initComponents();
         
-        registrarLicenciaBO = new RegistrarLicenciaBO();
+        //registrarLicenciaBO = new RegistrarLicenciaBO();
         persona = null;
-        
         iniciar();
     }
     
@@ -76,7 +84,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 if (doc.getLength() == 13) {
                     
                     // Lógica para validar rfc
-                    persona = registrarLicenciaBO.consultarPersonaPorRfc(txtRfc.getText());
+                    persona = Ventanas.registrar.consultarPersonaPorRfc(txtRfc.getText());
                     if(persona == null){ // No se encontró
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
@@ -121,7 +129,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             lblPrecioVigencia2.setText("500$");
             lblPrecioVigencia3.setText("700$");
         }else{
-            cbxDiscapacidad.setEnabled(false);
+            cbxDiscapacidad.setEnabled(true);
             lblPrecioVigencia1.setText("600$");
             lblPrecioVigencia2.setText("900$");
             lblPrecioVigencia3.setText("1100$");
@@ -135,11 +143,11 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
             if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
-                persona=registrarLicenciaBO.actualizarDiscapacidadPersona(persona);
+                persona=Ventanas.registrar.actualizarDiscapacidadPersona(persona);
             }
             
             TramiteLicenciaDTO licencia = setTramiteLicencia();
-            if (registrarLicenciaBO.registrarLicencia(licencia)) {
+            if (Ventanas.registrar.registrarLicencia(licencia)) {
                 JOptionPane.showMessageDialog(null,
                         "Licencia nueva registrada con éxito."
                 );
@@ -169,10 +177,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     costo=costos[i][0];
             }
         }
-//        
-//        if(costo==0.0f){
-//            return null;
-//        }
         TramiteDTO tramite=new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.VIGENTE);
         tramite.setPersona(persona);
         persona.addTramite(tramite);
@@ -191,10 +195,54 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private void regresarMenu(){
         reiniciarPanel();
-        Ventanas.setRegistrarLicenciaBO(registrarLicenciaBO);
+        //Ventanas.setRegistrarLicenciaBO(ventana.getBO());
         ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
     }
 
+    private void desplegarTablaPersonasRegistradas(){
+        JDialog dialogo = new JDialog((Ventanas)SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this), "Personas registradas", false);
+        dialogo.setLayout(new BorderLayout());
+        dialogo.setSize(400, 200);
+        
+        List<PersonaDTO> personas=Ventanas.registrar.obtenerPersonasRegistradas();
+        Object[][] filas =new Object[20][2];
+        int contador=0;
+        for(PersonaDTO p:personas){
+            filas[contador][0]=p.getNombreCompleto();
+            filas[contador][1]=p.getRfc();
+            contador++;
+        }
+        List<String> columnas = new ArrayList<>();
+        columnas.add("nombre");
+        columnas.add("RFC");
+        
+        
+        DefaultTableModel modeloTabla = new DefaultTableModel(filas,columnas.toArray());
+        JTable tabla = new JTable(modeloTabla);
+        
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        dialogo.add(scrollPane, BorderLayout.CENTER);
+
+        dialogo.setLocationRelativeTo((Ventanas)SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this));
+
+        dialogo.setVisible(true);
+        
+        setPersonaSeleccionada(tabla, personas);
+    }
+    
+    
+    private void setPersonaSeleccionada(JTable tabla,List<PersonaDTO> lista){
+        tabla.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
+            System.out.println("cambio el valor: " + event.toString());
+            if (!event.getValueIsAdjusting()) {
+                int fila =tabla.getSelectedRow();
+                if(fila>=0){
+                    txtRfc.setText(lista.get(fila).getRfc());
+                }else
+                    limpiarDatos();
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,6 +254,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
+        btnPersonasRegistradas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -234,15 +283,28 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(640, 360));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnPersonasRegistradas.setText("personas registradas");
+        btnPersonasRegistradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPersonasRegistradasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 179, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(btnPersonasRegistradas)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 37, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnPersonasRegistradas)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 6, -1, -1));
@@ -466,9 +528,15 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPagarStateChanged
 
+    private void btnPersonasRegistradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonasRegistradasActionPerformed
+        // TODO add your handling code here:
+        desplegarTablaPersonasRegistradas();
+    }//GEN-LAST:event_btnPersonasRegistradasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPagar;
+    private javax.swing.JButton btnPersonasRegistradas;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbxDiscapacidad;

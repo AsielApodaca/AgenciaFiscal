@@ -1,6 +1,10 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import iBo.iRegistrarLicenciaBO;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.SwingUtilities;
+import negocioDTO.PersonaDTO;
 
 /**
  *
@@ -8,11 +12,13 @@ import javax.swing.SwingUtilities;
  */
 public class MenuJpanel extends javax.swing.JPanel {
 
+    protected static List<PersonaDTO> personasRegistradas;
     /**
      * Creates new form PrincipalJpanel
      */
     public MenuJpanel() {
         initComponents();
+        personasRegistradas=new ArrayList<>();
     }
 
     /**
@@ -32,7 +38,7 @@ public class MenuJpanel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnInsertarUsuarios = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -82,8 +88,13 @@ public class MenuJpanel extends javax.swing.JPanel {
         });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 200, -1));
 
-        jButton5.setText("Insertar registros usuarios");
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 230, 30));
+        btnInsertarUsuarios.setText("Insertar registros usuarios");
+        btnInsertarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarUsuariosActionPerformed(evt);
+            }
+        });
+        add(btnInsertarUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
@@ -102,13 +113,21 @@ public class MenuJpanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnInsertarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarUsuariosActionPerformed
+        // TODO add your handling code here:
+        obtenerPersonasAgregadas();
+    }//GEN-LAST:event_btnInsertarUsuariosActionPerformed
+
+    private void obtenerPersonasAgregadas(){
+        personasRegistradas=Ventanas.registrar.obtenerPersonasRegistradas();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnInsertarUsuarios;
     private javax.swing.JButton btnModuloLicencias;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
