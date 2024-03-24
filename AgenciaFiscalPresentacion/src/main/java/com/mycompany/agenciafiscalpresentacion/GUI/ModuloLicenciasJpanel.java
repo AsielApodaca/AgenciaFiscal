@@ -45,7 +45,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }
     
     public void iniciar(){
-        //Validaciones.limitarCaracteres(txtRfc, 13);
         validarRfc();
         btnPagar.setEnabled(false);
         txtAdvertencia.setVisible(false);
@@ -126,18 +125,26 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         txtTelefono.setText(persona.getTelefono());
         
         if(persona.getDiscapaciad()){
-            cbxDiscapacidad.setSelected(true);
-            lblPrecioVigencia1.setText("$ 200");
-            lblPrecioVigencia2.setText("$ 500");
-            lblPrecioVigencia3.setText("$ 700");
             cbxDiscapacidad.setEnabled(false);
+            cbxDiscapacidad.setSelected(true);
         }else{
             cbxDiscapacidad.setEnabled(true);
             cbxDiscapacidad.setSelected(false);
+        }
+        
+        actualizarVistaPrecios();
+    }
+    
+    public void actualizarVistaPrecios() {
+        if(cbxDiscapacidad.isSelected()){
+            lblPrecioVigencia1.setText("$ 200");
+            lblPrecioVigencia2.setText("$ 500");
+            lblPrecioVigencia3.setText("$ 700");
+        } else {
             lblPrecioVigencia1.setText("$ 600");
             lblPrecioVigencia2.setText("$ 900");
             lblPrecioVigencia3.setText("$ 1100");
-        }
+        }    
     }
     
     public void registrarLicencia() {
@@ -193,7 +200,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         buttonGroup1.clearSelection();
         cbxDiscapacidad.setSelected(false);
         limpiarDatos();
-        System.out.println("hola");
         
     }
 
@@ -543,24 +549,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPersonasRegistradasActionPerformed
 
     private void cbxDiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiscapacidadActionPerformed
-        cbxDiscapacidad.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {//checkbox ha sido seleccionado
-                    lblPrecioVigencia1.setText("$ 200");
-                    lblPrecioVigencia2.setText("$ 500");
-                    lblPrecioVigencia3.setText("$ 700");
-                    //... cambia los demás labels de precios
-                } else {//checkbox ha sido deseleccionado
-                    lblPrecioVigencia1.setText("$ 600");
-                    lblPrecioVigencia2.setText("$ 900");
-                    lblPrecioVigencia3.setText("$ 1100");
-                    //... cambia los demás labels de precios
-                }
-            }
-        });
-
-                  
+        actualizarVistaPrecios();      
     }//GEN-LAST:event_cbxDiscapacidadActionPerformed
 
 
