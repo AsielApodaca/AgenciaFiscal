@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +30,15 @@ public class TramiteLicencia extends Tramite implements Serializable {
     @Column(name = "fecha_caducidad")
     @Temporal(TemporalType.DATE)
     private Calendar fechaCaducidad;
+    
+    @PreRemove
+    @PrePersist
+    @PreUpdate
+    public void actualizarEstado() {
+        if (fechaCaducidad != null && fechaCaducidad.before(Calendar.getInstance())) {
+            super.setEstado(Estado.CADUCO);
+        }
+    }
     
     public Integer getVigencia() {
         return vigencia;
