@@ -36,7 +36,7 @@ public class TramiteLicencia extends Tramite implements Serializable {
     @PreUpdate
     public void actualizarEstado() {
         if (fechaCaducidad != null && fechaCaducidad.before(Calendar.getInstance())) {
-            super.setEstado(Estado.ACTIVO);
+            super.setEstado(Estado.CADUCO);
         }
     }
     
