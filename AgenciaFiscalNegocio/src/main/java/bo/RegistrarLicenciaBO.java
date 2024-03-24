@@ -105,6 +105,26 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
         return null;
     }
+
+    @Override
+    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) { 
+        Persona persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
+        TramiteLicencia tramite=tramiteLicenciaDao.obtenerTramiteLicencia(persona);
+        if(tramite!=null){
+            TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramite.getVigencia(),tramite.getFechaEmision(),
+                    tramite.getCostoMxn(), EstadoDTO.ACTIVO);
+            t.setPersona(personaTramite);
+            return t;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) {
+        Persona persona=personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
+        TramiteLicencia tramite=tramiteLicenciaDao.obtenerTramiteLicencia(persona);
+        return tramiteLicenciaDao.actualizarEstadoLicencia(tramite);
+    }
     
     
 }

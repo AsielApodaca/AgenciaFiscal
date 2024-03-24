@@ -1,6 +1,7 @@
 package negocioDTO;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -79,10 +80,15 @@ public abstract class TramiteDTO {
     public String toStringReducido(){
         StringBuilder sb=new StringBuilder();
         sb.append("{id tramite: ").append(id);
-        sb.append(", fecha emision: ").append(fechaEmision);
+        sb.append(", fecha emision: ").append(fechaToString(fechaEmision));
         sb.append(", costo: ").append(costoMxn);
         sb.append(", estado: ").append(estado);
         sb.append("}");
         return sb.toString();
+    }
+    
+     public String fechaToString(Calendar fecha){
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
+        return formatoFecha.format(fecha.getTime());
     }
 }

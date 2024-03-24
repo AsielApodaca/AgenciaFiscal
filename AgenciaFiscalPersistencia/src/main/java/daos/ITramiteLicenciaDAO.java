@@ -4,6 +4,7 @@
  */
 package daos;
 
+import entidades.Persona;
 import entidades.TramiteLicencia;
 
 /**
@@ -11,7 +12,8 @@ import entidades.TramiteLicencia;
  * @author luiis
  */
 public interface ITramiteLicenciaDAO {
-//    public TramiteLicencia obtenerTramiteLicencia(TramiteLicencia tramite);
+    public TramiteLicencia obtenerTramiteLicencia(Persona personaTramite);
     public TramiteLicencia agregarTramiteLicencia(TramiteLicencia tramite);
+    public boolean actualizarEstadoLicencia(TramiteLicencia tramite);
     public void cerrarConexion();
 }

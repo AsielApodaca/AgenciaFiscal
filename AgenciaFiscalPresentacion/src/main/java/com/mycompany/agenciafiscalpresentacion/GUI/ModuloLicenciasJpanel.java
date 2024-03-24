@@ -91,6 +91,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
                     } else { // Se encontró
+                        System.out.println(persona.toString());
                         btnPagar.setEnabled(true);
                         mostrarDatos();
                     }
@@ -127,10 +128,10 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         
         if(persona.getDiscapaciad()){
             cbxDiscapacidad.setSelected(true);
+            cbxDiscapacidad.setEnabled(false);
             lblPrecioVigencia1.setText("$ 200");
             lblPrecioVigencia2.setText("$ 500");
             lblPrecioVigencia3.setText("$ 700");
-            cbxDiscapacidad.setEnabled(false);
         }else{
             cbxDiscapacidad.setEnabled(true);
             cbxDiscapacidad.setSelected(false);
@@ -149,7 +150,14 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
                 persona=Ventanas.registrar.actualizarDiscapacidadPersona(persona);
             }
-            
+            TramiteLicenciaDTO licenciaVieja=Ventanas.registrar.obtenerTramiteLicencia(persona);
+            if(licenciaVieja!=null){
+                System.out.println("licencia vieja:"+licenciaVieja.toStringReducido());
+                if(Ventanas.registrar.actualizarEstadoLicencia(licenciaVieja))
+                    System.out.println("se actualizo el estado de la licencia");
+                else
+                    System.out.println("no se actualizo el estado de la licencia");
+            }System.out.println("no tiene otra licencia vigente");
             TramiteLicenciaDTO licencia = setTramiteLicencia();
             if (Ventanas.registrar.registrarLicencia(licencia)) {
                 JOptionPane.showMessageDialog(null,

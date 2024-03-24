@@ -14,4 +14,6 @@ public interface iRegistrarLicenciaBO {
     public void cerrarConexiones();
     public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona);
     public List<PersonaDTO> obtenerPersonasRegistradas();
+    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite);
+    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia);
 }

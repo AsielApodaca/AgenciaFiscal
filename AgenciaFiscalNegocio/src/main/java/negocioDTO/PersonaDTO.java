@@ -1,6 +1,7 @@
 package negocioDTO;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -123,7 +124,7 @@ public class PersonaDTO {
         return "Persona{" + "id=" + id + 
                 ", rfc=" + rfc + 
                 ", nombreCompleto=" + nombreCompleto + 
-                ", fechaNacimiento=" + fechaNacimiento + 
+                ", fechaNacimiento=" + fechaToString() + 
                 ", curp=" + curp +
                 ", telefono=" + telefono + 
                 ", discapaciad=" + discapaciad + 
@@ -148,4 +149,8 @@ public class PersonaDTO {
         return sb.toString();
     }
     
+    public String fechaToString(){
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
+        return formatoFecha.format(getFechaNacimiento().getTime());
+    }
 }
