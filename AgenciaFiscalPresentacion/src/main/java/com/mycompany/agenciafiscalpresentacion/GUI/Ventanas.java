@@ -46,9 +46,6 @@ public class Ventanas extends JFrame {
         cardLayout.show(cardPanel, nombrePanel);
     }
 
-    public RegistrarLicenciaBO getBO(){
-        return (RegistrarLicenciaBO)registrar;
-    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
