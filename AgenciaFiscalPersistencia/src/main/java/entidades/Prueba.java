@@ -5,7 +5,9 @@
 package entidades;
 
 import daos.IPersonaDAO;
+import daos.IVehiculo;
 import daos.PersonaDAO;
+import daos.VehiculoDAO;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,8 +25,8 @@ public class Prueba {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-//        EntityManagerFactory emf=Persistence.createEntityManagerFactory("conexionPU");
-//        EntityManager em=emf.createEntityManager();
+        EntityManagerFactory emf=Persistence.createEntityManagerFactory("conexionPU");
+        EntityManager em=emf.createEntityManager();
 //        
 //        Calendar fechaNac=Calendar.getInstance();
 //        Calendar fechaEmision=Calendar.getInstance();
@@ -43,10 +45,30 @@ public class Prueba {
 //        em.close();
 //        emf.close();
 
-        IPersonaDAO persona=new PersonaDAO();
+//        IPersonaDAO persona=new PersonaDAO();
+//        
+//        persona.agregarPersonas();
+        IVehiculo vehiculo=new VehiculoDAO();
         
-        persona.agregarPersonas();
+        em.getTransaction().begin();
+        Persona persona=em.find(Persona.class, 1L);
+        Vehiculo v=new Vehiculo("12345678901234567", "Toyota", "Corolla", "Negro", "LE", persona);
+        vehiculo.agregarVehiculo(v);
+//        persona.agregarVehiculo(v);
+        em.getTransaction().commit();
         
+        em.getTransaction().begin();
+        Persona p=em.find(Persona.class, 1L);
+        if(!p.getVehiculos().isEmpty()){
+            for (Vehiculo ve : p.getVehiculos()) {
+                System.out.println(ve.toString());
+            }
+        }else System.out.println("lista vacia");
+        
+        em.getTransaction().commit();
+        
+        em.close();
+        emf.close();
     }
     
 }

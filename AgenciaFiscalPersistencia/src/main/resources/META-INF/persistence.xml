@@ -5,6 +5,8 @@
     <class>entidades.TramiteLicencia</class>
     <class>entidades.Tramite</class>
     <class>entidades.Persona</class>
+    <class>entidades.Vehiculo</class>
+    <class>entidades.TramitePlacas</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/agencia_fiscal?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

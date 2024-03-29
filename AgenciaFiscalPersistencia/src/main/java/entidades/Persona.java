@@ -15,7 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -55,6 +54,21 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "persona",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<Tramite> tramites;
 
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    private List<Vehiculo> vehiculos;
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(List<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+    
+    public void agregarVehiculo(Vehiculo vehiculo){
+        this.vehiculos.add(vehiculo);
+    }
+    
     public List<Tramite> getTramites() {
         return tramites;
     }
