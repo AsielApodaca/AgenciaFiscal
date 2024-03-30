@@ -5,14 +5,17 @@
 package entidades;
 
 import daos.IPersonaDAO;
-import daos.IVehiculo;
+import daos.ITramiteDAO;
 import daos.PersonaDAO;
+import daos.TramiteLicenciaDAO;
 import daos.VehiculoDAO;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import daos.IVehiculoDAO;
+import java.util.Random;
 
 /**
  *
@@ -25,8 +28,8 @@ public class Prueba {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        EntityManagerFactory emf=Persistence.createEntityManagerFactory("conexionPU");
-        EntityManager em=emf.createEntityManager();
+//        EntityManagerFactory emf=Persistence.createEntityManagerFactory("conexionPU");
+//        EntityManager em=emf.createEntityManager();
 //        
 //        Calendar fechaNac=Calendar.getInstance();
 //        Calendar fechaEmision=Calendar.getInstance();
@@ -48,27 +51,84 @@ public class Prueba {
 //        IPersonaDAO persona=new PersonaDAO();
 //        
 //        persona.agregarPersonas();
-        IVehiculo vehiculo=new VehiculoDAO();
+//        IVehiculoDAO vehiculo=new VehiculoDAO();
+//        
+//        em.getTransaction().begin();
+//        Persona persona=em.find(Persona.class, 1L);
+//        Vehiculo v=new Vehiculo("12345678901234567", "Toyota", "Corolla", "Negro", "LE", persona);
+//        vehiculo.agregarVehiculo(v);
+////        persona.agregarVehiculo(v);
+//        em.getTransaction().commit();
+//        
+//        em.getTransaction().begin();
+//        Persona p=em.find(Persona.class, 1L);
+//        if(!p.getVehiculos().isEmpty()){
+//            for (Vehiculo ve : p.getVehiculos()) {
+//                System.out.println(ve.toString());
+//            }
+//        }else System.out.println("lista vacia");
+//        
+//        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        Persona p=em.find(Persona.class, 3L);
+//        Vehiculo v=new Vehiculo("12345678911234567", "Toyota", "Camry", "Rojo", "LE", p);
+//        p.agregarVehiculo(v);
+//        em.getTransaction().commit();
+//        em.close();
+//        emf.close();
         
-        em.getTransaction().begin();
-        Persona persona=em.find(Persona.class, 1L);
-        Vehiculo v=new Vehiculo("12345678901234567", "Toyota", "Corolla", "Negro", "LE", persona);
-        vehiculo.agregarVehiculo(v);
-//        persona.agregarVehiculo(v);
-        em.getTransaction().commit();
+        IPersonaDAO personaDao=new PersonaDAO();
+        List<Persona> personas=personaDao.agregarPersonas();
         
-        em.getTransaction().begin();
-        Persona p=em.find(Persona.class, 1L);
-        if(!p.getVehiculos().isEmpty()){
-            for (Vehiculo ve : p.getVehiculos()) {
-                System.out.println(ve.toString());
+        if(!personas.isEmpty()){
+            for(Persona per:personas){
+                System.out.println("nombre: "+per.getNombreCompleto());
+                for(Vehiculo vp:per.getVehiculos()){
+                    System.out.println("serie vehiculo: "+vp.getSerie());
+                }
             }
-        }else System.out.println("lista vacia");
+        }
         
-        em.getTransaction().commit();
+        personaDao.cerrarConexion();
+//        
+//        IVehiculoDAO vehiculo=new VehiculoDAO();
+//        Vehiculo vOb=vehiculo.obtenerVehiculo(new Vehiculo("12345678911234567"));
+//        vehiculo.cerrarConexion();
         
-        em.close();
-        emf.close();
+//        ITramiteDAO tramites= new TramiteLicenciaDAO();
+//        Calendar fechaEmision=Calendar.getInstance();
+////        
+////        Tramite tp=new TramitePlacas("AAA-111", vOb, fechaEmision, 1500.0f, Estado.ACTIVO, p);
+////        
+////        if(tramites.registrarTramite(tp))
+////            System.out.println("se registro con exito las placas");
+////        else System.out.println("no se registraron las placas");
+//         
+//        Object obj=tramites.obtenerTramite(p, "licencia");
+//        if(tramites.actualizarEstadoTramite((TramiteLicencia)obj))
+//            System.out.println("se actualizo el estado");
+//        else 
+//            System.out.println("no se actualizo");
+//        Tramite tl=new TramiteLicencia(fechaEmision, 700.0f, Estado.VIGENTE, p);
+//        ((TramiteLicencia)tl).setVigencia(3);
+//        if(tramites.registrarTramite(tl))
+//            System.out.println("se registro con exito");
+//        else System.out.println("no se registro");
+//
+//        List<Tramite> tramitesP=tramites.obtenerTramites(p);
+//        List<Vehiculo> vehiculos=p.getVehiculos();
+//        if(!vehiculos.isEmpty()){
+//             for(Vehiculo ve:vehiculos){
+//                System.out.println(ve.toString());
+//            }
+//        }
+//        if(tramitesP!=null){
+//            for(Tramite t:tramitesP){
+//                System.out.println(t.toString());
+//            }
+//        }else System.out.println("no hay tramites");
+//        tramites.cerrarConexion();
+        
     }
     
 }
