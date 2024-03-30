@@ -6,14 +6,12 @@ package daos;
 
 import entidades.Persona;
 import entidades.TramitePlacas;
+import java.util.List;
 
 /**
  *
  * @author luiis
  */
-public interface ITramitePlacas {
-    public TramitePlacas obtenerTramitePlacas(Persona personaTramite);
-    public TramitePlacas agregarTramitePlacas(TramitePlacas tramite);
-    public boolean actualizarEstadoPlacas(TramitePlacas tramite);
-    public void cerrarConexion();
+public interface ITramitePlacasDAO extends ITramiteDAO{
+    public List<TramitePlacas> obtenerTramitesPlacas(Persona personaTramite);
 }

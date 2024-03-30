@@ -24,7 +24,7 @@ public class TramitePlacas extends Tramite implements Serializable {
     private String matricula;
     
     @ManyToOne
-    @JoinColumn(name = "id_vehiculo", nullable = false)//o serie_vehiculo
+    @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
 
     public String getMatricula() {

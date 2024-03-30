@@ -5,15 +5,14 @@
 package daos;
 
 import entidades.Persona;
+import entidades.Tramite;
 import entidades.TramiteLicencia;
+import java.util.List;
 
 /**
  *
  * @author luiis
  */
-public interface ITramiteLicenciaDAO {
-    public TramiteLicencia obtenerTramiteLicencia(Persona personaTramite);
-    public TramiteLicencia agregarTramiteLicencia(TramiteLicencia tramite);
-    public boolean actualizarEstadoLicencia(TramiteLicencia tramite);
-    public void cerrarConexion();
+public interface ITramiteLicenciaDAO extends ITramiteDAO{
+    public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite);
 }

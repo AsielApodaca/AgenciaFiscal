@@ -4,13 +4,18 @@
  */
 package daos;
 
+import entidades.Persona;
 import entidades.Tramite;
+import java.util.List;
 
 /**
  *
  * @author luiis
  */
 public interface ITramiteDAO {
-//    public Tramite obtenerTramite(Tramite tramite);
-//    public Tramite registrarTramite(Tramite tramite);
+    public List<Tramite> obtenerTramites(Persona personaTramite);
+    public Object obtenerTramite(Persona personaTramite, String tipoTramite);
+    public boolean registrarTramite(Tramite tramite);
+    public boolean actualizarEstadoTramite(Tramite tramite);
+    public void cerrarConexion();
 }
