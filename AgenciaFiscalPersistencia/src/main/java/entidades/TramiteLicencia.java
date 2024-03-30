@@ -5,8 +5,8 @@
 package entidades;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrePersist;
@@ -31,6 +31,19 @@ public class TramiteLicencia extends Tramite implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar fechaCaducidad;
     
+    @Column(name = "num_licencia", unique = true)
+    private String numLicencia;
+
+    public String getNumLicencia() {
+        return numLicencia;
+    }
+
+    public void setNumLicencia(String numLicencia) {
+        Random r=new Random();
+        long random = Math.abs(r.nextLong() % 1000000000L);
+        this.numLicencia=String.valueOf(random);
+    }
+    
     @PreRemove
     @PrePersist
     @PreUpdate
@@ -46,6 +59,9 @@ public class TramiteLicencia extends Tramite implements Serializable {
 
     public void setVigencia(Integer vigencia) {
         this.vigencia = vigencia;
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, vigencia);
+        this.fechaCaducidad = calendar;
     }
 
     public Calendar getFechaCaducidad() {
@@ -59,11 +75,14 @@ public class TramiteLicencia extends Tramite implements Serializable {
     public TramiteLicencia() {
     }
 
-    public TramiteLicencia(Integer vigencia, Calendar fechaCaducidad,
-            Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
+    public TramiteLicencia(Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
+        super(fechaEmision, costoMxn, estado, persona);
+    }
+
+    
+    public TramiteLicencia(Integer vigencia,Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
         super(fechaEmision, costoMxn, estado, persona);
         this.vigencia = vigencia;
-        this.fechaCaducidad = fechaCaducidad;
     }
 
     @Override
@@ -73,6 +92,7 @@ public class TramiteLicencia extends Tramite implements Serializable {
         sb.append(super.toString());
         sb.append("vigencia=").append(vigencia);
         sb.append(", fechaCaducidad=").append(fechaToString(fechaCaducidad));
+        sb.append(", numero licencia=").append(numLicencia);
         sb.append('}');
         return sb.toString();
     }
