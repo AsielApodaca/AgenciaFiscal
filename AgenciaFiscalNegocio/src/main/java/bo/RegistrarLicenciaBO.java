@@ -1,12 +1,14 @@
 package bo;
 
 import daos.IPersonaDAO;
+import daos.ITramiteDAO;
 import daos.ITramiteLicenciaDAO;
 import daos.PersonaDAO;
 import daos.TramiteLicenciaDAO;
 import negocioDTO.EstadoDTO;
 import entidades.Persona;
 import entidades.Estado;
+import entidades.Tramite;
 import entidades.TramiteLicencia;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import negocioDTO.TramiteLicenciaDTO;
 public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
 
     private static IPersonaDAO personaDao;
-    private static ITramiteLicenciaDAO tramiteLicenciaDao;
+    private static ITramiteDAO tramiteLicenciaDao;
     
     public RegistrarLicenciaBO() {
         personaDao=new PersonaDAO();
@@ -51,15 +53,13 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         PersonaDTO personaEnviada=tramiteLicencia.getPersona();
         Persona persona=personaDao.obtenerPersona(new Persona(personaEnviada.getRfc()));
         
-        TramiteLicencia tramite=new TramiteLicencia(tramiteLicencia.getVigencia(),
-                tramiteLicencia.getFechaCaducidad(), 
-                tramiteLicencia.getFechaEmision(), 
+        TramiteLicencia tramite=new TramiteLicencia(tramiteLicencia.getFechaEmision(), 
                 tramiteLicencia.getCostoMxn(),
                 Estado.VIGENTE,
                 persona
         );
-        
-        return tramiteLicenciaDao.agregarTramiteLicencia(tramite)!=null;
+        tramite.setVigencia(tramiteLicencia.getVigencia());
+        return tramiteLicenciaDao.registrarTramite(tramite);
     }
 
     @Override
@@ -109,10 +109,11 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     @Override
     public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) { 
         Persona persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
-        TramiteLicencia tramite=tramiteLicenciaDao.obtenerTramiteLicencia(persona);
+        Object tramite=tramiteLicenciaDao.obtenerTramite(persona,"licencia");
         if(tramite!=null){
-            TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramite.getVigencia(),tramite.getFechaEmision(),
-                    tramite.getCostoMxn(), EstadoDTO.ACTIVO);
+            TramiteLicencia tramiteLicencia=(TramiteLicencia)tramite;
+            TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramiteLicencia.getVigencia(),tramiteLicencia.getFechaEmision(),
+                    tramiteLicencia.getCostoMxn(), EstadoDTO.ACTIVO);
             t.setPersona(personaTramite);
             return t;
         }
@@ -122,8 +123,8 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     @Override
     public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) {
         Persona persona=personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
-        TramiteLicencia tramite=tramiteLicenciaDao.obtenerTramiteLicencia(persona);
-        return tramiteLicenciaDao.actualizarEstadoLicencia(tramite);
+        Object tramite=tramiteLicenciaDao.obtenerTramite(persona,"licencia");
+        return tramiteLicenciaDao.actualizarEstadoTramite((TramiteLicencia)tramite);
     }
     
     
