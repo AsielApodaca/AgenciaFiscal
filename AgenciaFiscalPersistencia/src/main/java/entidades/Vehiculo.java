@@ -49,7 +49,7 @@ public class Vehiculo implements Serializable {
     @JoinColumn(name = "id_persona",nullable = false)
     private Persona persona;
     
-    @OneToMany(mappedBy = "vehiculo",cascade =CascadeType.MERGE)
+    @OneToMany(mappedBy = "vehiculo")
     private List<TramitePlacas> tramitesPlacas;
 
     public String getSerie() {
@@ -137,6 +137,11 @@ public class Vehiculo implements Serializable {
         this.color = color;
         this.modelo = modelo;
         this.persona = persona;
+        this.tramitesPlacas=new ArrayList<>();
+    }
+
+    public Vehiculo(String serie) {
+        this.serie = serie;
         this.tramitesPlacas=new ArrayList<>();
     }
 

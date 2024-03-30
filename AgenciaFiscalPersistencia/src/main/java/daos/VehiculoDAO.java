@@ -9,12 +9,16 @@ import entidades.Vehiculo;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
  * @author luiis
  */
-public class VehiculoDAO implements IVehiculo {
+public class VehiculoDAO implements IVehiculoDAO {
 
     private EntityManagerFactory emf;
     private EntityManager em;
@@ -24,29 +28,38 @@ public class VehiculoDAO implements IVehiculo {
         em=emf.createEntityManager();
     }
     
-    @Override
-    public boolean agregarVehiculo(Vehiculo vehiculo) {
-        Long id_persona=vehiculo.getPersona().getId();
-        Persona p=em.find(Persona.class, id_persona);
-        if(p!=null){
-            em.getTransaction().begin();
-            em.persist(vehiculo);
-            em.getTransaction().commit();
-            return true;
-        }
-        System.out.println("la persona asignada al vehiculo no se encuentra registrada");
-        return false;
-    }
+//    @Override
+//    public boolean agregarVehiculo(Vehiculo vehiculo) {
+//        Long id_persona=vehiculo.getPersona().getId();
+//        Persona p=em.find(Persona.class, id_persona);
+//        if(p!=null){
+//            em.getTransaction().begin();
+//            p.agregarVehiculo(vehiculo);
+//            //em.persist(vehiculo);
+//            em.getTransaction().commit();
+//            return true;
+//        }
+//        System.out.println("la persona asignada al vehiculo no se encuentra registrada");
+//        return false;
+//    }
 
     @Override
     public Vehiculo obtenerVehiculo(Vehiculo vehiculo) {
+        CriteriaBuilder cb=em.getCriteriaBuilder();
+        CriteriaQuery<Vehiculo> criteria=cb.createQuery(Vehiculo.class);
+        Root<Vehiculo> root=criteria.from(Vehiculo.class);
         
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        Predicate predicate=cb.equal(root.get("serie"), vehiculo.getSerie());
+        criteria.select(root).where(predicate);
+        
+        return em.createQuery(criteria).getSingleResult();
     }
 
     @Override
     public void cerrarConexion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        em.close();
+        emf.close();
     }
     
 }

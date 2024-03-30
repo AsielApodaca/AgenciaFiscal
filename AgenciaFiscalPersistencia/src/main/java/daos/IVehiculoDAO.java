@@ -10,8 +10,7 @@ import entidades.Vehiculo;
  *
  * @author luiis
  */
-public interface IVehiculo {
-    public boolean agregarVehiculo(Vehiculo vehiculo);
+public interface IVehiculoDAO {
     public Vehiculo obtenerVehiculo(Vehiculo vehiculo);
     public void cerrarConexion();
 }
