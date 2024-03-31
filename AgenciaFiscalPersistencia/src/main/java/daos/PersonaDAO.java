@@ -22,13 +22,13 @@ import javax.persistence.criteria.Root;
  */
 public class PersonaDAO implements IPersonaDAO{
 
-    private EntityManagerFactory emf;
+//    private EntityManagerFactory emf;
     private EntityManager em;
     private CriteriaBuilder cb;
     
     public PersonaDAO(){
-        emf=Persistence.createEntityManagerFactory("conexionPU");
-        em=emf.createEntityManager();
+//        emf=Persistence.createEntityManagerFactory("conexionPU");
+        em=ClaseConexion.getEntityManager();
         cb=em.getCriteriaBuilder();
     }
     
@@ -63,12 +63,12 @@ public class PersonaDAO implements IPersonaDAO{
         System.out.println("no se obtuvo el result set");
         return null;
     }
-
-    @Override
-    public void cerrarConexion() {
-        em.close();
-        emf.close();
-    }
+//
+//    @Override
+//    public void cerrarConexion() {
+//        em.close();
+//        emf.close();
+//    }
 
     @Override
     public Persona actualizarPersona(Persona persona) {

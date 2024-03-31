@@ -1,5 +1,6 @@
 package bo;
 
+import daos.ClaseConexion;
 import daos.IPersonaDAO;
 import daos.ITramiteDAO;
 import daos.ITramiteLicenciaDAO;
@@ -29,7 +30,6 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         personaDao=new PersonaDAO();
         tramiteLicenciaDao=new TramiteLicenciaDAO();
     }
-
     
     @Override
     public PersonaDTO consultarPersonaPorRfc(String Rfc) {
@@ -59,13 +59,8 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
                 persona
         );
         tramite.setVigencia(tramiteLicencia.getVigencia());
+        tramite.setNumLicencia();
         return tramiteLicenciaDao.registrarTramite(tramite);
-    }
-
-    @Override
-    public void cerrarConexiones() {
-        personaDao.cerrarConexion();
-        tramiteLicenciaDao.cerrarConexion();
     }
 
     @Override

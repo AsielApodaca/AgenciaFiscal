@@ -29,13 +29,13 @@ import javax.persistence.criteria.Root;
  */
 public class TramiteDAO implements ITramiteDAO{
 
-    protected static EntityManagerFactory emf;
-    protected static EntityManager em;
-    protected static CriteriaBuilder cb;
+//    protected static EntityManagerFactory emf;
+    static EntityManager em;
+    static CriteriaBuilder cb;
     
     public TramiteDAO(){
-        emf=Persistence.createEntityManagerFactory("conexionPU");
-        em=emf.createEntityManager();
+//        emf=Persistence.createEntityManagerFactory("conexionPU");
+        em=ClaseConexion.getEntityManager();
         cb=em.getCriteriaBuilder();
     }
     
@@ -160,11 +160,11 @@ public class TramiteDAO implements ITramiteDAO{
 //        return false;
     }
 
-    @Override
-    public void cerrarConexion() {
-        em.close();
-        emf.close();
-    }
+//    @Override
+//    public void cerrarConexion() {
+//        em.close();
+//        emf.close();
+//    }
 
     @Override
     public Object obtenerTramite(Persona personaTramite, String tipoTramite) {

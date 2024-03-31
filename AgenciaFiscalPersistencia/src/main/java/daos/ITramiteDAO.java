@@ -17,5 +17,5 @@ public interface ITramiteDAO {
     public Object obtenerTramite(Persona personaTramite, String tipoTramite);
     public boolean registrarTramite(Tramite tramite);
     public boolean actualizarEstadoTramite(Tramite tramite);
-    public void cerrarConexion();
+    //public void cerrarConexion();
 }

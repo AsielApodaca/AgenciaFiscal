@@ -89,7 +89,7 @@ public class Prueba {
             }
         }
         
-        personaDao.cerrarConexion();
+        //personaDao.cerrarConexion();
 //        
 //        IVehiculoDAO vehiculo=new VehiculoDAO();
 //        Vehiculo vOb=vehiculo.obtenerVehiculo(new Vehiculo("12345678911234567"));

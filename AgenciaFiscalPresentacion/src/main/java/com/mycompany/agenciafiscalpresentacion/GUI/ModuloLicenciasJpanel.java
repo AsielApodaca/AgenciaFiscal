@@ -30,7 +30,6 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
-   // private static iRegistrarLicenciaBO registrarLicenciaBO;
     private PersonaDTO persona;
     
     /**
@@ -39,13 +38,13 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     public ModuloLicenciasJpanel() {
         initComponents();
         
-        //registrarLicenciaBO = new RegistrarLicenciaBO();
         persona = null;
         iniciar();
     }
     
     public void iniciar(){
         validarRfc();
+        Ventanas.registrarLicencia=new RegistrarLicenciaBO();
         btnPagar.setEnabled(false);
         txtAdvertencia.setVisible(false);
         
@@ -85,7 +84,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 if (doc.getLength() == 13) {
                     
                     // Lógica para validar rfc
-                    persona = Ventanas.registrar.consultarPersonaPorRfc(txtRfc.getText());
+                    persona = Ventanas.registrarLicencia.consultarPersonaPorRfc(txtRfc.getText());
                     if(persona == null){ // No se encontró
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
@@ -160,18 +159,18 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
             if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
-                persona=Ventanas.registrar.actualizarDiscapacidadPersona(persona);
+                persona=Ventanas.registrarLicencia.actualizarDiscapacidadPersona(persona);
             }
-            TramiteLicenciaDTO licenciaVieja=Ventanas.registrar.obtenerTramiteLicencia(persona);
+            TramiteLicenciaDTO licenciaVieja=Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
             if(licenciaVieja!=null){
                 System.out.println("licencia vieja:"+licenciaVieja.toStringReducido());
-                if(Ventanas.registrar.actualizarEstadoLicencia(licenciaVieja))
+                if(Ventanas.registrarLicencia.actualizarEstadoLicencia(licenciaVieja))
                     System.out.println("se actualizo el estado de la licencia");
                 else
                     System.out.println("no se actualizo el estado de la licencia");
             }System.out.println("no tiene otra licencia vigente");
             TramiteLicenciaDTO licencia = setTramiteLicencia();
-            if (Ventanas.registrar.registrarLicencia(licencia)) {
+            if (Ventanas.registrarLicencia.registrarLicencia(licencia)) {
                 JOptionPane.showMessageDialog(null,
                         "Licencia nueva registrada con éxito."
                 );
@@ -218,7 +217,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private void regresarMenu(){
         reiniciarPanel();
-        //Ventanas.setRegistrarLicenciaBO(ventana.getBO());
         ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
     }
 
@@ -227,7 +225,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         dialogo.setLayout(new BorderLayout());
         dialogo.setSize(400, 200);
         
-        List<PersonaDTO> personas=Ventanas.registrar.obtenerPersonasRegistradas();
+        List<PersonaDTO> personas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
         Object[][] filas =new Object[20][2];
         int contador=0;
         for(PersonaDTO p:personas){
@@ -379,6 +377,11 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         txtRfc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRfcActionPerformed(evt);
+            }
+        });
+        txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRfcKeyTyped(evt);
             }
         });
 
