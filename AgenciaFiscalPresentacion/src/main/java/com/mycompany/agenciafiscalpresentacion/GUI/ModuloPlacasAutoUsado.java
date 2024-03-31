@@ -4,17 +4,33 @@
  */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import bo.RegistrarPlacasBO;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.text.Document;
+import negocioDTO.EstadoDTO;
+import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteDTO;
+import negocioDTO.TramiteLicenciaDTO;
+import negocioDTO.TramitePlacasDTO;
+import negocioDTO.VehiculoDTO;
+
 /**
  *
  * @author luiis
  */
 public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
-
+    
+    private PersonaDTO persona;
+    private TramitePlacasDTO tramitePlacasAnteriores;
     /**
      * Creates new form ModuloPlacasAutoUsado
      */
     public ModuloPlacasAutoUsado() {
         initComponents();
+        persona=null;
+        iniciar();
     }
 
     /**
@@ -26,19 +42,438 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        btnRegresar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtPlacas = new javax.swing.JTextField();
+        btnBuscarPlacas = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txtSerieVehiculo = new javax.swing.JTextField();
+        lblAdvertenciaPlacas = new javax.swing.JLabel();
+        btnPagar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txtLicencia = new javax.swing.JTextField();
+        btnBuscarLicencia = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtTitularLicencia = new javax.swing.JTextField();
+        lblAdvertenciaLicencia = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(640, 360));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        jPanel1.setBackground(new java.awt.Color(136, 62, 69));
+        jPanel1.setForeground(new java.awt.Color(153, 153, 153));
+
+        jLabel1.setText("Modulo de Placas");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 23, Short.MAX_VALUE))
+        );
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, -1, 80));
+
+        jLabel7.setText("Matricula de placas:");
+
+        txtPlacas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPlacasKeyTyped(evt);
+            }
+        });
+
+        btnBuscarPlacas.setText("buscar");
+        btnBuscarPlacas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPlacasActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Serie del vehiculo:");
+
+        txtSerieVehiculo.setEditable(false);
+        txtSerieVehiculo.setToolTipText("");
+
+        lblAdvertenciaPlacas.setForeground(new java.awt.Color(255, 51, 51));
+        lblAdvertenciaPlacas.setText("No se encontró el registro de las placas ");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                            .addComponent(btnBuscarPlacas))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtPlacas)
+                        .addComponent(txtSerieVehiculo))
+                    .addComponent(lblAdvertenciaPlacas))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPlacas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscarPlacas)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSerieVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblAdvertenciaPlacas)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 160));
+
+        btnPagar.setText("Pagar");
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
+        add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, -1, -1));
+
+        jLabel9.setText("No. de licencia:");
+
+        txtLicencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLicenciaKeyTyped(evt);
+            }
+        });
+
+        btnBuscarLicencia.setText("buscar");
+        btnBuscarLicencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLicenciaActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Titular de licencia:");
+
+        txtTitularLicencia.setEditable(false);
+        txtTitularLicencia.setToolTipText("");
+
+        lblAdvertenciaLicencia.setForeground(new java.awt.Color(255, 51, 51));
+        lblAdvertenciaLicencia.setText("No se encontró la licencia");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel10)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                            .addComponent(btnBuscarLicencia))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtLicencia)
+                        .addComponent(txtTitularLicencia))
+                    .addComponent(lblAdvertenciaLicencia))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBuscarLicencia)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTitularLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblAdvertenciaLicencia)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 250, 160));
+
+        jLabel2.setText("Ingrese las placas anteriores");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
+
+        jLabel3.setText("Ingrese su licencia vigente");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        regresarMenu();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void txtPlacasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacasKeyTyped
+        // TODO add your handling code here:
+        if (txtPlacas.getText().length() == 9)
+            evt.consume();
+    }//GEN-LAST:event_txtPlacasKeyTyped
+
+    private void btnBuscarPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPlacasActionPerformed
+        // TODO add your handling code here:
+        buscarPlacasAnteriores();
+    }//GEN-LAST:event_btnBuscarPlacasActionPerformed
+
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        // TODO add your handling code here:
+        if(pagarTramite())
+            regresarMenu();
+    }//GEN-LAST:event_btnPagarActionPerformed
+
+    private void txtLicenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLicenciaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLicenciaKeyTyped
+
+    private void btnBuscarLicenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLicenciaActionPerformed
+        // TODO add your handling code here:
+        buscarLicencia();
+    }//GEN-LAST:event_btnBuscarLicenciaActionPerformed
+
+    private boolean pagarTramite(){
+         int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar las placas?", "Advertencia", JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            TramitePlacasDTO placas = new TramitePlacasDTO(Calendar.getInstance(), 1500.0f, EstadoDTO.ACTIVO);
+            placas.setPersona(persona);
+            placas.setVehiculo(tramitePlacasAnteriores.getVehiculo());
+
+            if(!Ventanas.registrarPlacas.actualizarEstadoPlacasAnteriores(tramitePlacasAnteriores)){
+                JOptionPane.showConfirmDialog(null, 
+                        "Hubo un error al registrar el tramite. Intente de nuevo");
+                return false;
+            }
+            
+            if (Ventanas.registrarPlacas.registrarPlacas(placas)) {
+                JOptionPane.showMessageDialog(null,
+                        "Placas nuevas registradas con éxito."
+                );
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "No se han podido registrar las placas.");
+            }
+        }
+        return false;
+    }
+    
+    private void iniciar(){
+        Ventanas.registrarPlacas=new RegistrarPlacasBO();
+        validarLicencia();
+        validarSerie();
+        lblAdvertenciaLicencia.setVisible(false);
+        lblAdvertenciaPlacas.setVisible(false);
+        txtSerieVehiculo.setEnabled(false);
+        txtTitularLicencia.setEnabled(false);
+        btnBuscarPlacas.setEnabled(false);
+        btnBuscarLicencia.setEnabled(false);
+        txtPlacas.setEnabled(false);
+        btnPagar.setEnabled(false);
+    }
+    
+    private void buscarLicencia() {
+        TramiteLicenciaDTO licencia = new TramiteLicenciaDTO();
+        licencia.setNumLicencia(txtLicencia.getText());
+        TramiteLicenciaDTO licenciaObtenida = Ventanas.registrarPlacas.obtenerLicenciaVigente(licencia);
+        if (licenciaObtenida != null) {//si se encuentra la licencia
+            //se despliega el nombre del titular en el txtTitularLicencia
+            txtTitularLicencia.setText(licenciaObtenida.getPersona().getNombreCompleto());
+            persona = licenciaObtenida.getPersona();
+            lblAdvertenciaLicencia.setVisible(false);
+            txtPlacas.setEnabled(true);
+            habilitarBotonPagar();
+        } else {
+            //si no, se muestra la advertencia de que no se encontro
+            lblAdvertenciaLicencia.setVisible(true);
+            persona = null;
+        }
+    }
+    
+    private void buscarPlacasAnteriores(){
+        TramitePlacasDTO placas=new TramitePlacasDTO();
+        placas.setMatricula(txtPlacas.getText());
+        placas.setPersona(persona);
+        placas=Ventanas.registrarPlacas.obtenerPlacasAnteriores(placas);
+        if(placas!=null){
+            tramitePlacasAnteriores=placas;
+            txtSerieVehiculo.setText(placas.getVehiculo().getSerie());
+            lblAdvertenciaPlacas.setVisible(false);
+            habilitarBotonPagar();
+        }else{
+            tramitePlacasAnteriores=null;
+            lblAdvertenciaPlacas.setVisible(true);
+            txtSerieVehiculo.setText("");
+        }
+    }
+    
+    private void habilitarBotonPagar(){
+        if(!txtSerieVehiculo.getText().isEmpty() && !txtTitularLicencia.getText().isEmpty())
+            btnPagar.setEnabled(true);
+        else btnPagar.setEnabled(false);
+    }
+    
+    private void validarSerie(){
+        Document doc = txtPlacas.getDocument();
+        doc.addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            private void validar(javax.swing.event.DocumentEvent e) {
+                Document doc = e.getDocument();
+                if (doc.getLength() == 7) {
+                    btnBuscarPlacas.setEnabled(true);
+                } else {
+                    btnBuscarPlacas.setEnabled(false);
+                    txtSerieVehiculo.setText("");
+                    tramitePlacasAnteriores=null;
+                }
+            }
+        });
+    }
+    
+    private void validarLicencia(){
+        Document doc = txtLicencia.getDocument();
+        doc.addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                validar(e);
+            }
+
+            private void validar(javax.swing.event.DocumentEvent e) {
+                Document doc = e.getDocument();
+                if (doc.getLength() == 9) {
+                    btnBuscarLicencia.setEnabled(true);
+                } else {
+                    limpiarDatosLicencia();
+                    reiniciarPanelPlacas();
+                }
+            }
+        });
+    }
+    
+     private void limpiarDatosLicencia() {
+        txtTitularLicencia.setText("");
+        lblAdvertenciaLicencia.setVisible(false);
+        persona=null;
+        btnBuscarLicencia.setEnabled(false);
+    }
+
+     
+     private void reiniciarPanelPlacas(){
+         txtPlacas.setText("");
+         txtPlacas.setEnabled(false);
+         txtSerieVehiculo.setText("");
+         btnBuscarPlacas.setEnabled(false);
+         lblAdvertenciaPlacas.setVisible(false);
+         tramitePlacasAnteriores=null;
+     }
+     
+    public void reiniciarPanel(){
+        reiniciarPanelPlacas();
+        limpiarDatosLicencia();
+        txtLicencia.setText("");
+    }
+    
+    private void regresarMenu(){
+        reiniciarPanel();
+        ((Ventanas) SwingUtilities.getWindowAncestor(ModuloPlacasAutoUsado.this)).mostrarVentana("MenuJpanel");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarLicencia;
+    private javax.swing.JButton btnBuscarPlacas;
+    private javax.swing.JButton btnPagar;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblAdvertenciaLicencia;
+    private javax.swing.JLabel lblAdvertenciaPlacas;
+    private javax.swing.JTextField txtLicencia;
+    private javax.swing.JTextField txtPlacas;
+    private javax.swing.JTextField txtSerieVehiculo;
+    private javax.swing.JTextField txtTitularLicencia;
     // End of variables declaration//GEN-END:variables
 }
