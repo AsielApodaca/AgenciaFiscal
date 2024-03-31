@@ -4,6 +4,7 @@
  */
 package entidades;
 
+import daos.ClaseConexion;
 import daos.IPersonaDAO;
 import daos.ITramiteDAO;
 import daos.PersonaDAO;
@@ -77,17 +78,17 @@ public class Prueba {
 //        em.close();
 //        emf.close();
         
-        IPersonaDAO personaDao=new PersonaDAO();
-        List<Persona> personas=personaDao.agregarPersonas();
-        
-        if(!personas.isEmpty()){
-            for(Persona per:personas){
-                System.out.println("nombre: "+per.getNombreCompleto());
-                for(Vehiculo vp:per.getVehiculos()){
-                    System.out.println("serie vehiculo: "+vp.getSerie());
-                }
-            }
-        }
+//        IPersonaDAO personaDao=new PersonaDAO();
+//        List<Persona> personas=personaDao.agregarPersonas();
+//        
+//        if(!personas.isEmpty()){
+//            for(Persona per:personas){
+//                System.out.println("nombre: "+per.getNombreCompleto());
+//                for(Vehiculo vp:per.getVehiculos()){
+//                    System.out.println("serie vehiculo: "+vp.getSerie());
+//                }
+//            }
+//        }
         
         //personaDao.cerrarConexion();
 //        
@@ -95,8 +96,20 @@ public class Prueba {
 //        Vehiculo vOb=vehiculo.obtenerVehiculo(new Vehiculo("12345678911234567"));
 //        vehiculo.cerrarConexion();
         
-//        ITramiteDAO tramites= new TramiteLicenciaDAO();
+        IPersonaDAO p=new PersonaDAO();
+        Persona persona=new Persona("GALA850730M78");
+        persona=p.obtenerPersona(persona);
+        System.out.println("nombre persona: "+persona.getNombreCompleto());
+        ITramiteDAO tramites= new TramiteLicenciaDAO();
+        Tramite t=tramites.obtenerTramite(persona, "placas");
+        if(t!=null){
+            System.out.println(t.toString());
+            TramitePlacas tramitePlacas=(TramitePlacas)t;
+            System.out.println(tramitePlacas.getVehiculo().toString());
+        }
+        ClaseConexion.cerrarConexion();
 //        Calendar fechaEmision=Calendar.getInstance();
+        
 ////        
 ////        Tramite tp=new TramitePlacas("AAA-111", vOb, fechaEmision, 1500.0f, Estado.ACTIVO, p);
 ////        
