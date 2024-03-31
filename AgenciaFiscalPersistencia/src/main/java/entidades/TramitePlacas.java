@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -25,7 +26,7 @@ public class TramitePlacas extends Tramite implements Serializable {
     @Column(name = "matricula")
     private String matricula;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
 
