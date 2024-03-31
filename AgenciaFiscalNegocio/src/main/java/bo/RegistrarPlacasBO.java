@@ -15,6 +15,7 @@ import daos.TramiteLicenciaDAO;
 import daos.TramitePlacasDAO;
 import entidades.Estado;
 import entidades.Persona;
+import entidades.Tramite;
 import entidades.TramiteLicencia;
 import entidades.TramitePlacas;
 import entidades.Vehiculo;
@@ -61,6 +62,7 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
                     tramite.getCostoMxn(),
                     Estado.ACTIVO, 
                     p);
+            placasNuevas.setMatricula();
             return tramitePlacasDAO.registrarTramite(placasNuevas);
         }
         System.out.println("error al registrar las placas");
@@ -68,17 +70,28 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     }
 
     @Override
-    public TramitePlacasDTO obtenerPlacas(VehiculoDTO vehiculoDTO) {
+    public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculoDTO) {
         Vehiculo vehiculo=new Vehiculo();
         vehiculo.setSerie(vehiculoDTO.getSerie());
         TramitePlacas placas=tramitePlacasDAO.obtenerPlacas(vehiculo);
         
         if(placas!=null){
-            return new TramitePlacasDTO(
+            TramitePlacasDTO placasObtenidas=new TramitePlacasDTO(
                     placas.getMatricula(),
-                    placas.getFechaEmision(), 
-                    placas.getCostoMxn(), 
+                    placas.getFechaEmision(),
+                    placas.getCostoMxn(),
                     EstadoDTO.ACTIVO);
+            
+            vehiculo=placas.getVehiculo();
+            VehiculoDTO vehiculoObt=new VehiculoDTO(
+                    vehiculo.getSerie(),
+                    vehiculo.getMarca(),
+                    vehiculo.getLinea(),
+                    vehiculo.getColor(),
+                    vehiculo.getModelo());
+            placasObtenidas.setVehiculo(vehiculoObt);
+            
+            return placasObtenidas;
         }
         return null;
     }
@@ -102,6 +115,41 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
             return (TramiteLicenciaDTO)licenciaEncontrada;
         }
         return null;
+    }
+
+    @Override
+    public TramitePlacasDTO obtenerPlacasAnteriores(TramitePlacasDTO placasAnteriores) {
+        TramitePlacas tramite=new TramitePlacas();
+        PersonaDTO p=placasAnteriores.getPersona();
+        Persona persona=new Persona(p.getRfc());
+        
+        Object obj=tramitePlacasDAO.obtenerTramite(persona, "placas");
+        if(obj!=null){
+            TramitePlacas placasObtenidas=(TramitePlacas)obj;
+            TramitePlacasDTO placasObtenidasDTO=new TramitePlacasDTO(
+                    placasObtenidas.getMatricula(),
+                    placasObtenidas.getFechaEmision(),
+                    placasObtenidas.getCostoMxn(),
+                    EstadoDTO.ACTIVO
+            );
+            Vehiculo v=placasObtenidas.getVehiculo();
+            placasObtenidasDTO.setVehiculo(new VehiculoDTO(
+                    v.getSerie(),
+                    v.getMarca(),
+                    v.getLinea(),
+                    v.getColor(),
+                    v.getModelo()
+            ));
+            return placasObtenidasDTO;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores) {
+        Persona personaTramite=new Persona(placasAnteriores.getPersona().getRfc());
+        Tramite placas=tramitePlacasDAO.obtenerTramite(personaTramite, "placas");
+        return tramitePlacasDAO.actualizarEstadoTramite((TramitePlacas)placas);
     }
     
 }

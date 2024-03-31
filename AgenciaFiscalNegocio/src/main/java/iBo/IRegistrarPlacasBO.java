@@ -14,6 +14,8 @@ import negocioDTO.VehiculoDTO;
  */
 public interface IRegistrarPlacasBO {
     public boolean registrarPlacas(TramitePlacasDTO placas);
-    public TramitePlacasDTO obtenerPlacas(VehiculoDTO vehiculo);
+    public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculo);
+    public TramitePlacasDTO obtenerPlacasAnteriores(TramitePlacasDTO placasAnteriores);
     public TramiteLicenciaDTO obtenerLicenciaVigente(TramiteLicenciaDTO licencia);
+    public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores);
 }
