@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -96,5 +97,27 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
 //        em.getTransaction().commit();
 //        return resultado>0;
 //    }
+
+    @Override
+    public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia) {
+        CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
+        Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
+        //Join<Tramite,TramiteLicencia> joinTramiteL=root.join("id");
+        //Join<Tramite,Persona> joinPersona=root.join("persona");
+        
+        Predicate equal=cb.equal(root.get("numLicencia"),licencia.getNumLicencia());
+        Predicate predicado=cb.and(equal,cb.equal(root.<Estado>get("estado"), Estado.VIGENTE));
+        criteria.select(root).where(predicado);
+        
+        TypedQuery<TramiteLicencia> query=em.createQuery(criteria);
+        TramiteLicencia tramiteLicencia;
+        try{
+            tramiteLicencia=query.getSingleResult();
+            return tramiteLicencia;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
 }
