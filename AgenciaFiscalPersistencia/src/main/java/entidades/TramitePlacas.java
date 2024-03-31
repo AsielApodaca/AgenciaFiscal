@@ -6,6 +6,8 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Random;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -23,7 +25,7 @@ public class TramitePlacas extends Tramite implements Serializable {
     @Column(name = "matricula")
     private String matricula;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
 
@@ -31,8 +33,27 @@ public class TramitePlacas extends Tramite implements Serializable {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+    public void setMatricula() {
+        char[] letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        // Generador de números aleatorios
+        Random random = new Random();
+        
+        // Generar las tres letras aleatorias
+        StringBuilder sb= new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            char letra = letras[random.nextInt(letras.length)];
+            sb.append(letra);
+        }
+        
+        // Agregar el guión
+        sb.append("-");
+        
+        // Generar los tres dígitos aleatorios
+        for (int i = 0; i < 3; i++) {
+            int digito = random.nextInt(10); // Números del 0 al 9
+            sb.append(digito);
+        }
+        this.matricula = sb.toString();
     }
 
     public Vehiculo getVehiculo() {
@@ -47,9 +68,8 @@ public class TramitePlacas extends Tramite implements Serializable {
     }
     
     
-    public TramitePlacas(String matricula, Vehiculo vehiculo, Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
+    public TramitePlacas(Vehiculo vehiculo, Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
         super(fechaEmision, costoMxn, estado, persona);
-        this.matricula = matricula;
         this.vehiculo = vehiculo;
     }
 

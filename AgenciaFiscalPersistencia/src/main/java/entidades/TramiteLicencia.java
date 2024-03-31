@@ -38,10 +38,14 @@ public class TramiteLicencia extends Tramite implements Serializable {
         return numLicencia;
     }
 
-    public void setNumLicencia(String numLicencia) {
+    public void setNumLicencia() {
         Random r=new Random();
         long random = Math.abs(r.nextLong() % 1000000000L);
         this.numLicencia=String.valueOf(random);
+    }
+    
+    public void setNumLicencia(String numLicencia){
+        this.numLicencia=numLicencia;
     }
     
     @PreRemove
