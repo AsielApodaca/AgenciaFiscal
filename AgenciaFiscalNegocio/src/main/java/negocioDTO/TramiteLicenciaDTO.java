@@ -10,6 +10,15 @@ import java.util.Calendar;
 public class TramiteLicenciaDTO extends TramiteDTO{
     private Integer vigencia; 
     private Calendar fechaCaducidad;
+    private String numLicencia;
+
+    public String getNumLicencia() {
+        return numLicencia;
+    }
+
+    public void setNumLicencia(String numLicencia) {
+        this.numLicencia = numLicencia;
+    }
 
     public TramiteLicenciaDTO() {
         super();
@@ -43,7 +52,9 @@ public class TramiteLicenciaDTO extends TramiteDTO{
     public String toString() {
         return super.toString() + "TramiteLicencia{" + 
                 "vigencia=" + vigencia + 
-                ", fechaCaducidad=" + fechaCaducidad + '}';
+                ", fechaCaducidad=" + fechaCaducidad + 
+                ", numero licencia=" + numLicencia +
+                '}';
     }
 
     
