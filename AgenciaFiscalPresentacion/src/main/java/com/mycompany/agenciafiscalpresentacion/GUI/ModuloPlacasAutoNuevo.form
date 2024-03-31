@@ -31,7 +31,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="178" y="6" width="-1" height="80"/>
+          <AbsoluteConstraints x="180" y="0" width="-1" height="80"/>
         </Constraint>
       </Constraints>
 
@@ -274,6 +274,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtLicencia">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtLicenciaKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscarLicencia">
           <Properties>

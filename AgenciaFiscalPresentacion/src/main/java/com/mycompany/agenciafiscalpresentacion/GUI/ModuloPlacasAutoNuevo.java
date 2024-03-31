@@ -108,7 +108,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                 .addGap(0, 23, Short.MAX_VALUE))
         );
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 6, -1, 80));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, -1, 80));
 
         jLabel2.setText("No. de serie:");
 
@@ -186,6 +186,12 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 300, 180));
 
         jLabel7.setText("No. de licencia:");
+
+        txtLicencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtLicenciaKeyTyped(evt);
+            }
+        });
 
         btnBuscarLicencia.setText("buscar");
         btnBuscarLicencia.addActionListener(new java.awt.event.ActionListener() {
@@ -277,6 +283,12 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         pagarTramite();
     }//GEN-LAST:event_btnPagarActionPerformed
 
+    private void txtLicenciaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLicenciaKeyTyped
+        // TODO add your handling code here:
+        if(txtLicencia.getText().length()==9)
+            evt.consume();
+    }//GEN-LAST:event_txtLicenciaKeyTyped
+
     private void buscarLicencia(){
         TramiteLicenciaDTO licencia = new TramiteLicenciaDTO();
         licencia.setNumLicencia(txtLicencia.getText());
@@ -332,7 +344,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                     
                     VehiculoDTO vehiculo=new VehiculoDTO();
                     vehiculo.setSerie(txtSerie.getText());
-                    TramitePlacasDTO placas = Ventanas.registrarPlacas.obtenerPlacas(vehiculo);
+                    TramitePlacasDTO placas = Ventanas.registrarPlacas.obtenerPlacasPorSerieAuto(vehiculo);
                     if(placas==null){
                         System.out.println("placas nulas"); 
                         habilitarCamposVehiculo(true);
@@ -345,6 +357,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                         txtLinea.setText(vehiculo.getLinea());
                         txtColor.setText(vehiculo.getColor());
                         txtModelo.setText(vehiculo.getModelo());
+                        habilitarBotonPagar();
                     }
                 } else {
                     habilitarCamposVehiculo(false);
@@ -423,7 +436,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     }
     
     private void habilitarBotonPagar(){
-        if(!lblAdvertenciaVehiculo.isVisible() && 
+        if((!lblAdvertenciaVehiculo.isVisible() || !txtSerie.getText().isEmpty()) && 
                 (!lblAdvertenciaLicencia.isVisible()) || !txtTitularLicencia.getText().isEmpty())
             btnPagar.setEnabled(true);
         else btnPagar.setEnabled(false);
@@ -433,6 +446,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         txtLinea.setText((""));
         txtColor.setText("");
         txtModelo.setText("");
+        txtTitularLicencia.setText("");
         lblAdvertenciaLicencia.setVisible(false);
         lblAdvertenciaVehiculo.setVisible(false);
         btnPagar.setEnabled(false);
@@ -441,6 +455,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     public void reiniciarPanel(){
         txtSerie.setText("");
         txtLicencia.setText("");
+        persona=null;
         limpiarDatos();
         
     }

@@ -96,7 +96,7 @@ public class MenuJpanel extends javax.swing.JPanel {
                 btnInsertarUsuariosActionPerformed(evt);
             }
         });
-        add(btnInsertarUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 230, 30));
+        add(btnInsertarUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 230, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
