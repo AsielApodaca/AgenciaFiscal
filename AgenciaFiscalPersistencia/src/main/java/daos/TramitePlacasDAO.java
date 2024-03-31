@@ -4,11 +4,14 @@
  */
 package daos;
 
+import entidades.Estado;
 import entidades.Persona;
 import entidades.TramitePlacas;
+import entidades.Vehiculo;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -39,6 +42,29 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             return tramitesPlacas;
         }catch(Exception e){
             System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public TramitePlacas obtenerPlacas(Vehiculo vehiculo) {
+        CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
+        Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
+        Join<TramitePlacas, Vehiculo> join=root.join("vehiculo");
+        
+        Predicate equal=cb.equal(join.get("serie"), vehiculo.getSerie());
+        Predicate predicado=cb.and(equal,cb.equal(root.<Estado>get("estado"),Estado.ACTIVO));
+        
+        criteria.select(root).where(predicado);
+        
+        TypedQuery<TramitePlacas> query=em.createQuery(criteria);
+        TramitePlacas tramite;
+        try{
+            tramite=query.getSingleResult();
+            return tramite;
+        }catch(Exception e){
+            System.out.println("error al obtener las placas:");
+            System.out.println(e.fillInStackTrace());
             return null;
         }
     }

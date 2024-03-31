@@ -30,7 +30,7 @@ public class Vehiculo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "serie")
+    @Column(name = "serie", unique = true)
     private String serie;
     
     @Column(name = "marca")
