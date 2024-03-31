@@ -103,11 +103,19 @@ public class TramiteDAO implements ITramiteDAO{
         Long id_persona=tramite.getPersona().getId();
         Persona p=em.find(Persona.class, id_persona);
         if(p!=null){
-            em.getTransaction().begin();
-            em.persist(tramite);
-            //p.agregarTramite(tramite);
-            em.getTransaction().commit();
-            return true;
+            try{
+                em.getTransaction().begin();
+                em.persist(tramite);
+                //p.agregarTramite(tramite);
+                em.getTransaction().commit();
+                return true;
+            }catch(Exception e){
+                System.out.println("error al registrar el tramite");
+                System.out.println(e.getCause());
+                em.getTransaction().rollback();
+                return false;
+            }
+            
         }else
             System.out.println("la persona asignada al tramite no se encuentra registrada");
         return false;
@@ -117,8 +125,6 @@ public class TramiteDAO implements ITramiteDAO{
     public boolean actualizarEstadoTramite(Tramite tramite) {
         em.getTransaction().begin();
         Estado estado=null;
-//        CriteriaUpdate<Tramite> criteria=cb.createCriteriaUpdate(Tramite.class);
-//        Root<Tramite> root=criteria.from(Tramite.class);
         
         if(tramite.getClass()==TramiteLicencia.class){
             estado=Estado.CADUCO;
@@ -136,62 +142,30 @@ public class TramiteDAO implements ITramiteDAO{
             em.getTransaction().rollback();
             return false;
         }
-        
-//        Predicate predicate=cb.equal(root.get("id"), tramite.getId());
-//        if(estado!=null){
-//            criteria.set(root.<Estado>get("estado"), estado).
-//                where(predicate);
-//            Query query;
-//            int r=0;
-//            try {
-//                query = em.createQuery(criteria);
-//                r = query.executeUpdate();
-//                em.getTransaction().commit();
-//                //return r>0;
-//            } catch (Exception e) {
-//                System.out.println("exception: ");
-//                System.out.println(e.getCause());
-//                em.getTransaction().rollback();
-//                //return false;
-//            }
-//            return r>0;
-//        }
-//        System.out.println("error");
-//        return false;
     }
 
-//    @Override
-//    public void cerrarConexion() {
-//        em.close();
-//        emf.close();
-//    }
-
     @Override
-    public Object obtenerTramite(Persona personaTramite, String tipoTramite) {
-        CriteriaQuery criteria;
-        Root root;
-        Estado estado2;
-        if(tipoTramite.equalsIgnoreCase("licencia")){
-            criteria=cb.createQuery(TramiteLicencia.class);
-            root=criteria.from(TramiteLicencia.class);
-            estado2=Estado.VIGENTE;
-        }else {
-            criteria=cb.createQuery(TramitePlacas.class);
-            root=criteria.from(TramitePlacas.class);
-            estado2=Estado.ACTIVO;
-        }
+    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite) {
+        CriteriaQuery<Tramite> criteria=cb.createQuery(Tramite.class);
+        Root<Tramite> root=criteria.from(Tramite.class);
+        Estado estado;
+        if(tipoTramite.equals("licencia"))
+            estado=Estado.VIGENTE;
+        else
+            estado=Estado.ACTIVO;
         
         Predicate equal=cb.equal(root.get("persona").get("rfc"),personaTramite.getRfc());
-        Predicate predicado=cb.and(equal,cb.equal(root.<Estado>get("estado"), estado2));
+        Predicate predicado=cb.and(equal,cb.equal(root.<Estado>get("estado"), estado));
         criteria.select(root).where(predicado);
         
-        TypedQuery query=em.createQuery(criteria);
-        Object tramiteObtenido;
+        TypedQuery<Tramite> query=em.createQuery(criteria);
+        Tramite tramite;
         try{
-            tramiteObtenido=query.getSingleResult();
-            return tramiteObtenido;
+            tramite=query.getSingleResult();
+            return tramite;
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("error:");
+            System.out.println(e.fillInStackTrace());
             return null;
         }
     }

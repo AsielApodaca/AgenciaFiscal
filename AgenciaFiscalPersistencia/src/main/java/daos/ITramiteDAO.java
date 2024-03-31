@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ITramiteDAO {
     public List<Tramite> obtenerTramites(Persona personaTramite);
-    public Object obtenerTramite(Persona personaTramite, String tipoTramite);
+    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite);
     public boolean registrarTramite(Tramite tramite);
     public boolean actualizarEstadoTramite(Tramite tramite);
     //public void cerrarConexion();
