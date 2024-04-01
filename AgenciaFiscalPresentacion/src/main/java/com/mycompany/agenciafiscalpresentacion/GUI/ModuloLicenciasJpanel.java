@@ -217,7 +217,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private void regresarMenu(){
         reiniciarPanel();
-        ((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this)).mostrarVentana("MenuJpanel");
+        ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
     }
 
     private void desplegarTablaPersonasRegistradas(){

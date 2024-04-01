@@ -4,6 +4,8 @@
  */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author luiis
@@ -35,10 +37,13 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jToolBar2 = new javax.swing.JToolBar();
-        jRadioButton1 = new javax.swing.JRadioButton();
         jToolBar1 = new javax.swing.JToolBar();
+        jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        btnRegresar = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,7 +154,10 @@ public class ModuloConsultas extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 14, 280, 340));
+
         jLabel1.setText("Ingrese informacion solicitada");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
 
         jTextField1.setText(" ");
 
@@ -163,50 +171,24 @@ public class ModuloConsultas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 290, -1));
 
         jToolBar2.setRollover(true);
 
-        jRadioButton1.setText("CURP");
-        jRadioButton1.setFocusable(false);
-        jRadioButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        jToolBar2.add(jRadioButton1);
-
         jToolBar1.setRollover(true);
-
-        jRadioButton3.setText("Año de nacimiento");
-        jRadioButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(jRadioButton3);
-
-        jRadioButton2.setText("Nombre de persona");
-        jRadioButton2.setFocusable(false);
-        jRadioButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jRadioButton2);
-
         jToolBar2.add(jToolBar1);
 
         jLayeredPane1.setLayer(jToolBar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -228,42 +210,40 @@ public class ModuloConsultas extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(66, 66, 66))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1)
-                .addGap(57, 57, 57)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
-        );
+        add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
+
+        jRadioButton1.setText("CURP");
+        jRadioButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jRadioButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+        add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+
+        jRadioButton3.setText("Año de nacimiento");
+        jRadioButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jRadioButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+        add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+
+        jRadioButton2.setText("Nombre de persona");
+        jRadioButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jRadioButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -274,8 +254,22 @@ public class ModuloConsultas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        regresarMenu();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    public void reiniciarPanel(){
+        //limpiarDatos();
+        
+    }
+
+    private void regresarMenu(){
+        reiniciarPanel();
+        ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
