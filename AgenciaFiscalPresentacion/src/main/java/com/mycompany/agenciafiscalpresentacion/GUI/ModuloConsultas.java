@@ -30,22 +30,22 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPersonas = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtDato = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jToolBar2 = new javax.swing.JToolBar();
         jToolBar1 = new javax.swing.JToolBar();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jrbCurp = new javax.swing.JRadioButton();
+        jrbNacimiento = new javax.swing.JRadioButton();
+        jrbNombre = new javax.swing.JRadioButton();
         btnRegresar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -152,16 +152,16 @@ public class ModuloConsultas extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblPersonas);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(354, 14, 280, 340));
 
         jLabel1.setText("Ingrese informacion solicitada");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
 
-        jTextField1.setText(" ");
+        txtDato.setText(" ");
 
-        jButton1.setText("Buscar");
+        btnBuscar.setText("Buscar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -170,17 +170,17 @@ public class ModuloConsultas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar)
+                    .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -212,30 +212,30 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
         add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, -1, -1));
 
-        jRadioButton1.setText("CURP");
-        jRadioButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jrbCurp.setText("CURP");
+        jrbCurp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jrbCurp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jrbCurp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jrbCurpActionPerformed(evt);
             }
         });
-        add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        add(jrbCurp, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
-        jRadioButton3.setText("Año de nacimiento");
-        jRadioButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        jrbNacimiento.setText("Año de nacimiento");
+        jrbNacimiento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jrbNacimiento.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jrbNacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                jrbNacimientoActionPerformed(evt);
             }
         });
-        add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+        add(jrbNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
-        jRadioButton2.setText("Nombre de persona");
-        jRadioButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
+        jrbNombre.setText("Nombre de persona");
+        jrbNombre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jrbNombre.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        add(jrbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
 
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -246,42 +246,47 @@ public class ModuloConsultas extends javax.swing.JPanel {
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jrbCurpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCurpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jrbCurpActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void jrbNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbNacimientoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_jrbNacimientoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    public void reiniciarPanel(){
-        //limpiarDatos();
-        
-    }
-
-    private void regresarMenu(){
+    
+    private void regresarMenu() {
         reiniciarPanel();
         ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
     }
 
+    public void reiniciarPanel() {
+        limpiarDatos();
+        
+    }
+    
+    public void limpiarDatos() {
+        buttonGroup1.clearSelection();
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JRadioButton jrbCurp;
+    private javax.swing.JRadioButton jrbNacimiento;
+    private javax.swing.JRadioButton jrbNombre;
+    private javax.swing.JTable tblPersonas;
+    private javax.swing.JTextField txtDato;
     // End of variables declaration//GEN-END:variables
 }
