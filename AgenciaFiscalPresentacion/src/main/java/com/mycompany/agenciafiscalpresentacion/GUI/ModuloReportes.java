@@ -205,6 +205,7 @@ public class ModuloReportes extends javax.swing.JPanel {
 
         btnBuscar.setText("Buscar");
 
+        txtNombre.setEditable(false);
         txtNombre.setText(" ");
 
         jLabel5.setText("Ingrese nombre de la persona:");
@@ -251,7 +252,8 @@ public class ModuloReportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void cbxBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxBuscarNombreActionPerformed
-        // TODO add your handling code here:
+        txtNombre.setEditable(cbxBuscarNombre.isSelected());
+        if(!cbxBuscarNombre.isSelected()) txtNombre.setText("");
     }//GEN-LAST:event_cbxBuscarNombreActionPerformed
 
     public void reiniciarPanel(){
