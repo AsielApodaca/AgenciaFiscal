@@ -22,6 +22,8 @@ import negocioDTO.VehiculoDTO;
 public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
 
     private PersonaDTO persona;
+    private final Float precioTramite;
+    
     /**
      * Creates new form ModuloPlacasAutoNuevo
      */
@@ -29,6 +31,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         initComponents();
         iniciar();
         persona=null;
+        precioTramite = 1500.0F;
     }
 
     /**
@@ -64,6 +67,9 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         lblAdvertenciaLicencia = new javax.swing.JLabel();
         btnPagar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        lblPrecio = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(640, 360));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -261,6 +267,45 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
             }
         });
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jPanel5.setBackground(new java.awt.Color(255, 51, 153));
+
+        lblPrecio.setFont(new java.awt.Font("Avenir Next", 3, 18)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(0, 0, 0));
+        lblPrecio.setText("00.00");
+
+        jLabel10.setFont(new java.awt.Font("Avenir Next", 3, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("Total a pagar: $");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(201, Short.MAX_VALUE)
+                .addComponent(lblPrecio)
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(jLabel10)
+                    .addContainerGap(107, Short.MAX_VALUE)))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(lblPrecio)
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addContainerGap(9, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addContainerGap()))
+        );
+
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 260, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -318,6 +363,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         lblAdvertenciaVehiculo.setVisible(false);
         btnPagar.setEnabled(false);
         btnBuscarLicencia.setEnabled(false);
+        lblPrecio.setText(precioTramite.toString());
     }
     
     private void validarSerie(){
@@ -411,7 +457,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
             int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar las placas?", "Advertencia", JOptionPane.YES_NO_OPTION);
 
             if (opcion == JOptionPane.YES_OPTION) {
-                TramitePlacasDTO tramite= new TramitePlacasDTO(Calendar.getInstance(), 1500.0f, EstadoDTO.ACTIVO);
+                TramitePlacasDTO tramite= new TramitePlacasDTO(Calendar.getInstance(), precioTramite, EstadoDTO.ACTIVO);
                 tramite.setPersona(persona);
                 VehiculoDTO vehiculo=new VehiculoDTO(
                         txtSerie.getText(), 
@@ -470,6 +516,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -481,8 +528,10 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblAdvertenciaLicencia;
     private javax.swing.JLabel lblAdvertenciaVehiculo;
+    private javax.swing.JLabel lblPrecio;
     private javax.swing.JTextField txtColor;
     private javax.swing.JTextField txtLicencia;
     private javax.swing.JTextField txtLinea;
