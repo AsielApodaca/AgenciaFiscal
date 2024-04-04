@@ -39,8 +39,8 @@ public class MenuJpanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnModuloLicencias = new javax.swing.JButton();
         btnModuloPlacas = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnConsultas = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
         btnInsertarUsuarios = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
@@ -72,23 +72,21 @@ public class MenuJpanel extends javax.swing.JPanel {
         });
         add(btnModuloPlacas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 200, -1));
 
-        jButton3.setText("Consultas");
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnConsultas.setText("Consultas");
+        btnConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnConsultasActionPerformed(evt);
             }
         });
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 200, -1));
+        add(btnConsultas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 200, -1));
 
-        jButton4.setText("Reportes");
-        jButton4.setEnabled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnReportes.setText("Reportes");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnReportesActionPerformed(evt);
             }
         });
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 200, -1));
+        add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 200, -1));
 
         btnInsertarUsuarios.setText("Insertar registros usuarios");
         btnInsertarUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -145,13 +143,13 @@ public class MenuJpanel extends javax.swing.JPanel {
         //((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
     }//GEN-LAST:event_btnModuloPlacasActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
+        ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloConsultas");
+    }//GEN-LAST:event_btnConsultasActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloReportes");
+    }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnInsertarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarUsuariosActionPerformed
         // TODO add your handling code here:
@@ -163,11 +161,11 @@ public class MenuJpanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultas;
     private javax.swing.JButton btnInsertarUsuarios;
     private javax.swing.JButton btnModuloLicencias;
     private javax.swing.JButton btnModuloPlacas;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
