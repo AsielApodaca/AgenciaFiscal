@@ -17,7 +17,7 @@ public class Ventanas extends JFrame {
     public Ventanas() {
         setTitle("Agencia fiscal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 360);
+        setSize(640, 380);
         setLocationRelativeTo(null);
         setResizable(false);
         
