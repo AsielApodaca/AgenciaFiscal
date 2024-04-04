@@ -29,9 +29,10 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
      */
     public ModuloPlacasAutoNuevo() {
         initComponents();
+        this.persona = null;
+        this.precioTramite = 1500.0F;
         iniciar();
-        persona=null;
-        precioTramite = 1500.0F;
+        
     }
 
     /**
