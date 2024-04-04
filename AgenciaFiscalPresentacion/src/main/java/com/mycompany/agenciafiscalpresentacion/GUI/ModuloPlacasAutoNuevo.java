@@ -180,7 +180,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                 .addComponent(txtLinea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblAdvertenciaVehiculo)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 300, 180));
@@ -241,7 +241,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                 .addComponent(txtTitularLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAdvertenciaLicencia)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 250, 160));
@@ -269,7 +269,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
 
     private void txtSerieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSerieKeyTyped
         // TODO add your handling code here:
-        if(txtSerie.getText().length()==7)
+        if(txtSerie.getText().length()==17)
             evt.consume();
     }//GEN-LAST:event_txtSerieKeyTyped
 
@@ -340,7 +340,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
 
             private void validar(javax.swing.event.DocumentEvent e) {
                 Document doc = e.getDocument();
-                if (doc.getLength() == 7) {
+                if (doc.getLength() == 17) {
                     
                     VehiculoDTO vehiculo=new VehiculoDTO();
                     vehiculo.setSerie(txtSerie.getText());
