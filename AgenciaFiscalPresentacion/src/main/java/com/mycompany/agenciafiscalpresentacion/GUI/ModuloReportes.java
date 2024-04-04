@@ -27,7 +27,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        btnRegresar = new javax.swing.JButton();
         jdcDesde = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -42,6 +41,12 @@ public class ModuloReportes extends javax.swing.JPanel {
         txtNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cbxBuscarNombre = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btnRegresar = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -56,38 +61,42 @@ public class ModuloReportes extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable2);
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
-        btnRegresar.setText("Regresar");
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-        add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
-
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 3, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Filtros de busqueda");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
 
+        jLabel2.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Desde:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Hasta:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
-        add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
+        add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
 
+        cmbTipoTramite.setFont(new java.awt.Font("Avenir Next", 1, 13)); // NOI18N
+        cmbTipoTramite.setForeground(new java.awt.Color(0, 0, 0));
         cmbTipoTramite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Licencia", "Placas" }));
         cmbTipoTramite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipoTramiteActionPerformed(evt);
             }
         });
-        add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 85, -1));
+        add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 230, -1));
 
+        jLabel4.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tipo tramite:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
+        tblTramites.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
         tblTramites.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -197,13 +206,19 @@ public class ModuloReportes extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tblTramites);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 26, 370, 310));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 360, 220));
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
 
         txtNombre.setEditable(false);
         txtNombre.setText(" ");
 
+        jLabel5.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Ingrese nombre de la persona:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -211,32 +226,100 @@ public class ModuloReportes extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 100));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 100));
 
+        cbxBuscarNombre.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
+        cbxBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         cbxBuscarNombre.setText("Buscar por nombre");
         cbxBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxBuscarNombreActionPerformed(evt);
             }
         });
-        add(cbxBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
+        add(cbxBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(138, 47, 47));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 640, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 40));
+
+        jPanel4.setBackground(new java.awt.Color(35, 26, 26));
+
+        jPanel5.setBackground(new java.awt.Color(98, 76, 76));
+        jPanel5.setPreferredSize(new java.awt.Dimension(200, 60));
+
+        jLabel6.setFont(new java.awt.Font("Avenir Next", 3, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Módulo de reportes");
+        jPanel5.add(jLabel6);
+
+        jPanel4.add(jPanel5);
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 220, 80));
+
+        jPanel3.setBackground(new java.awt.Color(138, 47, 47));
+
+        btnRegresar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRegresar)
+                .addContainerGap(543, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnRegresar)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbTipoTramiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoTramiteActionPerformed
@@ -273,7 +356,12 @@ public class ModuloReportes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
