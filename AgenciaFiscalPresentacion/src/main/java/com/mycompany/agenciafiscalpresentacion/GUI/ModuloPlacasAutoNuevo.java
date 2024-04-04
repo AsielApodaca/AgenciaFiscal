@@ -348,7 +348,6 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                     if(placas==null){
                         System.out.println("placas nulas"); 
                         habilitarCamposVehiculo(true);
-                        habilitarBotonPagar();
                     }else{
                         System.out.println("placas no nulas");
                         habilitarCamposVehiculo(false);
@@ -357,8 +356,9 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                         txtLinea.setText(vehiculo.getLinea());
                         txtColor.setText(vehiculo.getColor());
                         txtModelo.setText(vehiculo.getModelo());
-                        habilitarBotonPagar();
+                        lblAdvertenciaVehiculo.setVisible(true);
                     }
+                    habilitarBotonPagar();
                 } else {
                     habilitarCamposVehiculo(false);
                     limpiarDatos();
@@ -436,10 +436,10 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     }
     
     private void habilitarBotonPagar(){
-        if((!lblAdvertenciaVehiculo.isVisible() || !txtSerie.getText().isEmpty()) && 
-                (!lblAdvertenciaLicencia.isVisible()) || !txtTitularLicencia.getText().isEmpty())
-            btnPagar.setEnabled(true);
-        else btnPagar.setEnabled(false);
+        if((lblAdvertenciaVehiculo.isVisible() || txtSerie.getText().isEmpty())
+                || (lblAdvertenciaLicencia.isVisible() || txtLicencia.getText().isEmpty()))
+            btnPagar.setEnabled(false);
+        else btnPagar.setEnabled(true);
     }
     private void limpiarDatos() {
         txtMarca.setText("");
