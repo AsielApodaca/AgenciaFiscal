@@ -34,67 +34,120 @@ public class MenuJpanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         btnModuloLicencias = new javax.swing.JButton();
         btnModuloPlacas = new javax.swing.JButton();
         btnConsultas = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
         btnInsertarUsuarios = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(111, 18, 18));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel3.setBackground(new java.awt.Color(138, 47, 47));
+
+        jLabel2.setFont(new java.awt.Font("Avenir Next", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Gobierno del estado de sonora");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, 20));
+        jPanel3.add(jLabel2);
 
+        jPanel1.add(jPanel3);
+
+        jPanel2.setBackground(new java.awt.Color(138, 47, 47));
+
+        jLabel3.setFont(new java.awt.Font("Avenir Next Condensed", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Control de placas y licencias automovílisticas");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
+        jPanel2.add(jLabel3);
 
-        jLabel1.setText("Modulos de Informacion");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 143, -1));
+        jPanel1.add(jPanel2);
 
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 80));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Módulos de Información");
+        jPanel4.add(jLabel1);
+
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 640, 60));
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setPreferredSize(new java.awt.Dimension(500, 100));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 2, 50, 20));
+
+        btnModuloLicencias.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         btnModuloLicencias.setText("Licencias");
         btnModuloLicencias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModuloLicenciasActionPerformed(evt);
             }
         });
-        add(btnModuloLicencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 200, -1));
+        jPanel5.add(btnModuloLicencias);
 
+        btnModuloPlacas.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         btnModuloPlacas.setText("Placas para automovil");
         btnModuloPlacas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModuloPlacasActionPerformed(evt);
             }
         });
-        add(btnModuloPlacas, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, 200, -1));
+        jPanel5.add(btnModuloPlacas);
 
+        btnConsultas.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         btnConsultas.setText("Consultas");
         btnConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultasActionPerformed(evt);
             }
         });
-        add(btnConsultas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 200, -1));
+        jPanel5.add(btnConsultas);
 
+        btnReportes.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         btnReportes.setText("Reportes");
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportesActionPerformed(evt);
             }
         });
-        add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 200, -1));
+        jPanel5.add(btnReportes);
 
+        jPanel6.add(jPanel5);
+
+        add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 640, 110));
+
+        jPanel7.setBackground(new java.awt.Color(138, 47, 47));
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 15));
+
+        btnInsertarUsuarios.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         btnInsertarUsuarios.setText("Insertar registros usuarios");
         btnInsertarUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarUsuariosActionPerformed(evt);
             }
         });
-        add(btnInsertarUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 230, 30));
+        jPanel7.add(btnInsertarUsuarios);
+
+        add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 640, 60));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
@@ -170,5 +223,12 @@ public class MenuJpanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     // End of variables declaration//GEN-END:variables
 }
