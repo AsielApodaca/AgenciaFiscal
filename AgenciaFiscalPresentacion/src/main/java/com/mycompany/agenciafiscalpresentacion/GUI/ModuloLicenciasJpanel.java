@@ -84,7 +84,13 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 if (doc.getLength() == 13) {
                     
                     // Lógica para validar rfc
-                    persona = Ventanas.registrarLicencia.consultarPersonaPorRfc(txtRfc.getText());
+                    PersonaDTO p=new PersonaDTO();
+                    p.setRfc(txtRfc.getText());
+                    try{
+                        persona = Ventanas.registrarLicencia.consultarPersonaPorRfc(p);
+                    }catch(IllegalArgumentException ex){
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
                     if(persona == null){ // No se encontró
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
@@ -374,11 +380,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         jLabel2.setText("RFC:");
 
-        txtRfc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRfcActionPerformed(evt);
-            }
-        });
         txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtRfcKeyTyped(evt);
@@ -526,10 +527,6 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     
     
-    private void txtRfcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRfcActionPerformed
-        //registrarLicencia();
-    }//GEN-LAST:event_txtRfcActionPerformed
-
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
