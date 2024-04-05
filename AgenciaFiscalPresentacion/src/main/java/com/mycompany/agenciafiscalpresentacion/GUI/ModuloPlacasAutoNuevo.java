@@ -48,6 +48,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         btnRegresar1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -89,8 +90,17 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Avenir Next", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Módulo de consultas");
+        jLabel9.setText("Módulo de Placas");
         jPanel7.add(jLabel9, new java.awt.GridBagConstraints());
+
+        jLabel11.setFont(new java.awt.Font("Avenir Next", 1, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("para automóvil");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel7.add(jLabel11, gridBagConstraints);
 
         jPanel6.add(jPanel7);
 
@@ -574,6 +584,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnRegresar1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
