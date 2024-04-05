@@ -184,7 +184,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtSerieVehiculo">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -287,7 +286,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTitularLicencia">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>

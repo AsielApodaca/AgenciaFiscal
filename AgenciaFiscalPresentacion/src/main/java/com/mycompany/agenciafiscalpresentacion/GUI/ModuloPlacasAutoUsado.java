@@ -134,7 +134,6 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
 
         jLabel8.setText("Serie del vehiculo:");
 
-        txtSerieVehiculo.setEditable(false);
         txtSerieVehiculo.setToolTipText("");
 
         lblAdvertenciaPlacas.setForeground(new java.awt.Color(255, 51, 51));
@@ -173,7 +172,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 .addComponent(txtSerieVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAdvertenciaPlacas)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 160));
@@ -203,7 +202,6 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
 
         jLabel10.setText("Titular de licencia:");
 
-        txtTitularLicencia.setEditable(false);
         txtTitularLicencia.setToolTipText("");
 
         lblAdvertenciaLicencia.setForeground(new java.awt.Color(255, 51, 51));
@@ -242,7 +240,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 .addComponent(txtTitularLicencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblAdvertenciaLicencia)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 250, 160));
