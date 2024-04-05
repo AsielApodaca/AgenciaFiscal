@@ -7,6 +7,8 @@ package entidades;
 import daos.ClaseConexion;
 import daos.IPersonaDAO;
 import daos.ITramiteDAO;
+import daos.ITramiteLicenciaDAO;
+import daos.ITramitePlacasDAO;
 import daos.PersonaDAO;
 import daos.TramiteLicenciaDAO;
 import daos.VehiculoDAO;
@@ -16,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import daos.IVehiculoDAO;
+import daos.TramitePlacasDAO;
 import java.util.Random;
 
 /**
@@ -96,18 +99,40 @@ public class Prueba {
 //        Vehiculo vOb=vehiculo.obtenerVehiculo(new Vehiculo("12345678911234567"));
 //        vehiculo.cerrarConexion();
         
-        IPersonaDAO p=new PersonaDAO();
-        Persona persona=new Persona("GALA850730M78");
-        persona=p.obtenerPersona(persona);
-        System.out.println("nombre persona: "+persona.getNombreCompleto());
-        ITramiteDAO tramites= new TramiteLicenciaDAO();
-        Tramite t=tramites.obtenerTramite(persona, "placas");
-        if(t!=null){
-            System.out.println(t.toString());
-            TramitePlacas tramitePlacas=(TramitePlacas)t;
-            System.out.println(tramitePlacas.getVehiculo().toString());
-        }
-        ClaseConexion.cerrarConexion();
+//        IPersonaDAO p=new PersonaDAO();
+//        Persona persona=new Persona("GALA850730M78");
+//        persona=p.obtenerPersona(persona);
+//        System.out.println("nombre persona: "+persona.getNombreCompleto());
+//        ITramiteDAO tramites= new TramiteLicenciaDAO();
+//        Tramite t=tramites.obtenerTramite(persona, "placas");
+//        if(t!=null){
+//            System.out.println(t.toString());
+//            TramitePlacas tramitePlacas=(TramitePlacas)t;
+//            System.out.println(tramitePlacas.getVehiculo().toString());
+//        }
+//        
+//        ITramiteLicenciaDAO tl=new TramiteLicenciaDAO();
+//        TramiteLicencia tramiteL= new TramiteLicencia();
+//        tramiteL.setNumLicencia("816164061");
+//        TramiteLicencia tramiteObt=tl.obtenerLicenciaVigente(tramiteL);
+//        if(tramiteObt!=null){
+//            System.out.println(tramiteObt.toString());
+//        }
+//                
+//        ITramitePlacasDAO tp=new TramitePlacasDAO();
+//        Vehiculo vehiculo=new Vehiculo("EEE-198");
+//        IVehiculoDAO v=new VehiculoDAO();
+//        vehiculo=v.obtenerVehiculo(vehiculo);
+//        System.out.println(vehiculo.toString());
+//        TramitePlacas tramite=tp.obtenerPlacas(vehiculo);
+//        System.out.println(tramite.toString());
+//        TramitePlacas renovacion=new TramitePlacas(vehiculo, Calendar.getInstance(), 1100.0f, Estado.ACTIVO, vehiculo.getPersona());
+//        renovacion.setMatricula();
+//        if(tp.renovarPlacas(renovacion))
+//            System.out.println("exito");
+//        else System.out.println("fallo");
+//        ClaseConexion.cerrarConexion();
+        
 //        Calendar fechaEmision=Calendar.getInstance();
         
 ////        
