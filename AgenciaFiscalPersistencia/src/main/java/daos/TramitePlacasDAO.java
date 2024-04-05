@@ -47,7 +47,7 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
     }
 
     @Override
-    public TramitePlacas obtenerPlacas(Vehiculo vehiculo) {
+    public TramitePlacas obtenerPlacasPorSerieAuto(Vehiculo vehiculo) {
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
         Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
         Join<TramitePlacas, Vehiculo> join=root.join("vehiculo");
@@ -68,5 +68,43 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             return null;
         }
     }
-    
+
+    @Override
+    public boolean renovarPlacas(TramitePlacas tramite) {
+        try {
+            em.getTransaction().begin();
+            em.merge(tramite);
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error al registrar el tramite");
+            System.out.println(e.getCause());
+            em.getTransaction().rollback();
+            return false;
+        }
+    }
+
+    @Override
+    public TramitePlacas obtenerPlacasPorMatricula(TramitePlacas placas) {
+        CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
+        Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
+        
+        criteria.select(root).where(
+                cb.equal(
+                        root.get("matricula"),
+                        placas.getMatricula()
+                )
+        );
+        
+        TypedQuery<TramitePlacas> query=em.createQuery(criteria);
+        TramitePlacas tramite;
+        try{
+            tramite=query.getSingleResult();
+            return tramite;
+        }catch(Exception e){
+            System.out.println("error al obtener las placas:");
+            System.out.println(e.fillInStackTrace());
+            return null;
+        }
+    }
 }

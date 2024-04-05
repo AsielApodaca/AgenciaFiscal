@@ -15,5 +15,8 @@ import java.util.List;
  */
 public interface ITramitePlacasDAO extends ITramiteDAO{
     public List<TramitePlacas> obtenerTramitesPlacas(Persona personaTramite);
-    public TramitePlacas obtenerPlacas(Vehiculo vehiculo);
+    public boolean renovarPlacas(TramitePlacas tramite);
+    public TramitePlacas obtenerPlacasPorSerieAuto(Vehiculo vechiculo);
+    public TramitePlacas obtenerPlacasPorMatricula(TramitePlacas placas);
+    
 }

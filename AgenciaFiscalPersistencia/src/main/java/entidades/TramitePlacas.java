@@ -56,6 +56,10 @@ public class TramitePlacas extends Tramite implements Serializable {
         }
         this.matricula = sb.toString();
     }
+    
+    public void setMatricula(String matricula){
+        this.matricula=matricula;
+    }
 
     public Vehiculo getVehiculo() {
         return vehiculo;
