@@ -73,25 +73,25 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculoDTO) {
         Vehiculo vehiculo=new Vehiculo();
         vehiculo.setSerie(vehiculoDTO.getSerie());
-        TramitePlacas placas=tramitePlacasDAO.obtenerPlacas(vehiculo);
+        TramitePlacas placasObtenidas=tramitePlacasDAO.obtenerPlacasPorSerieAuto(vehiculo);
         
-        if(placas!=null){
-            TramitePlacasDTO placasObtenidas=new TramitePlacasDTO(
-                    placas.getMatricula(),
-                    placas.getFechaEmision(),
-                    placas.getCostoMxn(),
+        if(placasObtenidas!=null){
+            TramitePlacasDTO placasDTO=new TramitePlacasDTO(
+                    placasObtenidas.getMatricula(),
+                    placasObtenidas.getFechaEmision(),
+                    placasObtenidas.getCostoMxn(),
                     EstadoDTO.ACTIVO);
             
-            vehiculo=placas.getVehiculo();
+            vehiculo=placasObtenidas.getVehiculo();
             VehiculoDTO vehiculoObt=new VehiculoDTO(
                     vehiculo.getSerie(),
                     vehiculo.getMarca(),
                     vehiculo.getLinea(),
                     vehiculo.getColor(),
                     vehiculo.getModelo());
-            placasObtenidas.setVehiculo(vehiculoObt);
+            placasDTO.setVehiculo(vehiculoObt);
             
-            return placasObtenidas;
+            return placasDTO;
         }
         return null;
     }
@@ -108,9 +108,11 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
                     licencia.getFechaEmision(),
                     licencia.getCostoMxn(),
                     EstadoDTO.ACTIVO);
+            Persona personaObtenida=licencia.getPersona();
             PersonaDTO persona=new PersonaDTO();
-            persona.setNombreCompleto(licencia.getPersona().getNombreCompleto());
-            persona.setRfc(licencia.getPersona().getRfc());
+            persona.setId(personaObtenida.getId());
+            persona.setNombreCompleto(personaObtenida.getNombreCompleto());
+            persona.setRfc(personaObtenida.getRfc());
             licenciaEncontrada.setPersona(persona);
             return (TramiteLicenciaDTO)licenciaEncontrada;
         }
@@ -118,21 +120,19 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     }
 
     @Override
-    public TramitePlacasDTO obtenerPlacasAnteriores(TramitePlacasDTO placasAnteriores) {
+    public TramitePlacasDTO obtenerPlacasPorMatricula(TramitePlacasDTO placasAnteriores) {
         TramitePlacas tramite=new TramitePlacas();
-        PersonaDTO p=placasAnteriores.getPersona();
-        Persona persona=new Persona(p.getRfc());
+        tramite.setMatricula(placasAnteriores.getMatricula());
         
-        Object obj=tramitePlacasDAO.obtenerTramite(persona, "placas");
-        if(obj!=null){
-            TramitePlacas placasObtenidas=(TramitePlacas)obj;
+        tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(tramite);
+        if(tramite!=null){
             TramitePlacasDTO placasObtenidasDTO=new TramitePlacasDTO(
-                    placasObtenidas.getMatricula(),
-                    placasObtenidas.getFechaEmision(),
-                    placasObtenidas.getCostoMxn(),
+                    tramite.getMatricula(),
+                    tramite.getFechaEmision(),
+                    tramite.getCostoMxn(),
                     EstadoDTO.ACTIVO
             );
-            Vehiculo v=placasObtenidas.getVehiculo();
+            Vehiculo v=tramite.getVehiculo();
             placasObtenidasDTO.setVehiculo(new VehiculoDTO(
                     v.getSerie(),
                     v.getMarca(),
@@ -147,9 +147,17 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
 
     @Override
     public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores) {
-        Persona personaTramite=new Persona(placasAnteriores.getPersona().getRfc());
-        Tramite placas=tramitePlacasDAO.obtenerTramite(personaTramite, "placas");
-        return tramitePlacasDAO.actualizarEstadoTramite((TramitePlacas)placas);
+        //Persona personaTramite=new Persona(placasAnteriores.getPersona().getRfc());
+        TramitePlacas placas=new TramitePlacas();
+        placas.setMatricula(placasAnteriores.getMatricula());
+        TramitePlacas tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(placas);
+        System.out.println(tramite.toString());
+        return tramitePlacasDAO.actualizarEstadoTramite(tramite);
+    }
+
+    @Override
+    public boolean renovarPlacas(TramitePlacasDTO placas) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
