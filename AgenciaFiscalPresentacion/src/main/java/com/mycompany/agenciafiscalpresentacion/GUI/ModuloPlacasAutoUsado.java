@@ -288,7 +288,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
          int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar las placas?", "Advertencia", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
-            TramitePlacasDTO placas = new TramitePlacasDTO(Calendar.getInstance(), 1500.0f, EstadoDTO.ACTIVO);
+            TramitePlacasDTO placas = new TramitePlacasDTO(Calendar.getInstance(), 1100.0f, EstadoDTO.ACTIVO);
             placas.setPersona(persona);
             placas.setVehiculo(tramitePlacasAnteriores.getVehiculo());
 
@@ -298,7 +298,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 return false;
             }
             
-            if (Ventanas.registrarPlacas.registrarPlacas(placas)) {
+            if (Ventanas.registrarPlacas.renovarPlacas(placas)) {
                 JOptionPane.showMessageDialog(null,
                         "Placas nuevas registradas con éxito."
                 );
@@ -345,9 +345,9 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
     private void buscarPlacasAnteriores(){
         TramitePlacasDTO placas=new TramitePlacasDTO();
         placas.setMatricula(txtPlacas.getText());
-        placas.setPersona(persona);
-        placas=Ventanas.registrarPlacas.obtenerPlacasAnteriores(placas);
+        placas=Ventanas.registrarPlacas.obtenerPlacasPorMatricula(placas);
         if(placas!=null){
+            placas.setPersona(persona);
             tramitePlacasAnteriores=placas;
             txtSerieVehiculo.setText(placas.getVehiculo().getSerie());
             lblAdvertenciaPlacas.setVisible(false);
@@ -390,6 +390,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 } else {
                     btnBuscarPlacas.setEnabled(false);
                     txtSerieVehiculo.setText("");
+                    habilitarBotonPagar();
                     tramitePlacasAnteriores=null;
                 }
             }
@@ -421,6 +422,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 } else {
                     limpiarDatosLicencia();
                     reiniciarPanelPlacas();
+                    habilitarBotonPagar();
                 }
             }
         });
