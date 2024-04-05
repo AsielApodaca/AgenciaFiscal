@@ -65,7 +65,7 @@ public class ModuloReportes extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Avenir Next", 3, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Filtros de busqueda");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
@@ -278,14 +278,17 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 40));
 
         jPanel4.setBackground(new java.awt.Color(35, 26, 26));
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
 
         jPanel5.setBackground(new java.awt.Color(98, 76, 76));
         jPanel5.setPreferredSize(new java.awt.Dimension(200, 60));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jLabel6.setFont(new java.awt.Font("Avenir Next", 3, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Avenir Next", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Módulo de reportes");
-        jPanel5.add(jLabel6);
+        jPanel5.add(jLabel6, new java.awt.GridBagConstraints());
 
         jPanel4.add(jPanel5);
 
