@@ -9,10 +9,12 @@ import daos.IPersonaDAO;
 import daos.ITramiteDAO;
 import daos.ITramiteLicenciaDAO;
 import daos.ITramitePlacasDAO;
+import daos.IVehiculoDAO;
 import daos.PersonaDAO;
 import daos.TramiteDAO;
 import daos.TramiteLicenciaDAO;
 import daos.TramitePlacasDAO;
+import daos.VehiculoDAO;
 import entidades.Estado;
 import entidades.Persona;
 import entidades.Tramite;
@@ -36,11 +38,13 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     private static ITramitePlacasDAO tramitePlacasDAO;
     private static ITramiteLicenciaDAO tramiteLicenciaDAO;
     private static IPersonaDAO personaDAO;
+    private static IVehiculoDAO vehiculoDAO;
     
     public RegistrarPlacasBO(){
         tramitePlacasDAO=new TramitePlacasDAO();
         tramiteLicenciaDAO=new TramiteLicenciaDAO();
         personaDAO=new PersonaDAO();
+        vehiculoDAO=new VehiculoDAO();
     }
     
     @Override
@@ -157,7 +161,22 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
 
     @Override
     public boolean renovarPlacas(TramitePlacasDTO placas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        PersonaDTO persona=placas.getPersona();
+        Persona p=personaDAO.obtenerPersona(new Persona(persona.getRfc()));
+        VehiculoDTO v=placas.getVehiculo();
+        Vehiculo vehiculo = new Vehiculo();
+        vehiculo.setSerie(v.getSerie());
+        vehiculo=vehiculoDAO.obtenerVehiculo(vehiculo);
+        TramitePlacas placasNuevas = new TramitePlacas(
+                vehiculo,
+                placas.getFechaEmision(),
+                placas.getCostoMxn(),
+                Estado.ACTIVO,
+                p
+        );
+        placasNuevas.setMatricula();
+        //placasViejas=tramitePlacasDAO.obtenerPlacasPorMatricula(placasViejas);
+        return tramitePlacasDAO.renovarPlacas(placasNuevas);
     }
     
 }

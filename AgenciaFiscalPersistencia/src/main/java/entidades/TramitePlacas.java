@@ -26,7 +26,7 @@ public class TramitePlacas extends Tramite implements Serializable {
     @Column(name = "matricula")
     private String matricula;
     
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
 
