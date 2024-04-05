@@ -50,7 +50,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        btnRegresar1 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnPagar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -108,12 +108,12 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(138, 47, 47));
 
-        btnRegresar1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnRegresar1.setForeground(new java.awt.Color(0, 0, 0));
-        btnRegresar1.setText("Regresar");
-        btnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresar1ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
@@ -123,14 +123,14 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRegresar1)
+                .addComponent(btnRegresar)
                 .addContainerGap(543, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRegresar1)
+                .addComponent(btnRegresar)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -398,9 +398,10 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
             evt.consume();
     }//GEN-LAST:event_txtLicenciaKeyTyped
 
-    private void btnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegresar1ActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        reiniciarPanel();
+        ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void buscarLicencia(){
         TramiteLicenciaDTO licencia = new TramiteLicenciaDTO();
@@ -582,7 +583,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarLicencia;
     private javax.swing.JButton btnPagar;
-    private javax.swing.JButton btnRegresar1;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
