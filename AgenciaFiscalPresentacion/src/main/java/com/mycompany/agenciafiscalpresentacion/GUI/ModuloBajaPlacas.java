@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import javax.swing.SwingUtilities;
@@ -289,12 +285,18 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     public void reiniciarPanel(){
-        
+        txtPlacas.setText("");
+        txtSerieVehiculo.setText("");
+        txtTitular.setText("");
     }
     
     private void regresarMenu(){
         reiniciarPanel();
         ((Ventanas) SwingUtilities.getWindowAncestor(ModuloBajaPlacas.this)).mostrarVentana("MenuJpanel");
+    }
+    
+    private void buscarPlacas() {
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
