@@ -43,7 +43,6 @@ begin
 	select * from personas where nombre_completo like @pat;
 end $$
 delimiter ;
-call sp_buscar_personas_nombre("pe");
 
 delimiter $$
 create procedure sp_insertar_autos_personas()
