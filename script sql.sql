@@ -1,7 +1,5 @@
 use agencia_fiscal;
 
-select * from personas;
-select * from vehiculos;
 delimiter $$
 create procedure sp_insertar_personas()
 begin
@@ -38,38 +36,46 @@ end $$
 delimiter ;
 
 delimiter $$
+create procedure sp_buscar_personas_nombre(in nombre varchar(100))
+begin
+    set @pat=concat('%',nombre,'%');
+	select * from personas where nombre_completo like @pat;
+end $$
+delimiter ;
+call sp_buscar_personas_nombre("pe");
+
+delimiter $$
 create procedure sp_insertar_autos_personas()
 begin
-	insert into vehiculos (color, linea, marca, modelo, serie,id_persona) values
-			('Rojo', 'Sedán', 'Toyota', 'Corolla', '1A1BCD12345678901',1),
-			('Azul', 'SUV', 'Honda', 'CR-V', '2B2EFG23456789012',1),
-			('Blanco', 'Pickup', 'Ford', 'F-150', '3C3HIJ34567890123',2),
-			('Negro', 'Hatchback', 'Volkswagen', 'Golf', '4D4KLM45678901234',3),
-			('Gris', 'Coupé', 'BMW', 'Serie 3', '5E5NOP56789012345',4),
-			('Verde', 'Camioneta', 'Chevrolet', 'Traverse', '6F6QRS67890123456',4),
-			('Plateado', 'Convertible', 'Audi', 'A5', '7G7TUV78901234567',5),
-			('Amarillo', 'Minivan', 'Dodge', 'Grand Caravan', '8H8WXY89012345678',6),
-			('Naranja', 'SUV', 'Jeep', 'Wrangler', '9I9ZAB90123456789',7),
-			('Negro', 'Hatchback', 'Hyundai', 'Veloster', '1J1CDE01234567890',7),
-			('Blanco', 'Pickup', 'Toyota', 'Tacoma', '2K2EFG12345678901',7),
-			('Gris', 'Coupé', 'Ford', 'Mustang', '3L3HIJ23456789012',8),
-			('Azul', 'Sedán', 'Honda', 'Accord', '4M4KLM34567890123',9),
-			('Rojo', 'Crossover', 'Nissan', 'Rogue', '5N5NOP45678901234',10),
-			('Negro', 'Hatchback', 'Volkswagen', 'Golf GTI', '6O6QRS56789012345',10),
-			('Blanco', 'SUV', 'Kia', 'Sportage', '7P7TUV67890123456',11),
-			('Verde', 'Pickup', 'Chevrolet', 'Silverado', '8Q8WXY78901234567',12),
-			('Gris', 'Sedán', 'Audi', 'A4', '9R9ZAB89012345678',13),
-			('Plateado', 'Coupé', 'BMW', 'Serie 4', '1S1CDE90123456789',14),
-			('Azul', 'Hatchback', 'Mercedes-Benz', 'Clase A', '2T2EFG01234567890',15),
-			('Negro', 'SUV', 'Ford', 'Escape', '3U3HIJ12345678901',16),
-			('Blanco', 'Pickup', 'Ram', '1500', '4V4KLM23456789012',16),
-			('Rojo', 'Coupé', 'Lexus', 'RC', '5W5NOP34567890123',17),
-			('Gris', 'SUV', 'Infiniti', 'QX60', '6X6QRS45678901234',17),
-			('Azul', 'Sedán', 'Subaru', 'Impreza', '7Y7TUV56789012345',18),
-			('Negro', 'Crossover', 'Mazda', 'CX-5', '8Z8WXY67890123456',18),
-			('Blanco', 'Pickup', 'GMC', 'Sierra', '9A9ZAB78901234567',18),
-			('Plateado', 'Hatchback', 'Volkswagen', 'Polo', '1B1CDE89012345678',19),
-			('Rojo', 'Coupé', 'Chevrolet', 'Camaro', '2C2EFG90123456789',20),
-			('Azul', 'SUV', 'Toyota', 'Highlander', '3D3HIJ01234567890',20);
+	insert into vehiculos (serie, marca, linea, color, modelo, id_persona) values
+		('ABC-123', 'Honda', 'Civic', 'Negro', '2003', 1),
+		('DEF-456', 'Toyota', 'Corolla', 'Rojo', '2005', 2),
+		('GHI-789', 'Ford', 'Fiesta', 'Azul', '2010', 3),
+		('JKL-012', 'Chevrolet', 'Camaro', 'Blanco', '2015', 4),
+		('MNO-345', 'Nissan', 'Sentra', 'Plata', '2012', 5),
+		('PQR-678', 'Volkswagen', 'Jetta', 'Gris', '2008', 6),
+		('STU-901', 'Hyundai', 'Accent', 'Verde', '2017', 7),
+		('VWX-234', 'Mazda', '3', 'Azul', '2019', 8),
+		('YZA-567', 'Kia', 'Rio', 'Negro', '2014', 9),
+		('BCD-890', 'Subaru', 'Outback', 'Rojo', '2016', 10),
+		('EFG-123', 'Audi', 'A4', 'Blanco', '2018', 11),
+		('HIJ-456', 'Mercedes-Benz', 'Clase C', 'Plateado', '2020', 12),
+		('KLM-789', 'BMW', 'Serie 3', 'Negro', '2013', 13),
+		('NOP-012', 'Volvo', 'S60', 'Gris', '2011', 14),
+		('PQR-345', 'Lexus', 'IS', 'Rojo', '2017', 15),
+		('STU-678', 'Infiniti', 'Q50', 'Negro', '2015', 16),
+		('VWX-901', 'Tesla', 'Model S', 'Azul', '2019', 17),
+		('YZA-234', 'Porsche', '911', 'Blanco', '2021', 18),
+		('BCD-567', 'Jaguar', 'XE', 'Gris', '2014', 19),
+		('EFG-890', 'Land Rover', 'Range Rover', 'Negro', '2016', 20),
+		('HIJ-123', 'Ferrari', '488', 'Rojo', '2020', 1),
+		('KLM-456', 'Lamborghini', 'Huracan', 'Amarillo', '2018', 2),
+		('NOP-789', 'McLaren', '720S', 'Naranja', '2019', 3),
+		('PQR-012', 'Bugatti', 'Chiron', 'Azul', '2021', 4),
+		('STU-345', 'Rolls-Royce', 'Phantom', 'Blanco', '2020', 5),
+		('VWX-678', 'Bentley', 'Continental GT', 'Negro', '2017', 6),
+		('YZA-901', 'Aston Martin', 'DB11', 'Gris', '2018', 7),
+		('BCD-234', 'Fiat', '500', 'Rojo', '2015', 8),
+		('EFG-567', 'Alfa Romeo', 'Giulia', 'Blanco', '2019', 9);
 end $$
 delimiter ;
