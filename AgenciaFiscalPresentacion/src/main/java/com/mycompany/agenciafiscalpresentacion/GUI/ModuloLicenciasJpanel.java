@@ -281,6 +281,15 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btnRegresar = new javax.swing.JButton();
+        btnPersonasRegistradas = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtRfc = new javax.swing.JTextField();
@@ -291,183 +300,31 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         txtAdvertencia = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        rbnVigencia2 = new javax.swing.JRadioButton();
-        rbnVigencia3 = new javax.swing.JRadioButton();
-        lblPrecioVigencia2 = new javax.swing.JLabel();
-        lblPrecioVigencia3 = new javax.swing.JLabel();
-        btnPagar = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        btnRegresar = new javax.swing.JButton();
-        btnPersonasRegistradas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         cbxDiscapacidad = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        Vigencia1 = new javax.swing.JPanel();
         rbnVigencia1 = new javax.swing.JRadioButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblPrecioVigencia1 = new javax.swing.JLabel();
+        Vigencia2 = new javax.swing.JPanel();
+        rbnVigencia2 = new javax.swing.JRadioButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        lblPrecioVigencia2 = new javax.swing.JLabel();
+        Vigencia3 = new javax.swing.JPanel();
+        rbnVigencia3 = new javax.swing.JRadioButton();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        lblPrecioVigencia3 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        btnPagar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(640, 360));
         setPreferredSize(new java.awt.Dimension(640, 360));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel4.setLayout(new java.awt.GridBagLayout());
-
-        jLabel2.setText("RFC:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(jLabel2, gridBagConstraints);
-
-        txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtRfcKeyTyped(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 186;
-        gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
-        jPanel4.add(txtRfc, gridBagConstraints);
-
-        jLabel3.setText("Nombre Completo:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(jLabel3, gridBagConstraints);
-
-        txtNombreCompleto.setEditable(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 186;
-        gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
-        jPanel4.add(txtNombreCompleto, gridBagConstraints);
-
-        jLabel4.setText("Fecha de nacimiento:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(jLabel4, gridBagConstraints);
-
-        txtFechaNacimiento.setEditable(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 186;
-        gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
-        jPanel4.add(txtFechaNacimiento, gridBagConstraints);
-
-        jLabel5.setText("Telefono:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(jLabel5, gridBagConstraints);
-
-        txtTelefono.setEditable(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 6;
-        gridBagConstraints.ipadx = 186;
-        gridBagConstraints.ipady = -6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
-        jPanel4.add(txtTelefono, gridBagConstraints);
-
-        txtAdvertencia.setForeground(new java.awt.Color(255, 51, 51));
-        txtAdvertencia.setText("No coincide con ninguna persona.");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(txtAdvertencia, gridBagConstraints);
-
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 270, 190));
-
-        buttonGroup1.add(rbnVigencia2);
-        rbnVigencia2.setText("Vigencia de 2 años");
-
-        buttonGroup1.add(rbnVigencia3);
-        rbnVigencia3.setText("Vigencia de 3 años");
-
-        lblPrecioVigencia2.setText("900$");
-
-        lblPrecioVigencia3.setText("1100$");
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbnVigencia2)
-                    .addComponent(rbnVigencia3))
-                .addGap(0, 28, Short.MAX_VALUE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPrecioVigencia2)
-                    .addComponent(lblPrecioVigencia3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(rbnVigencia2)
-                .addGap(1, 1, 1)
-                .addComponent(lblPrecioVigencia2)
-                .addGap(1, 1, 1)
-                .addComponent(rbnVigencia3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblPrecioVigencia3)
-                .addContainerGap())
-        );
-
-        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, -1, -1));
-
-        btnPagar.setText("Pagar");
-        btnPagar.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                btnPagarStateChanged(evt);
-            }
-        });
-        btnPagar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagarActionPerformed(evt);
-            }
-        });
-        add(btnPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 170, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(35, 26, 26));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
@@ -479,7 +336,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Avenir Next", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Módulo de consultas");
+        jLabel6.setText("Módulo de Licencias");
         jPanel7.add(jLabel6, new java.awt.GridBagConstraints());
 
         jPanel6.add(jPanel7);
@@ -529,8 +386,148 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, -1));
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
+        jLabel9.setFont(new java.awt.Font("Avenir Next Condensed", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Ingrese la información solicitada");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 0, 0);
+        jPanel5.add(jLabel9, gridBagConstraints);
+
+        jLabel10.setFont(new java.awt.Font("Avenir Next Condensed", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel10.setText("Seleccione el tipo de licencia");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 0, 0);
+        jPanel5.add(jLabel10, gridBagConstraints);
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jLabel2.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("RFC:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel2, gridBagConstraints);
+
+        txtRfc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRfcKeyTyped(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 186;
+        gridBagConstraints.ipady = -6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
+        jPanel4.add(txtRfc, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Nombre Completo:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel3, gridBagConstraints);
+
+        txtNombreCompleto.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 186;
+        gridBagConstraints.ipady = -6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
+        jPanel4.add(txtNombreCompleto, gridBagConstraints);
+
+        jLabel4.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Fecha de nacimiento:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel4, gridBagConstraints);
+
+        txtFechaNacimiento.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 186;
+        gridBagConstraints.ipady = -6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
+        jPanel4.add(txtFechaNacimiento, gridBagConstraints);
+
+        jLabel5.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Telefono:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel5, gridBagConstraints);
+
+        txtTelefono.setEditable(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 6;
+        gridBagConstraints.ipadx = 186;
+        gridBagConstraints.ipady = -6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 6, 0);
+        jPanel4.add(txtTelefono, gridBagConstraints);
+
+        txtAdvertencia.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        txtAdvertencia.setForeground(new java.awt.Color(255, 51, 51));
+        txtAdvertencia.setText("No coincide con ninguna persona.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(txtAdvertencia, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 15;
+        gridBagConstraints.ipady = 18;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 6, 8, 0);
+        jPanel5.add(jPanel4, gridBagConstraints);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        cbxDiscapacidad.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        cbxDiscapacidad.setForeground(new java.awt.Color(0, 0, 0));
         cbxDiscapacidad.setText("Discapacidad");
         cbxDiscapacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -539,8 +536,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         });
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jPanel8.setBackground(new java.awt.Color(98, 76, 76));
+        Vigencia1.setBackground(new java.awt.Color(98, 76, 76));
 
         buttonGroup1.add(rbnVigencia1);
 
@@ -555,46 +553,130 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
         lblPrecioVigencia1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         lblPrecioVigencia1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPrecioVigencia1.setText("600$");
+        lblPrecioVigencia1.setText("$600");
         jPanel9.add(lblPrecioVigencia1, java.awt.BorderLayout.PAGE_END);
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
+        javax.swing.GroupLayout Vigencia1Layout = new javax.swing.GroupLayout(Vigencia1);
+        Vigencia1.setLayout(Vigencia1Layout);
+        Vigencia1Layout.setHorizontalGroup(
+            Vigencia1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(rbnVigencia1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        Vigencia1Layout.setVerticalGroup(
+            Vigencia1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(Vigencia1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbnVigencia1))
+                    .addComponent(rbnVigencia1)))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 128;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 20, 3, 20);
+        jPanel2.add(Vigencia1, gridBagConstraints);
+
+        Vigencia2.setBackground(new java.awt.Color(98, 76, 76));
+
+        buttonGroup1.add(rbnVigencia2);
+
+        jPanel11.setBackground(new java.awt.Color(98, 76, 76));
+        jPanel11.setLayout(new java.awt.BorderLayout());
+
+        jLabel7.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Vigencia de 2 años");
+        jPanel11.add(jLabel7, java.awt.BorderLayout.CENTER);
+
+        lblPrecioVigencia2.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        lblPrecioVigencia2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioVigencia2.setText("$900");
+        jPanel11.add(lblPrecioVigencia2, java.awt.BorderLayout.PAGE_END);
+
+        javax.swing.GroupLayout Vigencia2Layout = new javax.swing.GroupLayout(Vigencia2);
+        Vigencia2.setLayout(Vigencia2Layout);
+        Vigencia2Layout.setHorizontalGroup(
+            Vigencia2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rbnVigencia2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        Vigencia2Layout.setVerticalGroup(
+            Vigencia2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Vigencia2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbnVigencia2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 121;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 20, 3, 20);
+        jPanel2.add(Vigencia2, gridBagConstraints);
+
+        Vigencia3.setBackground(new java.awt.Color(98, 76, 76));
+
+        buttonGroup1.add(rbnVigencia3);
+
+        jPanel12.setBackground(new java.awt.Color(98, 76, 76));
+        jPanel12.setLayout(new java.awt.BorderLayout());
+
+        jLabel8.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Vigencia de 3 años");
+        jPanel12.add(jLabel8, java.awt.BorderLayout.CENTER);
+
+        lblPrecioVigencia3.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        lblPrecioVigencia3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecioVigencia3.setText("$1100");
+        jPanel12.add(lblPrecioVigencia3, java.awt.BorderLayout.PAGE_END);
+
+        javax.swing.GroupLayout Vigencia3Layout = new javax.swing.GroupLayout(Vigencia3);
+        Vigencia3.setLayout(Vigencia3Layout);
+        Vigencia3Layout.setHorizontalGroup(
+            Vigencia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rbnVigencia3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        Vigencia3Layout.setVerticalGroup(
+            Vigencia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Vigencia3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGroup(Vigencia3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbnVigencia3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 121;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(3, 20, 3, 20);
+        jPanel2.add(Vigencia3, gridBagConstraints);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -603,8 +685,8 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cbxDiscapacidad)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(200, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -615,7 +697,52 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 300, 240));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 194;
+        gridBagConstraints.ipady = -2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 19, 8, 8);
+        jPanel5.add(jPanel1, gridBagConstraints);
+
+        add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 640, 240));
+
+        jPanel8.setBackground(new java.awt.Color(138, 47, 47));
+
+        btnPagar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnPagar.setForeground(new java.awt.Color(0, 0, 0));
+        btnPagar.setText("Pagar");
+        btnPagar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                btnPagarStateChanged(evt);
+            }
+        });
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(562, Short.MAX_VALUE)
+                .addComponent(btnPagar)
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(btnPagar)
+                .addContainerGap())
+        );
+
+        add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 40));
     }// </editor-fold>//GEN-END:initComponents
 
     
@@ -660,18 +787,27 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Vigencia1;
+    private javax.swing.JPanel Vigencia2;
+    private javax.swing.JPanel Vigencia3;
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnPersonasRegistradas;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbxDiscapacidad;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
