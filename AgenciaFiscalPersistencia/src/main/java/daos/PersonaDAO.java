@@ -5,14 +5,20 @@
 package daos;
 
 import entidades.Persona;
+import excepciones.PersistenciaException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Parameter;
+import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -25,15 +31,15 @@ public class PersonaDAO implements IPersonaDAO{
 //    private EntityManagerFactory emf;
     private EntityManager em;
     private CriteriaBuilder cb;
+    private final static Logger LOG= Logger.getLogger(PersonaDAO.class.getName());
     
     public PersonaDAO(){
-//        emf=Persistence.createEntityManagerFactory("conexionPU");
         em=ClaseConexion.getEntityManager();
         cb=em.getCriteriaBuilder();
     }
     
     @Override
-    public Persona obtenerPersona(Persona persona) {
+    public Persona obtenerPersona(Persona persona)throws PersistenciaException {
         CriteriaQuery<Persona> criteria=cb.createQuery(Persona.class);
         Root<Persona> root=criteria.from(Persona.class);
         
@@ -45,41 +51,62 @@ public class PersonaDAO implements IPersonaDAO{
             Persona personaConsultada=query.getSingleResult();
             return personaConsultada;
         } catch (Exception e) {
-            e.getStackTrace();
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage() , e);
+            throw new PersistenciaException("Ocurrio un error al buscar el registro de la persona");
         }
     }
 
     @Override
-    public List<Persona> agregarPersonas() {
+    public List<Persona> agregarPersonas()throws PersistenciaException {
         StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_insertar_personas",Persona.class);
         em.getTransaction().begin();
-        if(spc.execute()){
-            List<Persona> personasAgregadas=spc.getResultList();
-            em.getTransaction().commit();
-            return personasAgregadas;
+        try {
+            if (spc.execute()) {
+                List<Persona> personasAgregadas = spc.getResultList();
+                em.getTransaction().commit();
+                return personasAgregadas;
+            }
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            LOG.log(Level.SEVERE, e.getMessage(), e);
         }
-        em.getTransaction().commit();
-        System.out.println("no se obtuvo el result set");
-        return null;
+        throw new PersistenciaException("Ocurrio un error al registrar a las personas");
     }
-//
-//    @Override
-//    public void cerrarConexion() {
-//        em.close();
-//        emf.close();
-//    }
-
+    
     @Override
-    public Persona actualizarPersona(Persona persona) {
+    public Persona actualizarPersona(Persona persona) throws PersistenciaException{
         Persona personaBuscada=em.find(Persona.class, persona.getId());
         if(personaBuscada!=null){
-            em.getTransaction().begin();
-            personaBuscada.setTieneDiscapacidad(true);
-            em.getTransaction().commit();
-            return personaBuscada;
+            try{
+                em.getTransaction().begin();
+                personaBuscada.setTieneDiscapacidad(true);
+                em.getTransaction().commit();
+                return personaBuscada; 
+            }catch(Exception e){
+                em.getTransaction().rollback();
+                LOG.log(Level.SEVERE, e.getMessage(), e);
+                throw new PersistenciaException("Ocurrio un error al actualizar a la persona");
+            }
         }
-        return null;
+        throw new PersistenciaException("No se encontro el registro de la persona");
+    }
+
+    @Override
+    public List<Persona> buscarPersonasPorNombre(Persona persona)throws PersistenciaException {
+        System.out.println("consulta personas por nombre");
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_nombre",Persona.class);
+        spc.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
+        spc.setParameter("nombre", persona.getNombreCompleto());
+        try{
+            if (spc.execute()) {
+                List<Persona> personasObtenidas = spc.getResultList();
+                //System.out.println("exito");
+                return personasObtenidas;
+            }//System.out.println("no se ejecuto");
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        }
+        throw new PersistenciaException("Ocurrio un error al realizar la consulta");
     }
 
 }

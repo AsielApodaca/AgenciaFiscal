@@ -7,6 +7,7 @@ package daos;
 import entidades.Persona;
 import entidades.Tramite;
 import entidades.TramiteLicencia;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -14,6 +15,6 @@ import java.util.List;
  * @author luiis
  */
 public interface ITramiteLicenciaDAO extends ITramiteDAO{
-    public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite);
-    public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia);
+    public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite)throws PersistenciaException;
+    public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia)throws PersistenciaException;
 }

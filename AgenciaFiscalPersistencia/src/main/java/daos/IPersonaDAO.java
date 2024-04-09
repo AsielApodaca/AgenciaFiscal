@@ -5,6 +5,7 @@
 package daos;
 
 import entidades.Persona;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -12,8 +13,8 @@ import java.util.List;
  * @author luiis
  */
 public interface IPersonaDAO {
-    public Persona obtenerPersona(Persona persona);
-    public List<Persona> agregarPersonas();
-    //public void cerrarConexion();
-    public Persona actualizarPersona(Persona persona);
+    public Persona obtenerPersona(Persona persona)throws PersistenciaException;
+    public List<Persona> agregarPersonas()throws PersistenciaException;
+    public List<Persona> buscarPersonasPorNombre(Persona persona)throws PersistenciaException;
+    public Persona actualizarPersona(Persona persona)throws PersistenciaException;
 }
