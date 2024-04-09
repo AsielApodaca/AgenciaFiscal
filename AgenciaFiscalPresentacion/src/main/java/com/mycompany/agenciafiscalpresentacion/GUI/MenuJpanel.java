@@ -1,5 +1,6 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import excepciones.NegocioException;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,7 +211,11 @@ public class MenuJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInsertarUsuariosActionPerformed
 
     private void obtenerPersonasAgregadas(){
-        personasRegistradas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
+        try{
+            personasRegistradas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
+        }catch(NegocioException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarPlacasBO;
+import excepciones.NegocioException;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -406,7 +407,13 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     private void buscarLicencia(){
         TramiteLicenciaDTO licencia = new TramiteLicenciaDTO();
         licencia.setNumLicencia(txtLicencia.getText());
-        TramiteLicenciaDTO licenciaObtenida = Ventanas.registrarPlacas.obtenerLicenciaVigente(licencia);
+        TramiteLicenciaDTO licenciaObtenida;
+        try{
+            licenciaObtenida= Ventanas.registrarPlacas.obtenerLicenciaVigente(licencia);
+        }catch(NegocioException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return;
+        }
         if (licenciaObtenida != null) {//si se encuentra la licencia
             //se despliega el nombre del titular en el txtTitularLicencia
             txtTitularLicencia.setText(licenciaObtenida.getPersona().getNombreCompleto());
@@ -459,7 +466,12 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                     
                     VehiculoDTO vehiculo=new VehiculoDTO();
                     vehiculo.setSerie(txtSerie.getText());
-                    TramitePlacasDTO placas = Ventanas.registrarPlacas.obtenerPlacasPorSerieAuto(vehiculo);
+                    TramitePlacasDTO placas=null;
+                    try{
+                        placas= Ventanas.registrarPlacas.obtenerPlacasPorSerieAuto(vehiculo);
+                    }catch(NegocioException ex){
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
                     if(placas==null){
                         System.out.println("placas nulas"); 
                         habilitarCamposVehiculo(true);
@@ -535,14 +547,16 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                         txtColor.getText(),
                         txtModelo.getText());
                 tramite.setVehiculo(vehiculo);
-                
-                if(Ventanas.registrarPlacas.registrarPlacas(tramite)){
+                try{
+                    Ventanas.registrarPlacas.registrarPlacas(tramite);
                     JOptionPane.showMessageDialog(null,
                             "Placas nuevas registradas con éxito."
                     );
-                } else
-                    JOptionPane.showMessageDialog(null, "No se han podido registrar las placas.");
-                
+                }catch(NegocioException e){
+                    JOptionPane.showMessageDialog(null,
+                            "No se registraron las placas."
+                    );
+                }
                 regresarMenu();
             }
         }else{
