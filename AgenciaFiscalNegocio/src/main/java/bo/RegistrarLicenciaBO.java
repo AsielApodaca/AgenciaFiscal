@@ -38,9 +38,9 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     
     @Override
     public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona)  throws NegocioException{
-        if(!validaciones.validarRfcPersona(persona.getRfc())){
-            throw new NegocioException("El RFC ingresado no cumple con el formato correcto.");
-        }
+//        if(!validaciones.validarRfcPersona(persona.getRfc())){
+//            throw new NegocioException("El RFC ingresado no cumple con el formato correcto.");
+//        }
         Persona personaConsultada;
         try {
             personaConsultada=personaDao.obtenerPersona(new Persona(persona.getRfc()));
@@ -152,6 +152,18 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
             return tramiteLicenciaDao.actualizarEstadoTramite((TramiteLicencia) tramite);
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
+        ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
+        try{
+            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
+            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
+            return t.actualizarFechaVencimiento((TramiteLicencia)tramite);
+        }catch(PersistenciaException p){
+            throw new NegocioException(p.getMessage());
         }
     }
     
