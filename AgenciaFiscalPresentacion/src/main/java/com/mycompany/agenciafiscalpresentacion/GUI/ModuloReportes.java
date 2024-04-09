@@ -1,6 +1,7 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -339,8 +340,21 @@ public class ModuloReportes extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxBuscarNombreActionPerformed
 
     public void reiniciarPanel(){
-        //limpiarDatos();
-        
+        cmbTipoTramite.setSelectedIndex(0);
+        txtNombre.setText("");
+        cbxBuscarNombre.setSelected(false);
+        limpiarTabla();
+        jdcDesde.setCalendar(null);
+        jdcHasta.setCalendar(null);
+    }
+    
+    public void limpiarTabla(){
+        DefaultTableModel temp = (DefaultTableModel) tblTramites.getModel();
+        int filas = tblTramites.getRowCount();
+
+        for (int a = 0; filas > a; a++) {
+            temp.removeRow(0);
+        }
     }
 
     private void regresarMenu(){
