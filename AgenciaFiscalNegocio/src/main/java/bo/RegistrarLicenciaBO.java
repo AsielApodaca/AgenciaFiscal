@@ -155,17 +155,17 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
 
-    @Override
-    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
-        ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
-        try{
-            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
-            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
-            return t.actualizarFechaVencimiento((TramiteLicencia)tramite);
-        }catch(PersistenciaException p){
-            throw new NegocioException(p.getMessage());
-        }
-    }
+//    @Override
+//    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
+//        ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
+//        try{
+//            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
+//            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
+//            return t.actualizarFechaVencimiento((TramiteLicencia)tramite);
+//        }catch(PersistenciaException p){
+//            throw new NegocioException(p.getMessage());
+//        }
+//    }
     
     class ValidacionesRegistrarLicencia{
         public boolean validarRfcPersona(String rfc){
