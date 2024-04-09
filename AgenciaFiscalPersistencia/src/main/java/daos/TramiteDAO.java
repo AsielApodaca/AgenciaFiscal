@@ -9,8 +9,11 @@ import entidades.Persona;
 import entidades.Tramite;
 import entidades.TramiteLicencia;
 import entidades.TramitePlacas;
+import excepciones.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -32,6 +35,7 @@ public class TramiteDAO implements ITramiteDAO{
 //    protected static EntityManagerFactory emf;
     static EntityManager em;
     static CriteriaBuilder cb;
+    protected final static Logger LOG= Logger.getLogger(TramiteDAO.class.getName());
     
     public TramiteDAO(){
 //        emf=Persistence.createEntityManagerFactory("conexionPU");
@@ -40,7 +44,7 @@ public class TramiteDAO implements ITramiteDAO{
     }
     
     @Override
-    public List<Tramite> obtenerTramites(Persona personaTramite) {
+    public List<Tramite> obtenerTramites(Persona personaTramite)throws PersistenciaException {
         CriteriaQuery<Tramite> criteria=cb.createQuery(Tramite.class);
         Root<Tramite> root=criteria.from(Tramite.class);
         
@@ -52,8 +56,9 @@ public class TramiteDAO implements ITramiteDAO{
         try{
             tramites=query.getResultList();
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            //System.out.println(e.getMessage());
+            LOG.log(Level.SEVERE,e.getMessage() , e);
+            throw new PersistenciaException("Ocurrio un error al obtener los tramites" );
         }
         if(!tramites.isEmpty()){
             List<Long> ids=new ArrayList<>();
@@ -69,11 +74,10 @@ public class TramiteDAO implements ITramiteDAO{
             }
             return tramitesObtenidos;
         }
-        System.out.println("la persona no tiene tramites");
-        return null;
+        throw new PersistenciaException("La persona no tiene tramites Registrados");
     }
 
-    private List<Tramite> obtenerTramitePorTipo(List<Long>ids,String tipoTramite){
+    private List<Tramite> obtenerTramitePorTipo(List<Long>ids,String tipoTramite)throws PersistenciaException{
         CriteriaQuery criteria;
         Root root;
         if(tipoTramite.equalsIgnoreCase("licencia")){
@@ -93,13 +97,13 @@ public class TramiteDAO implements ITramiteDAO{
             lista=query.getResultList();
             return lista;
         }catch(Exception e){
-            System.out.println("error: "+e.getMessage());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException( "Ocurrio un error al obtener los tramites");
         }
     }
     
     @Override
-    public boolean registrarTramite(Tramite tramite) {
+    public boolean registrarTramite(Tramite tramite) throws PersistenciaException{
         Long id_persona=tramite.getPersona().getId();
         Persona p=em.find(Persona.class, id_persona);
         if(p!=null){
@@ -113,16 +117,16 @@ public class TramiteDAO implements ITramiteDAO{
                 System.out.println("error al registrar el tramite");
                 System.out.println(e.getCause());
                 em.getTransaction().rollback();
-                return false;
+                LOG.log(Level.SEVERE, e.getMessage(), e);
+                throw new PersistenciaException("Ocurrio un error al registrar el tramite");
             }
             
-        }else
-            System.out.println("la persona asignada al tramite no se encuentra registrada");
-        return false;
+        }
+        throw new PersistenciaException("La persona asociada al tramite no esta registrada");
     }
 
     @Override
-    public boolean actualizarEstadoTramite(Tramite tramite) {
+    public boolean actualizarEstadoTramite(Tramite tramite) throws PersistenciaException{
         em.getTransaction().begin();
         Estado estado=null;
         
@@ -140,12 +144,13 @@ public class TramiteDAO implements ITramiteDAO{
             System.out.println("error :");
             System.out.println(e.getCause());
             em.getTransaction().rollback();
-            return false;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al actualizar el tramite");
         }
     }
 
     @Override
-    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite) {
+    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite)throws PersistenciaException {
         CriteriaQuery<Tramite> criteria=cb.createQuery(Tramite.class);
         Root<Tramite> root=criteria.from(Tramite.class);
         Estado estado;
@@ -166,7 +171,8 @@ public class TramiteDAO implements ITramiteDAO{
         }catch(Exception e){
             System.out.println("error:");
             System.out.println(e.fillInStackTrace());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener el tramite");
         }
     }
 }

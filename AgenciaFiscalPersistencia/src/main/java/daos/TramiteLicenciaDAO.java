@@ -4,10 +4,13 @@
  */
 package daos;
 
+import static daos.TramiteDAO.LOG;
 import entidades.Estado;
 import entidades.Persona;
 import entidades.TramiteLicencia;
+import excepciones.PersistenciaException;
 import java.util.List;
+import java.util.logging.Level;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -25,7 +28,7 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
     }
 
     @Override
-    public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite){
+    public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite)throws PersistenciaException{
         CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
         Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
         
@@ -40,13 +43,13 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
             tramitesLicencia=query.getResultList();
             return tramitesLicencia;
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener la licencia");
         }
     }
 
     @Override
-    public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia) {
+    public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia)throws PersistenciaException {
         CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
         Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
         //Join<Tramite,TramiteLicencia> joinTramiteL=root.join("id");
@@ -62,8 +65,8 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
             tramiteLicencia=query.getSingleResult();
             return tramiteLicencia;
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener la licencia");
         }
     }
 

@@ -6,9 +6,13 @@ package daos;
 
 import entidades.Persona;
 import entidades.Vehiculo;
+import excepciones.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -22,7 +26,8 @@ public class VehiculoDAO implements IVehiculoDAO {
 
     private EntityManagerFactory emf;
     private EntityManager em;
-
+    private final static Logger LOG= Logger.getLogger(VehiculoDAO.class.getName());
+    
     public VehiculoDAO() {
         emf=Persistence.createEntityManagerFactory("conexionPU");
         em=emf.createEntityManager();
@@ -44,22 +49,29 @@ public class VehiculoDAO implements IVehiculoDAO {
 //    }
 
     @Override
-    public Vehiculo obtenerVehiculo(Vehiculo vehiculo) {
+    public Vehiculo obtenerVehiculo(Vehiculo vehiculo)throws PersistenciaException {
         CriteriaBuilder cb=em.getCriteriaBuilder();
         CriteriaQuery<Vehiculo> criteria=cb.createQuery(Vehiculo.class);
         Root<Vehiculo> root=criteria.from(Vehiculo.class);
         
-        
         Predicate predicate=cb.equal(root.get("serie"), vehiculo.getSerie());
         criteria.select(root).where(predicate);
         
-        return em.createQuery(criteria).getSingleResult();
+        TypedQuery<Vehiculo> query=em.createQuery(criteria);
+        Vehiculo vehiculoObtenido;
+        try{
+            vehiculoObtenido=query.getSingleResult();
+            return vehiculoObtenido;
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener el vehiculo");
+        }
     }
 
-    @Override
-    public void cerrarConexion() {
-        em.close();
-        emf.close();
-    }
+//    @Override
+//    public void cerrarConexion() {
+//        em.close();
+//        emf.close();
+//    }
     
 }

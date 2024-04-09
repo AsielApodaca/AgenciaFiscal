@@ -5,6 +5,7 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarPlacasBO;
+import excepciones.NegocioException;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -368,22 +369,19 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
             placas.setPersona(persona);
             placas.setVehiculo(tramitePlacasAnteriores.getVehiculo());
 
-            if(!Ventanas.registrarPlacas.actualizarEstadoPlacasAnteriores(tramitePlacasAnteriores)){
+            try{
+                Ventanas.registrarPlacas.actualizarEstadoPlacasAnteriores(tramitePlacasAnteriores);
+                Ventanas.registrarPlacas.renovarPlacas(placas);
+            }catch(NegocioException e){
                 JOptionPane.showConfirmDialog(null, 
-                        "Hubo un error al registrar el tramite. Intente de nuevo");
+                        e.getMessage());
                 return false;
             }
-            
-            if (Ventanas.registrarPlacas.renovarPlacas(placas)) {
-                JOptionPane.showMessageDialog(null,
+        }
+        JOptionPane.showMessageDialog(null,
                         "Placas nuevas registradas con éxito."
                 );
                 return true;
-            } else {
-                JOptionPane.showMessageDialog(null, "No se han podido registrar las placas.");
-            }
-        }
-        return false;
     }
     
     private void iniciar(){
@@ -404,16 +402,18 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
     private void buscarLicencia() {
         TramiteLicenciaDTO licencia = new TramiteLicenciaDTO();
         licencia.setNumLicencia(txtLicencia.getText());
-        TramiteLicenciaDTO licenciaObtenida = Ventanas.registrarPlacas.obtenerLicenciaVigente(licencia);
-        if (licenciaObtenida != null) {//si se encuentra la licencia
-            //se despliega el nombre del titular en el txtTitularLicencia
+        TramiteLicenciaDTO licenciaObtenida;
+        try{
+            licenciaObtenida= Ventanas.registrarPlacas.obtenerLicenciaVigente(licencia);
+            //si se encuentra la licencia se despliega el nombre del titular en el txtTitularLicencia
             txtTitularLicencia.setText(licenciaObtenida.getPersona().getNombreCompleto());
             persona = licenciaObtenida.getPersona();
             lblAdvertenciaLicencia.setVisible(false);
             txtPlacas.setEnabled(true);
             habilitarBotonPagar();
-        } else {
+        }catch(NegocioException e){
             //si no, se muestra la advertencia de que no se encontro
+            JOptionPane.showConfirmDialog(null, e.getMessage());
             lblAdvertenciaLicencia.setVisible(true);
             persona = null;
         }
@@ -422,14 +422,15 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
     private void buscarPlacasAnteriores(){
         TramitePlacasDTO placas=new TramitePlacasDTO();
         placas.setMatricula(txtPlacas.getText());
-        placas=Ventanas.registrarPlacas.obtenerPlacasPorMatricula(placas);
-        if(placas!=null){
+        try{
+            placas=Ventanas.registrarPlacas.obtenerPlacasPorMatricula(placas);
             placas.setPersona(persona);
             tramitePlacasAnteriores=placas;
             txtSerieVehiculo.setText(placas.getVehiculo().getSerie());
             lblAdvertenciaPlacas.setVisible(false);
             habilitarBotonPagar();
-        }else{
+        }catch(NegocioException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
             tramitePlacasAnteriores=null;
             lblAdvertenciaPlacas.setVisible(true);
             txtSerieVehiculo.setText("");

@@ -6,6 +6,7 @@ package daos;
 
 import entidades.Persona;
 import entidades.Tramite;
+import excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -13,9 +14,9 @@ import java.util.List;
  * @author luiis
  */
 public interface ITramiteDAO {
-    public List<Tramite> obtenerTramites(Persona personaTramite);
-    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite);
-    public boolean registrarTramite(Tramite tramite);
-    public boolean actualizarEstadoTramite(Tramite tramite);
+    public List<Tramite> obtenerTramites(Persona personaTramite)throws PersistenciaException;
+    public Tramite obtenerTramite(Persona personaTramite, String tipoTramite)throws PersistenciaException;
+    public boolean registrarTramite(Tramite tramite)throws PersistenciaException;
+    public boolean actualizarEstadoTramite(Tramite tramite)throws PersistenciaException;
     //public void cerrarConexion();
 }

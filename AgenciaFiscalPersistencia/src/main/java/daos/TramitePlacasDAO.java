@@ -4,11 +4,15 @@
  */
 package daos;
 
+import static daos.TramiteDAO.LOG;
 import entidades.Estado;
 import entidades.Persona;
 import entidades.TramitePlacas;
 import entidades.Vehiculo;
+import excepciones.PersistenciaException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -26,7 +30,7 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
     }
     
     @Override
-    public List<TramitePlacas> obtenerTramitesPlacas(Persona personaTramite) {
+    public List<TramitePlacas> obtenerTramitesPlacas(Persona personaTramite)throws PersistenciaException {
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
         Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
         
@@ -41,13 +45,13 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             tramitesPlacas=query.getResultList();
             return tramitesPlacas;
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener las placas");
         }
     }
 
     @Override
-    public TramitePlacas obtenerPlacasPorSerieAuto(Vehiculo vehiculo) {
+    public TramitePlacas obtenerPlacasPorSerieAuto(Vehiculo vehiculo) throws PersistenciaException{
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
         Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
         Join<TramitePlacas, Vehiculo> join=root.join("vehiculo");
@@ -63,29 +67,27 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             tramite=query.getSingleResult();
             return tramite;
         }catch(Exception e){
-            System.out.println("error al obtener las placas:");
-            System.out.println(e.fillInStackTrace());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener las placas");
         }
     }
 
     @Override
-    public boolean renovarPlacas(TramitePlacas tramite) {
+    public boolean renovarPlacas(TramitePlacas tramite)throws PersistenciaException {
         try {
             em.getTransaction().begin();
             em.merge(tramite);
             em.getTransaction().commit();
             return true;
         } catch (Exception e) {
-            System.out.println("error al registrar el tramite");
-            System.out.println(e.getCause());
             em.getTransaction().rollback();
-            return false;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al renovar las placas");
         }
     }
 
     @Override
-    public TramitePlacas obtenerPlacasPorMatricula(TramitePlacas placas) {
+    public TramitePlacas obtenerPlacasPorMatricula(TramitePlacas placas)throws PersistenciaException {
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
         Root<TramitePlacas> root=criteria.from(TramitePlacas.class);
         
@@ -102,9 +104,8 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             tramite=query.getSingleResult();
             return tramite;
         }catch(Exception e){
-            System.out.println("error al obtener las placas:");
-            System.out.println(e.fillInStackTrace());
-            return null;
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener las placas");
         }
     }
 }

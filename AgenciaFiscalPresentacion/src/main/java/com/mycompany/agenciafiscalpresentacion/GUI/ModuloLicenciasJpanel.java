@@ -1,6 +1,7 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarLicenciaBO;
+import excepciones.NegocioException;
 import iBo.iRegistrarLicenciaBO;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
@@ -88,7 +89,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     p.setRfc(txtRfc.getText());
                     try{
                         persona = Ventanas.registrarLicencia.consultarPersonaPorRfc(p);
-                    }catch(IllegalArgumentException ex){
+                    }catch(NegocioException ex){
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
                     if(persona == null){ // No se encontró
@@ -164,25 +165,26 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         if (opcion == JOptionPane.YES_OPTION) {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
+            String msj;
             if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
-                persona=Ventanas.registrarLicencia.actualizarDiscapacidadPersona(persona);
+                try{
+                    persona=Ventanas.registrarLicencia.actualizarDiscapacidadPersona(persona);
+                }catch(NegocioException e){
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
             }
-            TramiteLicenciaDTO licenciaVieja=Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
-            if(licenciaVieja!=null){
-                System.out.println("licencia vieja:"+licenciaVieja.toStringReducido());
-                if(Ventanas.registrarLicencia.actualizarEstadoLicencia(licenciaVieja))
+            try {
+                TramiteLicenciaDTO licenciaVieja = Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
+                if (Ventanas.registrarLicencia.actualizarEstadoLicencia(licenciaVieja)) {
                     System.out.println("se actualizo el estado de la licencia");
-                else
-                    System.out.println("no se actualizo el estado de la licencia");
-            }System.out.println("no tiene otra licencia vigente");
-            TramiteLicenciaDTO licencia = setTramiteLicencia();
-            if (Ventanas.registrarLicencia.registrarLicencia(licencia)) {
-                JOptionPane.showMessageDialog(null,
-                        "Licencia nueva registrada con éxito."
-                );
-            } else 
-                JOptionPane.showMessageDialog(null, "No se ha podido registrar la licencia.");
-
+                }
+                TramiteLicenciaDTO licencia = setTramiteLicencia();
+                Ventanas.registrarLicencia.registrarLicencia(licencia);
+                msj="Licencia nueva registrada con éxito.";
+            } catch (NegocioException e) {
+                msj=e.getMessage();
+            }
+            JOptionPane.showMessageDialog(null, msj);
             // Se cambia a la ventana principal
             regresarMenu();
         }
@@ -231,7 +233,14 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         dialogo.setLayout(new BorderLayout());
         dialogo.setSize(400, 200);
         
-        List<PersonaDTO> personas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
+        List<PersonaDTO> personas;
+        try{
+            personas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
+        }catch(NegocioException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            regresarMenu();
+            return;
+        }
         Object[][] filas =new Object[20][2];
         int contador=0;
         for(PersonaDTO p:personas){

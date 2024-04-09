@@ -13,7 +13,9 @@ public class Ventanas extends JFrame {
     private JPanel cardPanel;
     protected static iRegistrarLicenciaBO registrarLicencia;
     protected static IRegistrarPlacasBO registrarPlacas;
+    protected static IConsultasBO consultas;
     private IServicioConexion servicio;
+    
     public Ventanas() {
         setTitle("Agencia fiscal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

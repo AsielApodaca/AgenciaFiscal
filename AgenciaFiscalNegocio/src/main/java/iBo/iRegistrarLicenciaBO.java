@@ -1,5 +1,6 @@
 package iBo;
 
+import excepciones.NegocioException;
 import java.util.List;
 import negocioDTO.PersonaDTO;
 import negocioDTO.TramiteLicenciaDTO;
@@ -9,10 +10,10 @@ import negocioDTO.TramiteLicenciaDTO;
  * @author Asiel Apodaca Monge
  */
 public interface iRegistrarLicenciaBO {
-    public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona);
-    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia);
-    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona);
-    public List<PersonaDTO> obtenerPersonasRegistradas();
-    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite);
-    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia);
+    public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona) throws NegocioException;
+    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException;
+    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) throws NegocioException;
+    public List<PersonaDTO> obtenerPersonasRegistradas() throws NegocioException;
+    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) throws NegocioException;
+    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException;
 }

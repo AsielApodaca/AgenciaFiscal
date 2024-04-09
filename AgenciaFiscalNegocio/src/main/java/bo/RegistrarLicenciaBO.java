@@ -11,6 +11,8 @@ import entidades.Persona;
 import entidades.Estado;
 import entidades.Tramite;
 import entidades.TramiteLicencia;
+import excepciones.NegocioException;
+import excepciones.PersistenciaException;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     private static IPersonaDAO personaDao;
     private static ITramiteDAO tramiteLicenciaDao;
     private ValidacionesRegistrarLicencia validaciones;
+    
     public RegistrarLicenciaBO() {
         personaDao=new PersonaDAO();
         tramiteLicenciaDao=new TramiteLicenciaDAO();
@@ -34,29 +37,36 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     }
     
     @Override
-    public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona) throws IllegalArgumentException{
+    public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona)  throws NegocioException{
         if(!validaciones.validarRfcPersona(persona.getRfc())){
-            throw new IllegalArgumentException("El RFC ingresado no cumple con el formato correcto.");
+            throw new NegocioException("El RFC ingresado no cumple con el formato correcto.");
         }
-        Persona personaConsultada=personaDao.obtenerPersona(new Persona(persona.getRfc()));
-        if(personaConsultada!=null){
-            System.out.println("id persona: "+personaConsultada.getId());
-            PersonaDTO personaDto = new PersonaDTO(personaConsultada.getRfc(),
-                    personaConsultada.getNombreCompleto(),
-                    personaConsultada.getFechaNacimiento(),
-                    personaConsultada.getCurp(),
-                    personaConsultada.getTelefono(),
-                    personaConsultada.esDiscapacitado()
-            );
-            return personaDto;
+        Persona personaConsultada;
+        try {
+            personaConsultada=personaDao.obtenerPersona(new Persona(persona.getRfc()));
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        return null;
+        System.out.println("id persona: " + personaConsultada.getId());
+        PersonaDTO personaDto = new PersonaDTO(personaConsultada.getRfc(),
+                personaConsultada.getNombreCompleto(),
+                personaConsultada.getFechaNacimiento(),
+                personaConsultada.getCurp(),
+                personaConsultada.getTelefono(),
+                personaConsultada.esDiscapacitado()
+        );
+        return personaDto;
     }
 
     @Override
-    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) {
+    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException{
         PersonaDTO personaEnviada=tramiteLicencia.getPersona();
-        Persona persona=personaDao.obtenerPersona(new Persona(personaEnviada.getRfc()));
+        Persona persona;
+        try {
+            persona = personaDao.obtenerPersona(new Persona(personaEnviada.getRfc()));
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
         
         TramiteLicencia tramite=new TramiteLicencia(tramiteLicencia.getFechaEmision(), 
                 tramiteLicencia.getCostoMxn(),
@@ -65,66 +75,84 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         );
         tramite.setVigencia(tramiteLicencia.getVigencia());
         tramite.setNumLicencia();
-        return tramiteLicenciaDao.registrarTramite(tramite);
-    }
-
-    @Override
-    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) {
-        Persona personaAModificar=personaDao.obtenerPersona(new Persona(persona.getRfc()));
-        Persona personaModificada=personaDao.actualizarPersona(personaAModificar);
-        if(personaModificada!=null){
-            return new PersonaDTO(
-                    personaModificada.getRfc(), 
-                    personaModificada.getNombreCompleto(), 
-                    personaModificada.getFechaNacimiento(),
-                    personaModificada.getCurp(),
-                    personaModificada.getTelefono(),
-                    personaModificada.esDiscapacitado()
-            );
+        try{
+            return tramiteLicenciaDao.registrarTramite(tramite);
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
         }
-        return null;
     }
 
     @Override
-    public List<PersonaDTO> obtenerPersonasRegistradas() {
-        List<Persona> personas=personaDao.agregarPersonas();
-        
-        if(personas!=null){
-            List<PersonaDTO> personasDTO=new ArrayList<>();
-            for(Persona p:personas){
-                PersonaDTO persona=new PersonaDTO(
-                        p.getRfc(),
-                        p.getNombreCompleto(), 
-                        p.getFechaNacimiento(), 
-                        p.getCurp(), 
-                        p.getTelefono(), 
-                        p.esDiscapacitado());
-                personasDTO.add(persona);
-            }
-            return personasDTO;
+    public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) throws NegocioException {
+        Persona personaAModificar;
+        try{
+            personaAModificar=personaDao.obtenerPersona(new Persona(persona.getRfc()));
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
         }
-        return null;
+        Persona personaModificada;
+        try {
+            personaModificada=personaDao.actualizarPersona(personaAModificar);
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
+        }
+        return new PersonaDTO(
+                personaModificada.getRfc(),
+                personaModificada.getNombreCompleto(),
+                personaModificada.getFechaNacimiento(),
+                personaModificada.getCurp(),
+                personaModificada.getTelefono(),
+                personaModificada.esDiscapacitado()
+        );
     }
 
     @Override
-    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) { 
-        Persona persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
-        Object tramite=tramiteLicenciaDao.obtenerTramite(persona,"licencia");
-        if(tramite!=null){
+    public List<PersonaDTO> obtenerPersonasRegistradas()throws NegocioException {
+        List<Persona> personas;
+        try{
+            personas=personaDao.agregarPersonas();
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
+        List<PersonaDTO> personasDTO = new ArrayList<>();
+        for (Persona p : personas) {
+            PersonaDTO persona = new PersonaDTO(
+                    p.getRfc(),
+                    p.getNombreCompleto(),
+                    p.getFechaNacimiento(),
+                    p.getCurp(),
+                    p.getTelefono(),
+                    p.esDiscapacitado());
+            personasDTO.add(persona);
+        }
+        return personasDTO;
+    }
+
+    @Override
+    public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) throws NegocioException{ 
+        Persona persona;
+        try {
+            persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
+            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
             TramiteLicencia tramiteLicencia=(TramiteLicencia)tramite;
             TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramiteLicencia.getVigencia(),tramiteLicencia.getFechaEmision(),
                     tramiteLicencia.getCostoMxn(), EstadoDTO.ACTIVO);
             t.setPersona(personaTramite);
             return t;
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        return null;
     }
 
     @Override
-    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) {
-        Persona persona=personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
-        Object tramite=tramiteLicenciaDao.obtenerTramite(persona,"licencia");
-        return tramiteLicenciaDao.actualizarEstadoTramite((TramiteLicencia)tramite);
+    public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
+        try{
+            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
+            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
+            return tramiteLicenciaDao.actualizarEstadoTramite((TramiteLicencia) tramite);
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
     }
     
     class ValidacionesRegistrarLicencia{

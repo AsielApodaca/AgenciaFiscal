@@ -19,6 +19,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import daos.IVehiculoDAO;
 import daos.TramitePlacasDAO;
+import excepciones.PersistenciaException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -99,7 +101,25 @@ public class Prueba {
 //        Vehiculo vOb=vehiculo.obtenerVehiculo(new Vehiculo("12345678911234567"));
 //        vehiculo.cerrarConexion();
         
-//        IPersonaDAO p=new PersonaDAO();
+        IPersonaDAO p=new PersonaDAO();
+        Persona per=new Persona();
+        per.setNombreCompleto("er");
+        List<Persona> personas=new ArrayList<>();
+        try {
+            personas=p.buscarPersonasPorNombre(per);
+        } catch (PersistenciaException e) {
+            System.out.println(e);
+        }
+        
+        if (!personas.isEmpty()) {
+            for (Persona pers : personas) {
+                System.out.println(pers.toString());
+            }
+        } else {
+            System.out.println("se obtuvo una lista vacia");
+        }
+
+        ClaseConexion.cerrarConexion();
 //        Persona persona=new Persona("GALA850730M78");
 //        persona=p.obtenerPersona(persona);
 //        System.out.println("nombre persona: "+persona.getNombreCompleto());
