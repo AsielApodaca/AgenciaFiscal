@@ -1,3 +1,4 @@
+create database agencia_fiscal;
 use agencia_fiscal;
 
 delimiter $$

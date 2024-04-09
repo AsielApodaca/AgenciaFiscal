@@ -3,6 +3,22 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
+//imports de itext5 (para genearar PDF)
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author luiis
@@ -48,6 +64,7 @@ public class ModuloReportes extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
+        btnGenerar = new javax.swing.JButton();
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,23 +84,19 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Filtros de busqueda");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
 
         jLabel2.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Desde:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Hasta:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
         add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
 
         cmbTipoTramite.setFont(new java.awt.Font("Avenir Next", 1, 13)); // NOI18N
-        cmbTipoTramite.setForeground(new java.awt.Color(0, 0, 0));
         cmbTipoTramite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Licencia", "Placas" }));
         cmbTipoTramite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +106,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tipo tramite:");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
@@ -212,14 +224,12 @@ public class ModuloReportes extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
 
         txtNombre.setEditable(false);
         txtNombre.setText(" ");
 
         jLabel5.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Ingrese nombre de la persona:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -254,7 +264,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 100));
 
         cbxBuscarNombre.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        cbxBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         cbxBuscarNombre.setText("Buscar por nombre");
         cbxBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -298,7 +307,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(138, 47, 47));
 
         btnRegresar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +332,15 @@ public class ModuloReportes extends javax.swing.JPanel {
         );
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        btnGenerar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnGenerar.setText("Generar PDF");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+        add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbTipoTramiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoTramiteActionPerformed
@@ -338,6 +355,56 @@ public class ModuloReportes extends javax.swing.JPanel {
         txtNombre.setEditable(cbxBuscarNombre.isSelected());
         if(!cbxBuscarNombre.isSelected()) txtNombre.setText("");
     }//GEN-LAST:event_cbxBuscarNombreActionPerformed
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+    
+        Document documento = new Document();
+    
+    try{
+        String ruta = System.getProperty("user.home");
+        
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
+        documento.open();
+        
+        PdfPTable tabla = new PdfPTable(6);
+        tabla.addCell("RFC");
+        tabla.addCell("Nombre completo");
+        tabla.addCell("Fecha de nacimiento");
+        tabla.addCell("CURP");
+        tabla.addCell("Telefono");
+        tabla.addCell("Discapacidad (true or false)");
+        
+        //conexion con la base de datos
+        try{
+            
+            Connection ConexionPU = DriverManager.getConnection("jdbc:mysql//localhost/agencia_fiscal", "root", "Bi0log1a1?");
+         PreparedStatement pst = ConexionPU.prepareStatement("select * from personas");
+                 
+                 ResultSet rs = pst.executeQuery();
+                 
+               if(rs.next()){
+                   
+                   do{
+                     tabla.addCell(rs.getNString(1));
+                     tabla.addCell(rs.getNString(2));
+                     tabla.addCell(rs.getNString(3));
+                     tabla.addCell(rs.getNString(4));
+                     tabla.addCell(rs.getNString(5));
+                     tabla.addCell(rs.getNString(6));
+                   }while(rs.next());
+                   
+                   documento.add(tabla);
+                   
+               }  
+        }catch(DocumentException | SQLException e){
+            
+        }
+        documento.close();
+         JOptionPane.showMessageDialog(null, "Reporte creado");
+    }catch(DocumentException | HeadlessException | FileNotFoundException e){
+   
+    }
+    }//GEN-LAST:event_btnGenerarActionPerformed
 
     public void reiniciarPanel(){
         cmbTipoTramite.setSelectedIndex(0);
@@ -364,6 +431,7 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JCheckBox cbxBuscarNombre;
     private javax.swing.JComboBox<String> cmbTipoTramite;
