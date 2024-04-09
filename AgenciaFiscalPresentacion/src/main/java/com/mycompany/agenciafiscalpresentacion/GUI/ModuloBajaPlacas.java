@@ -1,6 +1,11 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import bo.BajaPlacasBO;
+import excepciones.NegocioException;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import negocioDTO.EstadoDTO;
+import negocioDTO.TramitePlacasDTO;
 
 /**
  *
@@ -8,11 +13,15 @@ import javax.swing.SwingUtilities;
  */
 public class ModuloBajaPlacas extends javax.swing.JPanel {
 
+    private TramitePlacasDTO tramitePlacasDto;
     /**
      * Creates new form ModuloBajaPlacas
      */
     public ModuloBajaPlacas() {
         initComponents();
+        this.tramitePlacasDto = null;
+        iniciar();
+        
     }
 
     /**
@@ -34,8 +43,6 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         txtTitular = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtSerieVehiculo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -113,27 +120,15 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
 
         txtTitular.setToolTipText("");
 
-        jLabel8.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Serie del vehiculo:");
-
-        txtSerieVehiculo.setToolTipText("");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtTitular, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel8)
-                            .addGap(127, 127, 127))
-                        .addComponent(txtSerieVehiculo)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTitular, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -142,11 +137,7 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTitular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtSerieVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 48, Short.MAX_VALUE))
+                .addGap(0, 107, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 250, 160));
@@ -284,10 +275,15 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBajaActionPerformed
 
+    private void iniciar() {
+        lblAdvertencia.setVisible(false);
+    }
+    
     public void reiniciarPanel(){
         txtPlacas.setText("");
-        txtSerieVehiculo.setText("");
         txtTitular.setText("");
+        btnBaja.setEnabled(false);
+        lblAdvertencia.setVisible(false);
     }
     
     private void regresarMenu(){
@@ -296,7 +292,29 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     }
     
     private void buscarPlacas() {
+        TramitePlacasDTO placasDTO = new TramitePlacasDTO();
+        placasDTO.setMatricula(txtPlacas.getText());
         
+        
+        try {
+            tramitePlacasDto = Ventanas.bajaPlacas.obtenerPlacas(placasDTO);
+            txtTitular.setText(tramitePlacasDto.getPersona().getNombreCompleto());
+            if(tramitePlacasDto.getEstado() == EstadoDTO.INACTIVO) {
+                btnBaja.setEnabled(false);
+                lblAdvertencia.setText("Las placas ya están inactivas.");
+                lblAdvertencia.setVisible(true);
+            } else {
+                btnBaja.setEnabled(true);
+                lblAdvertencia.setVisible(false);
+            }
+            
+        } catch (NegocioException ne) {
+            JOptionPane.showConfirmDialog(null, ne.getMessage());
+            txtTitular.setText("");
+            lblAdvertencia.setText("Placas no encontradas.");
+            lblAdvertencia.setVisible(true);
+            tramitePlacasDto = null;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -308,7 +326,6 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -318,7 +335,6 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblAdvertencia;
     private javax.swing.JTextField txtPlacas;
-    private javax.swing.JTextField txtSerieVehiculo;
     private javax.swing.JTextField txtTitular;
     // End of variables declaration//GEN-END:variables
 }

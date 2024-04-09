@@ -3,6 +3,7 @@ package bo;
 import daos.ITramitePlacasDAO;
 import daos.TramitePlacasDAO;
 import entidades.Tramite;
+import entidades.Estado;
 import entidades.TramitePlacas;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
@@ -40,12 +41,24 @@ public class BajaPlacasBO implements IBajaPlacas{
         
         
         PersonaDTO persona = new PersonaDTO();
+        EstadoDTO estado;
+        switch(placasConsultada.getEstado().toString()){
+            case "ACTIVO":
+                estado = EstadoDTO.ACTIVO;
+                break;
+            case "INACTIVO":
+                estado = EstadoDTO.INACTIVO;
+                break;
+            default:
+                estado = null;
+                break;
+        }
         persona.setNombreCompleto(placasConsultada.getPersona().getNombreCompleto());
         placasDTO.setMatricula(placasConsultada.getMatricula());
-        //placasDTO.setEstado(placasConsultada.getEstado());
-        
+        placasDTO.setEstado(estado);
         placasDTO.setPersona(persona);
-        return ;
+        
+        return placasDTO;
     }
 
     @Override
