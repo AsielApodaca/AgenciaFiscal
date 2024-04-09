@@ -552,6 +552,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jPanel9.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         lblPrecioVigencia1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        lblPrecioVigencia1.setForeground(new java.awt.Color(204, 204, 204));
         lblPrecioVigencia1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrecioVigencia1.setText("$600");
         jPanel9.add(lblPrecioVigencia1, java.awt.BorderLayout.PAGE_END);
@@ -598,6 +599,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jPanel11.add(jLabel7, java.awt.BorderLayout.CENTER);
 
         lblPrecioVigencia2.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        lblPrecioVigencia2.setForeground(new java.awt.Color(204, 204, 204));
         lblPrecioVigencia2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrecioVigencia2.setText("$900");
         jPanel11.add(lblPrecioVigencia2, java.awt.BorderLayout.PAGE_END);
@@ -645,6 +647,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         jPanel12.add(jLabel8, java.awt.BorderLayout.CENTER);
 
         lblPrecioVigencia3.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        lblPrecioVigencia3.setForeground(new java.awt.Color(204, 204, 204));
         lblPrecioVigencia3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrecioVigencia3.setText("$1100");
         jPanel12.add(lblPrecioVigencia3, java.awt.BorderLayout.PAGE_END);
