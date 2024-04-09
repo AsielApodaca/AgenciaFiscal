@@ -131,6 +131,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
+        buttonGroup1.add(jrbCurp);
         jrbCurp.setFont(new java.awt.Font("Avenir", 0, 13)); // NOI18N
         jrbCurp.setForeground(new java.awt.Color(0, 0, 0));
         jrbCurp.setText("CURP");
@@ -143,6 +144,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
         });
         jPanel7.add(jrbCurp);
 
+        buttonGroup1.add(jrbNacimiento);
         jrbNacimiento.setFont(new java.awt.Font("Avenir", 0, 13)); // NOI18N
         jrbNacimiento.setForeground(new java.awt.Color(0, 0, 0));
         jrbNacimiento.setText("Año de nacimiento");
@@ -155,6 +157,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
         });
         jPanel7.add(jrbNacimiento);
 
+        buttonGroup1.add(jrbNombre);
         jrbNombre.setFont(new java.awt.Font("Avenir", 0, 13)); // NOI18N
         jrbNombre.setForeground(new java.awt.Color(0, 0, 0));
         jrbNombre.setText("Nombre de persona");
@@ -204,7 +207,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jPanel8.add(CampoDeInformacion);
 
         ContenedorDeTabla.setBackground(new java.awt.Color(255, 255, 255));
-        ContenedorDeTabla.setMinimumSize(new java.awt.Dimension(10, 10));
         ContenedorDeTabla.setPreferredSize(new java.awt.Dimension(330, 0));
         ContenedorDeTabla.setLayout(new java.awt.BorderLayout());
 
