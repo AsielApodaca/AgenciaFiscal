@@ -164,6 +164,45 @@ public class MenuJpanel extends javax.swing.JPanel {
 //            e.printStackTrace();
 //        }
 
+        
+        desplegarOperacionesPlacas();
+        //((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
+    }//GEN-LAST:event_btnModuloPlacasActionPerformed
+
+    private void desplegarOperacionesPlacas() {
+        // Mensaje e información personalizada
+        String mensaje = "Tipo de operación";
+        String titulo = "Seleccione una opcion";
+        Object[] opciones = { "Dar de alta", "Dar de baja", "Cancelar" }; // Texto personalizado de los botones
+
+        // Mostrar el diálogo con botones personalizados
+        int opcionSeleccionada = JOptionPane.showOptionDialog(null, mensaje, titulo, JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+
+        // Verificar la opción seleccionada por el usuario
+        switch (opcionSeleccionada) {
+            case 0:
+                // Seleccionó "Dar de alta"
+                System.out.println("Dar de alta");
+                desplegarOpcionesAltaPlacas();
+                break;
+            case 1:
+                // Seleccionó "Dar de baja"
+                System.out.println("Dar de baja");
+                ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloBajaPlacas");
+                break;
+            case 2:
+                // Seleccionó "Cancelar"
+                System.out.println("cancelar");
+                break;
+            default:
+                // El usuario cerró el diálogo sin seleccionar ninguna opción
+                System.out.println("El usuario ha cerrado el diálogo sin seleccionar ninguna opción");
+                break;
+        }
+    }
+    
+    private void desplegarOpcionesAltaPlacas() {
         // Mensaje e información personalizada
         String mensaje = "Tipo de auto";
         String titulo = "Seleccione una opcion";
@@ -194,9 +233,8 @@ public class MenuJpanel extends javax.swing.JPanel {
                 System.out.println("El usuario ha cerrado el diálogo sin seleccionar ninguna opción");
                 break;
         }
-        //((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
-    }//GEN-LAST:event_btnModuloPlacasActionPerformed
-
+    }
+    
     private void btnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultasActionPerformed
         ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloConsultas");
     }//GEN-LAST:event_btnConsultasActionPerformed
