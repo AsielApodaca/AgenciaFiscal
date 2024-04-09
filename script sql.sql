@@ -45,6 +45,22 @@ end $$
 delimiter ;
 
 delimiter $$
+create procedure sp_buscar_personas_curp(in curp varchar(100))
+begin
+    set @pat=concat('%',curp,'%');
+	select * from personas where curp like @pat;
+end $$
+delimiter ;
+
+delimiter $$
+create procedure sp_buscar_personas_fecha(in fecha_nacimiento date)
+begin
+    set @pat=concat('%',fecha_nacimiento,'%');
+	select * from personas where fecha_nacimiento like @pat;
+end $$
+delimiter ;
+
+delimiter $$
 create procedure sp_insertar_autos_personas()
 begin
 	insert into vehiculos (serie, marca, linea, color, modelo, id_persona) values
