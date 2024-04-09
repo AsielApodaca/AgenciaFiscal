@@ -21,6 +21,8 @@ import entidades.Tramite;
 import entidades.TramiteLicencia;
 import entidades.TramitePlacas;
 import entidades.Vehiculo;
+import excepciones.NegocioException;
+import excepciones.PersistenciaException;
 import iBo.IRegistrarPlacasBO;
 import negocioDTO.EstadoDTO;
 import negocioDTO.PersonaDTO;
@@ -48,125 +50,148 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     }
     
     @Override
-    public boolean registrarPlacas(TramitePlacasDTO tramite) {
+    public boolean registrarPlacas(TramitePlacasDTO tramite) throws NegocioException{
         Persona p=new Persona(tramite.getPersona().getRfc());
-        p=personaDAO.obtenerPersona(p);
-        if(p!=null){
-            VehiculoDTO v=tramite.getVehiculo();
-            Vehiculo vehiculo = new Vehiculo(
-                    v.getSerie(),
-                    v.getMarca(),
-                    v.getLinea(),
-                    v.getColor(),
-                    v.getModelo(),
-                    p);
-            TramitePlacas placasNuevas=new TramitePlacas(
-                    vehiculo,
-                    tramite.getFechaEmision(), 
-                    tramite.getCostoMxn(),
-                    Estado.ACTIVO, 
-                    p);
-            placasNuevas.setMatricula();
-            return tramitePlacasDAO.registrarTramite(placasNuevas);
+        try {
+            p=personaDAO.obtenerPersona(p);
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        System.out.println("error al registrar las placas");
-        return false;
+
+        VehiculoDTO v = tramite.getVehiculo();
+        Vehiculo vehiculo = new Vehiculo(
+                v.getSerie(),
+                v.getMarca(),
+                v.getLinea(),
+                v.getColor(),
+                v.getModelo(),
+                p);
+        TramitePlacas placasNuevas = new TramitePlacas(
+                vehiculo,
+                tramite.getFechaEmision(),
+                tramite.getCostoMxn(),
+                Estado.ACTIVO,
+                p);
+        placasNuevas.setMatricula();
+        try {
+            boolean b = tramitePlacasDAO.registrarTramite(placasNuevas);
+            return b;
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @Override
-    public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculoDTO) {
+    public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculoDTO) throws NegocioException{
         Vehiculo vehiculo=new Vehiculo();
         vehiculo.setSerie(vehiculoDTO.getSerie());
-        TramitePlacas placasObtenidas=tramitePlacasDAO.obtenerPlacasPorSerieAuto(vehiculo);
-        
-        if(placasObtenidas!=null){
-            TramitePlacasDTO placasDTO=new TramitePlacasDTO(
-                    placasObtenidas.getMatricula(),
-                    placasObtenidas.getFechaEmision(),
-                    placasObtenidas.getCostoMxn(),
-                    EstadoDTO.ACTIVO);
-            
-            vehiculo=placasObtenidas.getVehiculo();
-            VehiculoDTO vehiculoObt=new VehiculoDTO(
-                    vehiculo.getSerie(),
-                    vehiculo.getMarca(),
-                    vehiculo.getLinea(),
-                    vehiculo.getColor(),
-                    vehiculo.getModelo());
-            placasDTO.setVehiculo(vehiculoObt);
-            
-            return placasDTO;
+        TramitePlacas placasObtenidas=null;
+        try {
+            placasObtenidas=tramitePlacasDAO.obtenerPlacasPorSerieAuto(vehiculo);
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        return null;
+        TramitePlacasDTO placasDTO = new TramitePlacasDTO(
+                placasObtenidas.getMatricula(),
+                placasObtenidas.getFechaEmision(),
+                placasObtenidas.getCostoMxn(),
+                EstadoDTO.ACTIVO);
+
+        vehiculo = placasObtenidas.getVehiculo();
+        VehiculoDTO vehiculoObt = new VehiculoDTO(
+                vehiculo.getSerie(),
+                vehiculo.getMarca(),
+                vehiculo.getLinea(),
+                vehiculo.getColor(),
+                vehiculo.getModelo());
+        placasDTO.setVehiculo(vehiculoObt);
+
+        return placasDTO;
     }
 
     @Override
-    public TramiteLicenciaDTO obtenerLicenciaVigente(TramiteLicenciaDTO tramite) {
+    public TramiteLicenciaDTO obtenerLicenciaVigente(TramiteLicenciaDTO tramite)throws NegocioException {
         TramiteLicencia licenciaBuscada=new TramiteLicencia();
         licenciaBuscada.setNumLicencia(tramite.getNumLicencia());
-        TramiteLicencia licencia=tramiteLicenciaDAO.obtenerLicenciaVigente(licenciaBuscada);
-        
-        if(licencia!=null){
-            TramiteDTO licenciaEncontrada=new TramiteLicenciaDTO(
-                    licencia.getVigencia(),
-                    licencia.getFechaEmision(),
-                    licencia.getCostoMxn(),
-                    EstadoDTO.ACTIVO);
-            Persona personaObtenida=licencia.getPersona();
-            PersonaDTO persona=new PersonaDTO();
-            persona.setId(personaObtenida.getId());
-            persona.setNombreCompleto(personaObtenida.getNombreCompleto());
-            persona.setRfc(personaObtenida.getRfc());
-            licenciaEncontrada.setPersona(persona);
-            return (TramiteLicenciaDTO)licenciaEncontrada;
+        TramiteLicencia licencia=null;
+        try {
+            licencia=tramiteLicenciaDAO.obtenerLicenciaVigente(licenciaBuscada);
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        return null;
+         TramiteDTO licenciaEncontrada = new TramiteLicenciaDTO(
+                licencia.getVigencia(),
+                licencia.getFechaEmision(),
+                licencia.getCostoMxn(),
+                EstadoDTO.ACTIVO);
+        Persona personaObtenida = licencia.getPersona();
+        PersonaDTO persona = new PersonaDTO();
+        persona.setId(personaObtenida.getId());
+        persona.setNombreCompleto(personaObtenida.getNombreCompleto());
+        persona.setRfc(personaObtenida.getRfc());
+        licenciaEncontrada.setPersona(persona);
+        return (TramiteLicenciaDTO) licenciaEncontrada;
     }
 
     @Override
-    public TramitePlacasDTO obtenerPlacasPorMatricula(TramitePlacasDTO placasAnteriores) {
+    public TramitePlacasDTO obtenerPlacasPorMatricula(TramitePlacasDTO placasAnteriores) throws NegocioException{
         TramitePlacas tramite=new TramitePlacas();
         tramite.setMatricula(placasAnteriores.getMatricula());
-        
-        tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(tramite);
-        if(tramite!=null){
-            TramitePlacasDTO placasObtenidasDTO=new TramitePlacasDTO(
-                    tramite.getMatricula(),
-                    tramite.getFechaEmision(),
-                    tramite.getCostoMxn(),
-                    EstadoDTO.ACTIVO
-            );
-            Vehiculo v=tramite.getVehiculo();
-            placasObtenidasDTO.setVehiculo(new VehiculoDTO(
-                    v.getSerie(),
-                    v.getMarca(),
-                    v.getLinea(),
-                    v.getColor(),
-                    v.getModelo()
-            ));
-            return placasObtenidasDTO;
+        try {
+            tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(tramite);
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
         }
-        return null;
+        
+        TramitePlacasDTO placasObtenidasDTO = new TramitePlacasDTO(
+                tramite.getMatricula(),
+                tramite.getFechaEmision(),
+                tramite.getCostoMxn(),
+                EstadoDTO.ACTIVO
+        );
+        Vehiculo v = tramite.getVehiculo();
+        placasObtenidasDTO.setVehiculo(new VehiculoDTO(
+                v.getSerie(),
+                v.getMarca(),
+                v.getLinea(),
+                v.getColor(),
+                v.getModelo()
+        ));
+        return placasObtenidasDTO;
     }
 
     @Override
-    public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores) {
+    public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores) throws NegocioException{
         //Persona personaTramite=new Persona(placasAnteriores.getPersona().getRfc());
         TramitePlacas placas=new TramitePlacas();
         placas.setMatricula(placasAnteriores.getMatricula());
-        TramitePlacas tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(placas);
-        System.out.println(tramite.toString());
-        return tramitePlacasDAO.actualizarEstadoTramite(tramite);
+        TramitePlacas tramite;
+        try{
+            tramite=tramitePlacasDAO.obtenerPlacasPorMatricula(placas);
+            return tramitePlacasDAO.actualizarEstadoTramite(tramite);
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @Override
-    public boolean renovarPlacas(TramitePlacasDTO placas) {
+    public boolean renovarPlacas(TramitePlacasDTO placas)throws NegocioException {
         PersonaDTO persona=placas.getPersona();
-        Persona p=personaDAO.obtenerPersona(new Persona(persona.getRfc()));
+        Persona p;
+        try {
+            p=personaDAO.obtenerPersona(new Persona(persona.getRfc()));
+        } catch (PersistenciaException e) {
+            throw new NegocioException(e.getMessage());
+        }
         VehiculoDTO v=placas.getVehiculo();
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setSerie(v.getSerie());
-        vehiculo=vehiculoDAO.obtenerVehiculo(vehiculo);
+        try{
+            vehiculo=vehiculoDAO.obtenerVehiculo(vehiculo);
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
+        
         TramitePlacas placasNuevas = new TramitePlacas(
                 vehiculo,
                 placas.getFechaEmision(),
@@ -175,8 +200,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
                 p
         );
         placasNuevas.setMatricula();
+        try{
+            return tramitePlacasDAO.renovarPlacas(placasNuevas);
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
         //placasViejas=tramitePlacasDAO.obtenerPlacasPorMatricula(placasViejas);
-        return tramitePlacasDAO.renovarPlacas(placasNuevas);
     }
     
 }
