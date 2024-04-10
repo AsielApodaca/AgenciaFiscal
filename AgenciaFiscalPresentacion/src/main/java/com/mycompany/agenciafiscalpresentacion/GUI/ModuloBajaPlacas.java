@@ -2,6 +2,8 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.BajaPlacasBO;
 import excepciones.NegocioException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import negocioDTO.EstadoDTO;
@@ -14,6 +16,7 @@ import negocioDTO.TramitePlacasDTO;
 public class ModuloBajaPlacas extends javax.swing.JPanel {
 
     private TramitePlacasDTO tramitePlacasDto;
+    private static final Logger LOG = Logger.getLogger(ModuloBajaPlacas.class.getName());
     /**
      * Creates new form ModuloBajaPlacas
      */
@@ -311,13 +314,14 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
             }
             
         } catch (NegocioException ne) {
-            JOptionPane.showConfirmDialog(null, ne.getMessage());
+            LOG.log(Level.WARNING, ne.getMessage());
             txtTitular.setText("");
             lblAdvertencia.setText("Placas no encontradas.");
             lblAdvertencia.setVisible(true);
             tramitePlacasDto = null;
         }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
