@@ -54,6 +54,7 @@ public class BajaPlacasBO implements IBajaPlacasBO{
                 break;
         }
         persona.setNombreCompleto(placasConsultada.getPersona().getNombreCompleto());
+        persona.setRfc(placasConsultada.getPersona().getRfc());
         placasDTO.setMatricula(placasConsultada.getMatricula());
         placasDTO.setEstado(estado);
         placasDTO.setPersona(persona);
@@ -63,7 +64,17 @@ public class BajaPlacasBO implements IBajaPlacasBO{
 
     @Override
     public boolean darDeBajaPlacas(TramitePlacasDTO placas) throws NegocioException{
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        TramitePlacas tramite = new TramitePlacas();
+        tramite.setMatricula(placas.getMatricula());
+        
+        
+        try {
+            tramite = tramitePlacasDao.obtenerPlacasPorMatricula(tramite);
+            if(tramite == null) return false;
+            return tramitePlacasDao.actualizarEstadoTramite(tramite);
+        } catch (PersistenciaException pe) {
+            throw new NegocioException(pe.getMessage());
+        } 
     }
 
 }

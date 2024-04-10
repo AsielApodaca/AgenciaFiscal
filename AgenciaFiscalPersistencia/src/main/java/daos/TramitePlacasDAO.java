@@ -107,6 +107,9 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         try{
             tramite=query.getSingleResult();
             return tramite;
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());
+            return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
             throw new PersistenciaException("Ocurrio un error al obtener las placas");

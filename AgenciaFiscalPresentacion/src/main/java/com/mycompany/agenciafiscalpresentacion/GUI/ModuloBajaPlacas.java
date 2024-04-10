@@ -261,7 +261,7 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
 
     private void txtPlacasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacasKeyTyped
         // TODO add your handling code here:
-        if (txtPlacas.getText().length() == 9)
+        if (txtPlacas.getText().length() == 7)
         evt.consume();
     }//GEN-LAST:event_txtPlacasKeyTyped
 
@@ -275,7 +275,7 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        // TODO add your handling code here:
+        desactivarPlacas();
         
     }//GEN-LAST:event_btnBajaActionPerformed
 
@@ -322,6 +322,20 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
         }
     }
     
+    private void desactivarPlacas() {
+        try {
+            if(Ventanas.bajaPlacas.darDeBajaPlacas(tramitePlacasDto)) {
+                JOptionPane.showMessageDialog(null, "Las placas han sido desactivadas.");
+                regresarMenu();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "No se pudieron desactivar las placas.");
+            }
+        } catch (NegocioException ne) {
+            JOptionPane.showMessageDialog(null, "Hubo un error al desactivar las placas.");
+            LOG.log(Level.SEVERE, ne.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
