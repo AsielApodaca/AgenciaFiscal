@@ -7,16 +7,16 @@ import entidades.Estado;
 import entidades.TramitePlacas;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
-import iBo.IBajaPlacas;
 import negocioDTO.EstadoDTO;
 import negocioDTO.PersonaDTO;
 import negocioDTO.TramitePlacasDTO;
+import iBo.IBajaPlacasBO;
 
 /**
  *
  * @author Asiel Apodaca Monge
  */
-public class BajaPlacasBO implements IBajaPlacas{
+public class BajaPlacasBO implements IBajaPlacasBO{
 
     private static ITramitePlacasDAO tramitePlacasDao;
     

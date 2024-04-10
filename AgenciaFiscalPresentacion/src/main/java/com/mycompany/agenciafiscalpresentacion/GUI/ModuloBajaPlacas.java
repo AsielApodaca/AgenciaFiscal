@@ -118,6 +118,7 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Titular del vehículo");
 
+        txtTitular.setEditable(false);
         txtTitular.setToolTipText("");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
