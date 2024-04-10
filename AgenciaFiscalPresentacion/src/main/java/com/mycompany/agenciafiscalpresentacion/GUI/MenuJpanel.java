@@ -152,7 +152,36 @@ public class MenuJpanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModuloLicenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloLicenciasActionPerformed
-        ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
+        // Mensaje e información personalizada
+        String mensaje = "Tipo de operación";
+        String titulo = "Seleccione una opcion";
+        Object[] opciones = { "Tramitar licencia", "Cancelar licencia", "Cancelar" }; // Texto personalizado de los botones
+
+        // Mostrar el diálogo con botones personalizados
+        int opcionSeleccionada = JOptionPane.showOptionDialog(null, mensaje, titulo, JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+
+        // Verificar la opción seleccionada por el usuario
+        switch (opcionSeleccionada) {
+            case 0:
+                // Seleccionó "Tramitar licencia"
+                System.out.println("Tramitar licencia");
+                ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
+                break;
+            case 1:
+                // Seleccionó "Cancelar licencia"
+                System.out.println("Cancelar licencia");
+                ((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloBajaLicencia");
+                break;
+            case 2:
+                // Seleccionó "Cancelar"
+                System.out.println("Cancelar");
+                break;
+            default:
+                // El usuario cerró el diálogo sin seleccionar ninguna opción
+                System.out.println("El usuario ha cerrado el diálogo sin seleccionar ninguna opción");
+                break;
+        }
     }//GEN-LAST:event_btnModuloLicenciasActionPerformed
 
     private void btnModuloPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloPlacasActionPerformed

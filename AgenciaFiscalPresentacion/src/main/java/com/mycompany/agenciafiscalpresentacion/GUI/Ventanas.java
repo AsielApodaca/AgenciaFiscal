@@ -20,7 +20,7 @@ public class Ventanas extends JFrame {
     public Ventanas() {
         setTitle("Agencia fiscal");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 380);
+        setSize(640, 400);
         setLocationRelativeTo(null);
         setResizable(false);
         
@@ -45,6 +45,7 @@ public class Ventanas extends JFrame {
         cardPanel.add(new ModuloConsultas(), "ModuloConsultas");
         cardPanel.add(new ModuloReportes(), "ModuloReportes");
         cardPanel.add(new ModuloBajaPlacas(), "ModuloBajaPlacas");
+        cardPanel.add(new ModuloBajaLicencia(), "ModuloBajaLicencia");
         
         // Añadir el panel con CardLayout
         getContentPane().add(cardPanel, BorderLayout.CENTER);
