@@ -182,8 +182,10 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 }
                 
                 TramiteLicenciaDTO licencia = setTramiteLicencia();
-                Ventanas.registrarLicencia.registrarLicencia(licencia);
-                msj="Licencia nueva registrada con éxito.";
+                licencia = Ventanas.registrarLicencia.registrarLicencia(licencia);
+                msj="""
+                    Licencia nueva registrada con \u00e9xito.
+                    No. Licencia: '""" + licencia.getNumLicencia() + "'";
             } catch (NegocioException e) {
                 msj=e.getMessage();
             }

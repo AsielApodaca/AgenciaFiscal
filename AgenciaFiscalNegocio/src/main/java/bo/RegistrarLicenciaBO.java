@@ -59,7 +59,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     }
 
     @Override
-    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException{
+    public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException{
         PersonaDTO personaEnviada=tramiteLicencia.getPersona();
         Persona persona;
         try {
@@ -76,7 +76,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         tramite.setVigencia(tramiteLicencia.getVigencia());
         tramite.setNumLicencia();
         try{
-            return tramiteLicenciaDao.registrarTramite(tramite);
+            if(tramiteLicenciaDao.registrarTramite(tramite)) {
+                TramiteLicenciaDTO licenciaDto = new TramiteLicenciaDTO();
+                licenciaDto.setNumLicencia(tramite.getNumLicencia());
+                return licenciaDto;
+            }
+            return null;
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
         }

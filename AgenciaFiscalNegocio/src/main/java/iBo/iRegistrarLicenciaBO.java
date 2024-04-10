@@ -11,7 +11,7 @@ import negocioDTO.TramiteLicenciaDTO;
  */
 public interface iRegistrarLicenciaBO {
     public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona) throws NegocioException;
-    public boolean registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException;
+    public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException;
     public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) throws NegocioException;
     public List<PersonaDTO> obtenerPersonasRegistradas() throws NegocioException;
     public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) throws NegocioException;
