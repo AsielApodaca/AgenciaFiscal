@@ -277,6 +277,7 @@ public class ModuloBajaPlacas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void iniciar() {
+        Ventanas.bajaPlacas = new BajaPlacasBO();
         lblAdvertencia.setVisible(false);
     }
     
