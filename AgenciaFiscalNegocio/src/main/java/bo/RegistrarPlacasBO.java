@@ -88,6 +88,7 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         TramitePlacas placasObtenidas=null;
         try {
             placasObtenidas=tramitePlacasDAO.obtenerPlacasPorSerieAuto(vehiculo);
+            if(placasObtenidas == null) return null;
         } catch (PersistenciaException e) {
             throw new NegocioException(e.getMessage());
         }
