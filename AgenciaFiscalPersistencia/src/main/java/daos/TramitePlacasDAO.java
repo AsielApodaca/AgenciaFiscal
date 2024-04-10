@@ -13,6 +13,7 @@ import excepciones.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -66,6 +67,9 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         try{
             tramite=query.getSingleResult();
             return tramite;
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());
+            return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
             throw new PersistenciaException("Ocurrio un error al obtener las placas");
