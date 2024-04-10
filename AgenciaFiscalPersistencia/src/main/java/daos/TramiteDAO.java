@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -168,6 +169,9 @@ public class TramiteDAO implements ITramiteDAO{
         try{
             tramite=query.getSingleResult();
             return tramite;
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());
+            return null;
         }catch(Exception e){
             System.out.println("error:");
             System.out.println(e.fillInStackTrace());
