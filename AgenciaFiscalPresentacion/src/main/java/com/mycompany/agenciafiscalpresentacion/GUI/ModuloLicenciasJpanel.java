@@ -175,9 +175,12 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             }
             try {
                 TramiteLicenciaDTO licenciaVieja = Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
-                if (Ventanas.registrarLicencia.actualizarEstadoLicencia(licenciaVieja)) {
-                    System.out.println("se actualizo el estado de la licencia");
+                if(licenciaVieja != null) {
+                    if (Ventanas.registrarLicencia.actualizarEstadoLicencia(licenciaVieja)) {
+                        System.out.println("se actualizo el estado de la licencia");
+                    }
                 }
+                
                 TramiteLicenciaDTO licencia = setTramiteLicencia();
                 Ventanas.registrarLicencia.registrarLicencia(licencia);
                 msj="Licencia nueva registrada con éxito.";
