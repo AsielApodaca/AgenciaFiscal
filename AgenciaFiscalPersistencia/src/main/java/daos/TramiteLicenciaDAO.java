@@ -11,6 +11,7 @@ import entidades.TramiteLicencia;
 import excepciones.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -64,6 +65,9 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
         try{
             tramiteLicencia=query.getSingleResult();
             return tramiteLicencia;
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());
+            return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
             throw new PersistenciaException("Ocurrio un error al obtener la licencia");

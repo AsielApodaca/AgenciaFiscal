@@ -145,7 +145,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 160));
+        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 250, 180));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -214,7 +214,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 250, 160));
+        add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 120, 250, 180));
 
         jLabel2.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -362,6 +362,7 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarLicenciaActionPerformed
 
     private boolean pagarTramite(){
+        String msj;
          int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar las placas?", "Advertencia", JOptionPane.YES_NO_OPTION);
 
         if (opcion == JOptionPane.YES_OPTION) {
@@ -371,17 +372,22 @@ public class ModuloPlacasAutoUsado extends javax.swing.JPanel {
 
             try{
                 Ventanas.registrarPlacas.actualizarEstadoPlacasAnteriores(tramitePlacasAnteriores);
-                Ventanas.registrarPlacas.renovarPlacas(placas);
+                TramitePlacasDTO placasGeneradas = Ventanas.registrarPlacas.renovarPlacas(placas);
+                if(placasGeneradas != null){
+                    msj = """
+                          Placas nuevas registradas con \u00e9xito.
+                          Matr\u00edcula: '""" + placasGeneradas.getMatricula() + "'";
+                }
+                else msj = "No se pudieron registrar las placas";
             }catch(NegocioException e){
                 JOptionPane.showConfirmDialog(null, 
                         e.getMessage());
                 return false;
             }
+            JOptionPane.showMessageDialog(null, msj);
+            return true;
         }
-        JOptionPane.showMessageDialog(null,
-                        "Placas nuevas registradas con éxito."
-                );
-                return true;
+        return false;
     }
     
     private void iniciar(){

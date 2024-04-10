@@ -121,6 +121,7 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         TramiteLicencia licencia=null;
         try {
             licencia=tramiteLicenciaDAO.obtenerLicenciaVigente(licenciaBuscada);
+            if(licencia == null) return null;
         } catch (PersistenciaException e) {
             throw new NegocioException(e.getMessage());
         }
@@ -180,7 +181,7 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     }
 
     @Override
-    public boolean renovarPlacas(TramitePlacasDTO placas)throws NegocioException {
+    public TramitePlacasDTO renovarPlacas(TramitePlacasDTO placas)throws NegocioException {
         PersonaDTO persona=placas.getPersona();
         Persona p;
         try {
@@ -206,7 +207,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         );
         placasNuevas.setMatricula();
         try{
-            return tramitePlacasDAO.renovarPlacas(placasNuevas);
+            if(tramitePlacasDAO.renovarPlacas(placasNuevas)) {
+                TramitePlacasDTO placasGeneradasDto = new TramitePlacasDTO();
+                placasGeneradasDto.setMatricula(placasNuevas.getMatricula());
+                return placasGeneradasDto;
+            }
+            return null;
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
         }
