@@ -50,7 +50,7 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     }
     
     @Override
-    public boolean registrarPlacas(TramitePlacasDTO tramite) throws NegocioException{
+    public TramitePlacasDTO registrarPlacas(TramitePlacasDTO tramite) throws NegocioException{
         Persona p=new Persona(tramite.getPersona().getRfc());
         try {
             p=personaDAO.obtenerPersona(p);
@@ -74,8 +74,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
                 p);
         placasNuevas.setMatricula();
         try {
-            boolean b = tramitePlacasDAO.registrarTramite(placasNuevas);
-            return b;
+            if(tramitePlacasDAO.registrarTramite(placasNuevas)) {
+                TramitePlacasDTO placasRegistradasDto = new TramitePlacasDTO();
+                placasRegistradasDto.setMatricula(placasNuevas.getMatricula());
+                return placasRegistradasDto;
+            }
+            return null;
         } catch (PersistenciaException e) {
             throw new NegocioException(e.getMessage());
         }

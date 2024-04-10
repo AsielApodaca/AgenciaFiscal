@@ -14,7 +14,7 @@ import negocioDTO.VehiculoDTO;
  * @author luiis
  */
 public interface IRegistrarPlacasBO {
-    public boolean registrarPlacas(TramitePlacasDTO placas) throws NegocioException;
+    public TramitePlacasDTO registrarPlacas(TramitePlacasDTO placas) throws NegocioException;
     public boolean renovarPlacas(TramitePlacasDTO placas)throws NegocioException;
     public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculo)throws NegocioException;
     public TramitePlacasDTO obtenerPlacasPorMatricula(TramitePlacasDTO placasAnteriores)throws NegocioException;

@@ -533,6 +533,7 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
     }
     
     private void pagarTramite(){
+        String msj;
         if(!txtSerie.getText().isBlank() && !txtMarca.getText().isBlank() &&
                 !txtLinea.getText().isBlank() && !txtColor.getText().isBlank() && !txtModelo.getText().isBlank()){
             int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar las placas?", "Advertencia", JOptionPane.YES_NO_OPTION);
@@ -548,15 +549,16 @@ public class ModuloPlacasAutoNuevo extends javax.swing.JPanel {
                         txtModelo.getText());
                 tramite.setVehiculo(vehiculo);
                 try{
-                    Ventanas.registrarPlacas.registrarPlacas(tramite);
-                    JOptionPane.showMessageDialog(null,
-                            "Placas nuevas registradas con éxito."
-                    );
+                    TramitePlacasDTO placas = Ventanas.registrarPlacas.registrarPlacas(tramite);
+                    if(placas != null)
+                    msj = """
+                          Placas nuevas registradas con \u00e9xito.
+                          Matr\u00edcula: '""" + placas.getMatricula() + "'";
+                    else msj = "No se pudieron registrar las placas";
                 }catch(NegocioException e){
-                    JOptionPane.showMessageDialog(null,
-                            "No se registraron las placas."
-                    );
+                    msj = "Hubo un error al registrar las placas";
                 }
+                JOptionPane.showMessageDialog(null, msj);
                 regresarMenu();
             }
         }else{
