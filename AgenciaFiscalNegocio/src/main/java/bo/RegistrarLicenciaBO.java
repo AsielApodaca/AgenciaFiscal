@@ -134,6 +134,7 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         try {
             persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
             Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
+            if(tramite == null) return null;
             TramiteLicencia tramiteLicencia=(TramiteLicencia)tramite;
             TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramiteLicencia.getVigencia(),tramiteLicencia.getFechaEmision(),
                     tramiteLicencia.getCostoMxn(), EstadoDTO.ACTIVO);
