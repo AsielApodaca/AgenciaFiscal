@@ -74,4 +74,22 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
         }
     }
 
+    @Override
+    public boolean actualizarFechaVencimiento(TramiteLicencia licencia) throws PersistenciaException {
+        try{
+            System.out.println("no se: "+licencia.toString());
+            TramiteLicencia tl=em.find(TramiteLicencia.class, licencia.getId());
+            System.out.println(tl.toString());
+            em.getTransaction().begin();
+            tl.setFechaCaducidad(licencia.getFechaCaducidad());
+            tl.toString();
+            em.getTransaction().commit();
+            return true;
+        }catch(Exception e){
+            em.getTransaction().rollback();
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al actualizar la licencia");
+        }
+    }
+
 }
