@@ -8,9 +8,12 @@ import bo.ConsultasBO;
 import excepciones.NegocioException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import negocioDTO.PersonaDTO;
 
@@ -56,9 +59,10 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jrbNombre = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         txtDato = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         jListPersonas = new javax.swing.JList<>();
+        btnBuscar = new javax.swing.JButton();
         ContenedorDeTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonas = new javax.swing.JTable();
@@ -143,6 +147,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
         CampoDeInformacion.add(jLabel1, gridBagConstraints);
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
 
         buttonGroup1.add(jrbCurp);
         jrbCurp.setFont(new java.awt.Font("Avenir", 0, 13)); // NOI18N
@@ -192,44 +197,43 @@ public class ModuloConsultas extends javax.swing.JPanel {
             }
         });
 
-        btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setMinimumSize(new java.awt.Dimension(0, 60));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jListPersonas.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        scrollPane.setViewportView(jListPersonas);
+
+        jPanel6.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 239, 60));
+
+        btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
-
-        scrollPane.setViewportView(jListPersonas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(btnBuscar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(txtDato)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscar)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addGap(25, 25, 25))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(36, 36, 36)
-                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -365,7 +369,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
         jPanel8.add(ContenedorDeTabla);
 
-        add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 640, 220));
+        add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 640, 230));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrbCurpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCurpActionPerformed
@@ -381,7 +385,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void txtDatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyTyped
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtDatoKeyTyped
     
     private void validarDatoBusqueda(){
@@ -403,17 +407,24 @@ public class ModuloConsultas extends javax.swing.JPanel {
             }
 
             private void validar(javax.swing.event.DocumentEvent e) {
-                Document doc = e.getDocument();
-                if(jrbNombre.isSelected()){
-                    if(!txtDato.getText().isBlank() && txtDato.getText().matches("^[A-Za-z ]+$")){
-                        buscarPersonasPorNombre(txtDato.getText());
+                try {
+                    Document doc = e.getDocument();
+                    String texto = doc.getText(0, doc.getLength());
+                    if (jrbNombre.isSelected()) {
+                        if (texto.isBlank()) {
+                            personasEncontradas.clear();
+                        } else if (texto.matches("^[A-Za-z ]+$")) {
+                            buscarPersonasPorNombre(texto);
+                        }
                         actualizarJList();
-                    }else
-                        personasEncontradas.clear();
-                }else if(jrbNacimiento.isSelected()){
-                    
-                }else if(jrbCurp.isSelected()){
-                    
+                        
+                    } else if (jrbNacimiento.isSelected()) {
+                        
+                    } else if (jrbCurp.isSelected()) {
+                        
+                    }
+                } catch (BadLocationException ex) {
+                    Logger.getLogger(ModuloConsultas.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
@@ -422,24 +433,24 @@ public class ModuloConsultas extends javax.swing.JPanel {
     
     private void actualizarJList() {
         modeloLista.clear();
-        if(personasEncontradas!=null){
-            if (!personasEncontradas.isEmpty()) {
-                List<String> lista = nombresPersonas();
-                for (String nombrePersona : lista) {
-                    modeloLista.addElement(nombrePersona);
-                }
-                jListPersonas.setModel(modeloLista);
-                scrollPane.setVisible(true);
-                jListPersonas.setVisible(true);
-            } 
-        }else
+        if(personasEncontradas!=null && !personasEncontradas.isEmpty()){
+            List<String> lista = nombresPersonas();
+            for (String nombrePersona : lista) {
+                modeloLista.addElement(nombrePersona);
+            }
+            jListPersonas.setModel(modeloLista);
+            scrollPane.setVisible(true);
+            jListPersonas.setVisible(true);
+        }else{
+            
             scrollPane.setVisible(false);
+        }
+            
     }
     
     private List<String> nombresPersonas(){
         List<String> nombres = new ArrayList<>();
         for (PersonaDTO p : personasEncontradas) {
-            System.out.println(p.getNombreCompleto());
             nombres.add(p.getNombreCompleto());
         }
         return nombres;
@@ -452,11 +463,12 @@ public class ModuloConsultas extends javax.swing.JPanel {
         try {
             personasEncontradas = Ventanas.consultas.consultarPersonasPorNombre(persona);
             if(personasEncontradas!=null){
+                System.out.println(scrollPane.isVisible());
                 System.out.println("-------se encontraron personas-------");
                 for (PersonaDTO p : personasEncontradas) {
                     System.out.println(p.getNombreCompleto());
                 }
-            }
+            }else System.out.println("Lista vacia");
             
         } catch (NegocioException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -466,11 +478,16 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private void iniciar(){
         Ventanas.consultas=new ConsultasBO();
         personasEncontradas=new ArrayList<>();
+        modeloLista=new DefaultListModel<>();
+        jListPersonas.setModel(modeloLista);
+        jListPersonas.setVisible(true);
+        scrollPane.setVisible(true);
+        actualizarJList();
         validarDatoBusqueda();
         btnBuscar.setEnabled(false);
-        modeloLista=new DefaultListModel<>();
+        
         //jListPersonas.setModel(modeloLista);
-        scrollPane.setVisible(false);
+        
     }
     
     private void regresarMenu() {
@@ -504,6 +521,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
