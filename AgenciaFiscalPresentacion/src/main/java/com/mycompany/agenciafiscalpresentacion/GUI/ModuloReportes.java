@@ -8,6 +8,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import daos.TramiteDAO;
+import entidades.Persona;
+import entidades.Tramite;
+import excepciones.PersistenciaException;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +20,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -358,52 +365,45 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
     
-        Document documento = new Document();
-    
-    try{
+    Document documento = new Document();
+    try {
         String ruta = System.getProperty("user.home");
-        
         PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
         documento.open();
-        
-        PdfPTable tabla = new PdfPTable(6);
+
+        PdfPTable tabla = new PdfPTable(7);
+        tabla.addCell("ID");
         tabla.addCell("RFC");
         tabla.addCell("Nombre completo");
         tabla.addCell("Fecha de nacimiento");
         tabla.addCell("CURP");
         tabla.addCell("Telefono");
         tabla.addCell("Discapacidad (true or false)");
-        
-        //conexion con la base de datos
-        try{
-            
-            Connection ConexionPU = DriverManager.getConnection("jdbc:mysql//localhost/agencia_fiscal", "root", "Bi0log1a1?");
-            PreparedStatement pst = ConexionPU.prepareStatement("select * from personas");
-                 
-                 ResultSet rs = pst.executeQuery();
-                 
-               if(rs.next()){
-                   
-                   do{
-                     tabla.addCell(rs.getNString(1));
-                     tabla.addCell(rs.getNString(2));
-                     tabla.addCell(rs.getNString(3));
-                     tabla.addCell(rs.getNString(4));
-                     tabla.addCell(rs.getNString(5));
-                     tabla.addCell(rs.getNString(6));
-                   }while(rs.next());
-                   
-                   documento.add(tabla);
-                   
-               }  
-        }catch(DocumentException | SQLException e){
-            JOptionPane.showMessageDialog(null, e);
+
+        // Obtener los trámites utilizando JPA
+        TramiteDAO tramiteDAO = new TramiteDAO();
+        List<Tramite> tramites = tramiteDAO.obtenerTramites(new Persona(""));
+
+        for (Tramite tramite : tramites) {
+            tabla.addCell(String.valueOf(tramite.getId()));
+            tabla.addCell(tramite.getPersona().getRfc());
+            tabla.addCell(tramite.getPersona().getNombreCompleto());
+            tabla.addCell(tramite.getPersona().getFechaNacimiento().toString());
+            tabla.addCell(tramite.getPersona().getCurp());
+            tabla.addCell(tramite.getPersona().getTelefono());
+            tabla.addCell(String.valueOf(tramite.getPersona().esDiscapacitado()));
         }
+
+        documento.add(tabla);
+        
         documento.close();
-         JOptionPane.showMessageDialog(null, "Reporte creado");
-    }catch(DocumentException | HeadlessException | FileNotFoundException e){
+        JOptionPane.showMessageDialog(null, "Reporte creado");
+    } catch (DocumentException | HeadlessException | FileNotFoundException e) {
         JOptionPane.showMessageDialog(null, e);
-    }
+    }   catch (PersistenciaException ex) {
+            Logger.getLogger(ModuloReportes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     public void reiniciarPanel(){
@@ -428,6 +428,8 @@ public class ModuloReportes extends javax.swing.JPanel {
         reiniciarPanel();
         ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

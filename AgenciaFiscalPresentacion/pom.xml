@@ -31,6 +31,16 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.0.33</version>
         </dependency>
+        <dependency>
+            <groupId>com.couchbase.jdbc</groupId>
+            <artifactId>jdbc-n1ql</artifactId>
+            <version>0.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.alink</groupId>
+            <artifactId>alink_connector_jdbc_mysql_flink-1.10_2.11</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
