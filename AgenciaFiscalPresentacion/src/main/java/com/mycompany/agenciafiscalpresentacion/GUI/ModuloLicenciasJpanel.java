@@ -32,36 +32,39 @@ import negocioDTO.TramiteLicenciaDTO;
 public class ModuloLicenciasJpanel extends javax.swing.JPanel {
 
     private PersonaDTO persona;
-    
+
     /**
      * Creates new form ModuloLicenciasJpanel
      */
     public ModuloLicenciasJpanel() {
         initComponents();
-        
+
         persona = null;
         iniciar();
     }
-    
-    public void iniciar(){
+
+    public void iniciar() {
         validarRfc();
-        Ventanas.registrarLicencia=new RegistrarLicenciaBO();
+        Ventanas.registrarLicencia = new RegistrarLicenciaBO();
         btnPagar.setEnabled(false);
+        btnMostrarLicenciaAnt.setEnabled(false);
         txtAdvertencia.setVisible(false);
-        
+
         rbnVigencia1.addActionListener(e -> actualizarEstadoBtnPagar());
         rbnVigencia2.addActionListener(e -> actualizarEstadoBtnPagar());
         rbnVigencia3.addActionListener(e -> actualizarEstadoBtnPagar());
     }
-    
+
     public void actualizarEstadoBtnPagar() {
         if (rbnVigencia1.isSelected() || rbnVigencia2.isSelected() || rbnVigencia3.isSelected()) {
-            if(persona != null)btnPagar.setEnabled(true);
+            if (persona != null) {
+                btnPagar.setEnabled(true);
+            }
         } else {
             btnPagar.setEnabled(false);
         }
     }
-    
+
     public void validarRfc() {
         Document doc = txtRfc.getDocument();
         doc.addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -83,32 +86,44 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             private void validar(javax.swing.event.DocumentEvent e) {
                 Document doc = e.getDocument();
                 if (doc.getLength() == 13) {
-                    
+
                     // Lógica para validar rfc
-                    PersonaDTO p=new PersonaDTO();
+                    PersonaDTO p = new PersonaDTO();
                     p.setRfc(txtRfc.getText());
-                    try{
+                    try {
                         persona = Ventanas.registrarLicencia.consultarPersonaPorRfc(p);
-                    }catch(NegocioException ex){
+                    } catch (NegocioException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage());
                     }
-                    if(persona == null){ // No se encontró
+                    if (persona == null) { // No se encontró
                         limpiarDatos();
                         mostrarAdvertenciaRfc();
                     } else { // Se encontró
                         System.out.println(persona.toString());
                         btnPagar.setEnabled(true);
+                        if(buscarLicencia())
+                            btnMostrarLicenciaAnt.setEnabled(true);
                         mostrarDatos();
                     }
-                    
+
                 } else {
-                    persona=null;
+                    persona = null;
                     limpiarDatos();
                 }
             }
         });
     }
-    
+
+    private boolean buscarLicencia() {
+        TramiteLicenciaDTO licenciaExistente = null;
+        try {
+            licenciaExistente = Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return licenciaExistente != null;
+    }
+
     public void limpiarDatos() {
         txtNombreCompleto.setText("");
         txtFechaNacimiento.setText((""));
@@ -119,19 +134,19 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         cbxDiscapacidad.setSelected(false);
         cbxDiscapacidad.setEnabled(false);
     }
-    
-    public void mostrarAdvertenciaRfc(){
+
+    public void mostrarAdvertenciaRfc() {
         txtAdvertencia.setVisible(true);
         btnPagar.setEnabled(false);
     }
-    
-    public void mostrarDatos(){
+
+    public void mostrarDatos() {
         txtAdvertencia.setVisible(false);
         txtNombreCompleto.setText(persona.getNombreCompleto());
         txtFechaNacimiento.setText(persona.getFechaNacimiento().getTime().toString());
         txtTelefono.setText(persona.getTelefono());
-        
-        if(persona.getDiscapaciad()){
+
+        if (persona.getDiscapaciad()) {
             cbxDiscapacidad.setSelected(true);
             cbxDiscapacidad.setEnabled(false);
             lblPrecioVigencia1.setText("$ 200");
@@ -139,16 +154,16 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             lblPrecioVigencia3.setText("$ 700");
             cbxDiscapacidad.setEnabled(false);
             cbxDiscapacidad.setSelected(true);
-        }else{
+        } else {
             cbxDiscapacidad.setEnabled(true);
             cbxDiscapacidad.setSelected(false);
         }
-        
+
         actualizarVistaPrecios();
     }
-    
+
     public void actualizarVistaPrecios() {
-        if(cbxDiscapacidad.isSelected()){
+        if (cbxDiscapacidad.isSelected()) {
             lblPrecioVigencia1.setText("$ 200");
             lblPrecioVigencia2.setText("$ 500");
             lblPrecioVigencia3.setText("$ 700");
@@ -156,9 +171,9 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             lblPrecioVigencia1.setText("$ 600");
             lblPrecioVigencia2.setText("$ 900");
             lblPrecioVigencia3.setText("$ 1100");
-        }    
+        }
     }
-    
+
     public void registrarLicencia() {
         int opcion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas registrar la licencia?", "Advertencia", JOptionPane.YES_NO_OPTION);
 
@@ -166,10 +181,10 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             // El usuario ha hecho clic en "Sí" o "Continuar"
             // Aquí puedes poner tu lógica para registrar la licencia
             String msj;
-            if(!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()){
-                try{
-                    persona=Ventanas.registrarLicencia.actualizarDiscapacidadPersona(persona);
-                }catch(NegocioException e){
+            if (!persona.getDiscapaciad() && cbxDiscapacidad.isSelected()) {
+                try {
+                    persona = Ventanas.registrarLicencia.actualizarDiscapacidadPersona(persona);
+                } catch (NegocioException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
             }
@@ -187,103 +202,167 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                     Licencia nueva registrada con \u00e9xito.
                     No. Licencia: '""" + licencia.getNumLicencia() + "'";
             } catch (NegocioException e) {
-                msj=e.getMessage();
+                msj = e.getMessage();
             }
             JOptionPane.showMessageDialog(null, msj);
             // Se cambia a la ventana principal
             regresarMenu();
         }
     }
-    
-    private TramiteLicenciaDTO setTramiteLicencia(){
-        Integer vigencia=0;
-        Float costo=0.0f;
-        JRadioButton[] radioBtns={rbnVigencia1,rbnVigencia2,rbnVigencia3};
-        Float[][] costos={
-            {600.00f,200.00f},//costos para vigencia de 1 año
-            {900.00f,500.00f},//costos para vigencia de 2 años
-            {1100.00f,700.00f}//costos para vigencia de 3 años
+
+    private TramiteLicenciaDTO setTramiteLicencia() {
+        Integer vigencia = 0;
+        Float costo = 0.0f;
+        JRadioButton[] radioBtns = {rbnVigencia1, rbnVigencia2, rbnVigencia3};
+        Float[][] costos = {
+            {600.00f, 200.00f},//costos para vigencia de 1 año
+            {900.00f, 500.00f},//costos para vigencia de 2 años
+            {1100.00f, 700.00f}//costos para vigencia de 3 años
         };
         for (int i = 0; i < 3; i++) {
-            if(radioBtns[i].isSelected()){
-                vigencia=i+1;
-                if(persona.getDiscapaciad()){
-                    costo=costos[i][1];
-                }else
-                    costo=costos[i][0];
+            if (radioBtns[i].isSelected()) {
+                vigencia = i + 1;
+                if (persona.getDiscapaciad()) {
+                    costo = costos[i][1];
+                } else {
+                    costo = costos[i][0];
+                }
             }
         }
-        TramiteDTO tramite=new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.VIGENTE);
+        TramiteDTO tramite = new TramiteLicenciaDTO(Calendar.getInstance(), costo, EstadoDTO.VIGENTE);
         tramite.setPersona(persona);
         persona.addTramite(tramite);
-        ((TramiteLicenciaDTO)tramite).setVigencia(vigencia);
-        return (TramiteLicenciaDTO)tramite;
+        ((TramiteLicenciaDTO) tramite).setVigencia(vigencia);
+        return (TramiteLicenciaDTO) tramite;
     }
-    
-    public void reiniciarPanel(){
+
+    public void reiniciarPanel() {
         txtRfc.setText("");
         buttonGroup1.clearSelection();
         cbxDiscapacidad.setSelected(false);
         limpiarDatos();
-        
+
     }
 
-    private void regresarMenu(){
+    private void regresarMenu() {
         reiniciarPanel();
         ((Ventanas) SwingUtilities.getWindowAncestor(this)).mostrarVentana("MenuJpanel");
     }
 
-    private void desplegarTablaPersonasRegistradas(){
-        JDialog dialogo = new JDialog((Ventanas)SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this), "Personas registradas", false);
+    private void desplegarTablaPersonasRegistradas() {
+        JDialog dialogo = new JDialog((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this), "Personas registradas", false);
         dialogo.setLayout(new BorderLayout());
         dialogo.setSize(400, 200);
-        
+
         List<PersonaDTO> personas;
-        try{
-            personas=Ventanas.registrarLicencia.obtenerPersonasRegistradas();
-        }catch(NegocioException e){
+        try {
+            personas = Ventanas.registrarLicencia.obtenerPersonasRegistradas();
+        } catch (NegocioException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             regresarMenu();
             return;
         }
-        Object[][] filas =new Object[20][2];
-        int contador=0;
-        for(PersonaDTO p:personas){
-            filas[contador][0]=p.getNombreCompleto();
-            filas[contador][1]=p.getRfc();
+        Object[][] filas = new Object[20][2];
+        int contador = 0;
+        for (PersonaDTO p : personas) {
+            filas[contador][0] = p.getNombreCompleto();
+            filas[contador][1] = p.getRfc();
             contador++;
         }
         List<String> columnas = new ArrayList<>();
         columnas.add("nombre");
         columnas.add("RFC");
-        
-        
-        DefaultTableModel modeloTabla = new DefaultTableModel(filas,columnas.toArray());
+
+        DefaultTableModel modeloTabla = new DefaultTableModel(filas, columnas.toArray());
         JTable tabla = new JTable(modeloTabla);
-        
+
         JScrollPane scrollPane = new JScrollPane(tabla);
         dialogo.add(scrollPane, BorderLayout.CENTER);
 
-        dialogo.setLocationRelativeTo((Ventanas)SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this));
+        dialogo.setLocationRelativeTo((Ventanas) SwingUtilities.getWindowAncestor(ModuloLicenciasJpanel.this));
 
         dialogo.setVisible(true);
-        
+
         setPersonaSeleccionada(tabla, personas);
     }
-    
-    
-    private void setPersonaSeleccionada(JTable tabla,List<PersonaDTO> lista){
+
+    private void setPersonaSeleccionada(JTable tabla, List<PersonaDTO> lista) {
         tabla.getSelectionModel().addListSelectionListener((ListSelectionEvent event) -> {
             System.out.println("cambio el valor: " + event.toString());
             if (!event.getValueIsAdjusting()) {
-                int fila =tabla.getSelectedRow();
-                if(fila>=0){
+                int fila = tabla.getSelectedRow();
+                if (fila >= 0) {
                     txtRfc.setText(lista.get(fila).getRfc());
-                }else
+                } else {
                     limpiarDatos();
+                }
             }
         });
     }
+
+    private void mostrarInfoLicenciaAnterior(TramiteLicenciaDTO tramiteLicencia) {
+        String mensaje = """
+                           Informacion de la licencia anterior:
+                           numero: """ + tramiteLicencia.getNumLicencia() + "\n"
+                + "fecha emision: " + tramiteLicencia.fechaToString(tramiteLicencia.getFechaEmision()) +"\n"
+                + "fecha caducidad: " + tramiteLicencia.fechaToString(tramiteLicencia.getFechaCaducidad());
+        String titulo = "Licencia anterior";
+        Object[] opciones = {"Modificar fecha caducidad", "Salir"}; // Texto personalizado de los botones
+
+        // Mostrar el diálogo con botones personalizados
+        int opcionSeleccionada = JOptionPane.showOptionDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE, null, opciones, opciones[1]);
+
+        switch (opcionSeleccionada) {
+            case 0 -> actualizarFechaCaducidad(tramiteLicencia);
+            case 1 -> System.out.println("opcion salir");
+            default -> System.out.println("no se eligio ninguna opcion");
+            
+        }
+    }
+
+    
+    private void actualizarFechaCaducidad(TramiteLicenciaDTO tramiteLicencia){
+        String fecha="", msj="""
+                             Ingresa la fecha nueva:
+                             el formato de la fecha debe ser aaaa-mm-dd""";
+        int flag=0;
+        do{
+            fecha=JOptionPane.showInputDialog(null, msj);
+            if(!fecha.isEmpty()){
+                if (fecha.matches("^20(2[5-9]|[3-9][0-9])-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[012])"))
+                    flag = 1;
+                else {
+                    msj = """
+                    Se ingreso un formato de fecha invalido.
+                    El formato de la fecha debe ser aaaa-mm-dd
+                    Ingresa la fecha nuevamente:
+                    """;
+                }
+            }else{
+                flag=-1;
+            }
+            
+        }while(flag==0);
+        if(flag>0){
+            Calendar f = Calendar.getInstance();
+            f.set(Calendar.YEAR, Integer.parseInt(fecha.substring(0, 4)));
+            f.set(Calendar.MONTH, Integer.parseInt(fecha.substring(5, 7)));
+            f.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fecha.substring(8)));
+            tramiteLicencia.setFechaCaducidad(f);
+            try {
+                if (Ventanas.registrarLicencia.modificarFechaVencimientoLicencia(tramiteLicencia)) {
+                    TramiteLicenciaDTO tramiteLicenciaMod = Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
+                    Calendar c2 = tramiteLicenciaMod.getFechaCaducidad();
+                    System.out.println("si se modifico");
+                    System.out.println(c2.get(Calendar.YEAR) + "-" + c2.get(Calendar.MONTH) + "-" + c2.get(Calendar.DAY_OF_MONTH));
+                }
+            } catch (NegocioException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        }
+        else System.out.println("se cancelo la modificacion");
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -334,6 +413,7 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
         lblPrecioVigencia3 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btnPagar = new javax.swing.JButton();
+        btnMostrarLicenciaAnt = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(640, 360));
@@ -742,12 +822,28 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
             }
         });
 
+        btnMostrarLicenciaAnt.setFont(new java.awt.Font("Avenir Next", 1, 12)); // NOI18N
+        btnMostrarLicenciaAnt.setForeground(new java.awt.Color(0, 0, 0));
+        btnMostrarLicenciaAnt.setText("Mostrar licencia anterior");
+        btnMostrarLicenciaAnt.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                btnMostrarLicenciaAntStateChanged(evt);
+            }
+        });
+        btnMostrarLicenciaAnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarLicenciaAntActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addContainerGap(562, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(btnMostrarLicenciaAnt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 371, Short.MAX_VALUE)
                 .addComponent(btnPagar)
                 .addContainerGap())
         );
@@ -757,35 +853,38 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
                 .addContainerGap(8, Short.MAX_VALUE)
                 .addComponent(btnPagar)
                 .addContainerGap())
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(btnMostrarLicenciaAnt)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 40));
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnVerPersonasRegistradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerPersonasRegistradasActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnVerPersonasRegistradasActionPerformed
 
     private void txtRfcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRfcKeyTyped
         // TODO add your handling code here:
-        if(txtRfc.getText().length()==13)
+        if (txtRfc.getText().length() == 13)
             evt.consume();
     }//GEN-LAST:event_txtRfcKeyTyped
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         // TODO add your handling code here:
-        if(persona!=null){
-            if(rbnVigencia1.isSelected() || rbnVigencia2.isSelected() || rbnVigencia3.isSelected()){
+        if (persona != null) {
+            if (rbnVigencia1.isSelected() || rbnVigencia2.isSelected() || rbnVigencia3.isSelected()) {
                 registrarLicencia();
-            }else
+            } else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar una vigencia");
+            }
         }
     }//GEN-LAST:event_btnPagarActionPerformed
 
@@ -799,14 +898,33 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPersonasRegistradasActionPerformed
 
     private void cbxDiscapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiscapacidadActionPerformed
-        actualizarVistaPrecios();      
+        actualizarVistaPrecios();
     }//GEN-LAST:event_cbxDiscapacidadActionPerformed
+
+    private void btnMostrarLicenciaAntStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_btnMostrarLicenciaAntStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMostrarLicenciaAntStateChanged
+
+    private void btnMostrarLicenciaAntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarLicenciaAntActionPerformed
+        // TODO add your handling code here:
+        if (persona != null) {
+            try {
+                TramiteLicenciaDTO tramiteLicencia = Ventanas.registrarLicencia.obtenerTramiteLicencia(persona);
+
+                mostrarInfoLicenciaAnterior(tramiteLicencia);
+            } catch (NegocioException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        }
+
+    }//GEN-LAST:event_btnMostrarLicenciaAntActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Vigencia1;
     private javax.swing.JPanel Vigencia2;
     private javax.swing.JPanel Vigencia3;
+    private javax.swing.JButton btnMostrarLicenciaAnt;
     private javax.swing.JButton btnPagar;
     private javax.swing.JButton btnPersonasRegistradas;
     private javax.swing.JButton btnRegresar;
@@ -846,4 +964,3 @@ public class ModuloLicenciasJpanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }
-                  
