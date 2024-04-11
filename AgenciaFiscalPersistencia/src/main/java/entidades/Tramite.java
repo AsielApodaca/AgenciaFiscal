@@ -100,6 +100,11 @@ public class Tramite implements Serializable {
         this.estado = estado;
         this.persona=persona;
     }
+    
+    public String getFechaEmisionString() {
+    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+    return formatoFecha.format(fechaEmision.getTime());
+}
 
     @Override
     public String toString() {

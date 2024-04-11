@@ -11,6 +11,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import daos.TramiteDAO;
 import entidades.Persona;
 import entidades.Tramite;
+import daos.TramiteDAO;
 import excepciones.PersistenciaException;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
@@ -365,39 +366,42 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
     
-    Document documento = new Document();
+
+     Document documento = new Document();
     try {
         String ruta = System.getProperty("user.home");
         PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
         documento.open();
 
-        PdfPTable tabla = new PdfPTable(7);
-        tabla.addCell("ID");
-        tabla.addCell("RFC");
-        tabla.addCell("Nombre completo");
-        tabla.addCell("Fecha de nacimiento");
+        PdfPTable tabla = new PdfPTable(8);
+        tabla.addCell("ID Trámite");
+        tabla.addCell("Tipo");
+        tabla.addCell("Costo MXN");
+        tabla.addCell("Estado");
+        tabla.addCell("Fecha Emisión");
+        tabla.addCell("ID Persona");
+        tabla.addCell("Nombre Completo");
         tabla.addCell("CURP");
-        tabla.addCell("Telefono");
-        tabla.addCell("Discapacidad (true or false)");
 
-        // Obtener los trámites utilizando JPA
         TramiteDAO tramiteDAO = new TramiteDAO();
-        List<Tramite> tramites = tramiteDAO.obtenerTramites(new Persona(""));
+        List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
+        tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
 
         for (Tramite tramite : tramites) {
             tabla.addCell(String.valueOf(tramite.getId()));
-            tabla.addCell(tramite.getPersona().getRfc());
+            tabla.addCell(tramite.getClass().getSimpleName());
+            tabla.addCell(String.valueOf(tramite.getCostoMxn()));
+            tabla.addCell(tramite.getEstado().toString());
+            tabla.addCell(tramite.getFechaEmisionString());
+            tabla.addCell(String.valueOf(tramite.getPersona().getId()));
             tabla.addCell(tramite.getPersona().getNombreCompleto());
-            tabla.addCell(tramite.getPersona().getFechaNacimiento().toString());
             tabla.addCell(tramite.getPersona().getCurp());
-            tabla.addCell(tramite.getPersona().getTelefono());
-            tabla.addCell(String.valueOf(tramite.getPersona().esDiscapacitado()));
         }
 
         documento.add(tabla);
-        
         documento.close();
         JOptionPane.showMessageDialog(null, "Reporte creado");
+        
     } catch (DocumentException | HeadlessException | FileNotFoundException e) {
         JOptionPane.showMessageDialog(null, e);
     }   catch (PersistenciaException ex) {
