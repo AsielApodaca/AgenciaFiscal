@@ -378,7 +378,7 @@ public class ModuloReportes extends javax.swing.JPanel {
         try{
             
             Connection ConexionPU = DriverManager.getConnection("jdbc:mysql//localhost/agencia_fiscal", "root", "Bi0log1a1?");
-         PreparedStatement pst = ConexionPU.prepareStatement("select * from personas");
+            PreparedStatement pst = ConexionPU.prepareStatement("select * from personas");
                  
                  ResultSet rs = pst.executeQuery();
                  
@@ -397,12 +397,12 @@ public class ModuloReportes extends javax.swing.JPanel {
                    
                }  
         }catch(DocumentException | SQLException e){
-            
+            JOptionPane.showMessageDialog(null, e);
         }
         documento.close();
          JOptionPane.showMessageDialog(null, "Reporte creado");
     }catch(DocumentException | HeadlessException | FileNotFoundException e){
-   
+        JOptionPane.showMessageDialog(null, e);
     }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
