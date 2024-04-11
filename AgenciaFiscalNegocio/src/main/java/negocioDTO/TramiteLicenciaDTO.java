@@ -48,11 +48,14 @@ public class TramiteLicenciaDTO extends TramiteDTO{
         return fechaCaducidad;
     }
 
+    public void setFechaCaducidad(Calendar fecha){
+        this.fechaCaducidad=fecha;
+    }
     @Override
     public String toString() {
         return super.toString() + "TramiteLicencia{" + 
                 "vigencia=" + vigencia + 
-                ", fechaCaducidad=" + fechaCaducidad + 
+                ", fechaCaducidad=" + fechaToString(fechaCaducidad) + 
                 ", numero licencia=" + numLicencia +
                 '}';
     }
