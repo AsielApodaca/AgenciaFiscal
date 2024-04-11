@@ -109,4 +109,40 @@ public class PersonaDAO implements IPersonaDAO{
         throw new PersistenciaException("Ocurrio un error al realizar la consulta");
     }
 
+    @Override
+    public List<Persona> buscarPersonasPorCURP(Persona persona) throws PersistenciaException {
+        System.out.println("consulta personas por curp");
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_curp",Persona.class);
+        spc.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
+        spc.setParameter("nombre", persona.getNombreCompleto());
+        try{
+            if (spc.execute()) {
+                List<Persona> personasObtenidas = spc.getResultList();
+                //System.out.println("exito");
+                return personasObtenidas;
+            }//System.out.println("no se ejecuto");
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        }
+        throw new PersistenciaException("Ocurrio un error al realizar la consulta");
+    }
+
+    @Override
+    public List<Persona> buscarPersonasPorFechaNac(Persona persona) throws PersistenciaException {
+        System.out.println("consulta personas por curp");
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_curp",Persona.class);
+        spc.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
+        spc.setParameter("nombre", persona.getNombreCompleto());
+        try{
+            if (spc.execute()) {
+                List<Persona> personasObtenidas = spc.getResultList();
+                //System.out.println("exito");
+                return personasObtenidas;
+            }//System.out.println("no se ejecuto");
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        }
+        throw new PersistenciaException("Ocurrio un error al realizar la consulta");
+    }
+
 }
