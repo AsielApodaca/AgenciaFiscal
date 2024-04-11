@@ -5,13 +5,16 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.ConsultasBO;
+import com.toedter.calendar.JDateChooser;
 import excepciones.NegocioException;
+import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -25,6 +28,8 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
     private List<PersonaDTO> personasEncontradas;
     private DefaultListModel<String> modeloLista;
+    private JTextField txtDato;
+    private JDateChooser jdcFecha;
     /**
      * Creates new form ModuloConsultas
      */
@@ -58,11 +63,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jrbNacimiento = new javax.swing.JRadioButton();
         jrbNombre = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
-        txtDato = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         scrollPane = new javax.swing.JScrollPane();
         jListPersonas = new javax.swing.JList<>();
         btnBuscar = new javax.swing.JButton();
+        PanelDato = new javax.swing.JPanel();
         ContenedorDeTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPersonas = new javax.swing.JTable();
@@ -190,18 +195,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
-        txtDato.setText(" ");
-        txtDato.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDatoKeyTyped(evt);
-            }
-        });
-
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
         jPanel6.setMinimumSize(new java.awt.Dimension(0, 60));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jListPersonas.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        jListPersonas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(jListPersonas);
 
         jPanel6.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 239, 60));
@@ -210,16 +208,21 @@ public class ModuloConsultas extends javax.swing.JPanel {
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
 
+        PanelDato.setBackground(new java.awt.Color(255, 102, 102));
+        PanelDato.setMinimumSize(new java.awt.Dimension(20, 20));
+        PanelDato.setPreferredSize(new java.awt.Dimension(0, 20));
+        PanelDato.setLayout(new java.awt.CardLayout());
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDato)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(PanelDato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnBuscar)))
                 .addContainerGap())
@@ -228,7 +231,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtDato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelDato, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -383,10 +386,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
-
-    private void txtDatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDatoKeyTyped
-        
-    }//GEN-LAST:event_txtDatoKeyTyped
     
     private void validarDatoBusqueda(){
         Document doc = txtDato.getDocument();
@@ -476,9 +475,37 @@ public class ModuloConsultas extends javax.swing.JPanel {
     }
     
     private void iniciar(){
-        Ventanas.consultas=new ConsultasBO();
-        personasEncontradas=new ArrayList<>();
-        modeloLista=new DefaultListModel<>();
+        Ventanas.consultas = new ConsultasBO();
+        personasEncontradas = new ArrayList<>();
+        modeloLista = new DefaultListModel<>();
+        
+        txtDato = new JTextField();
+        txtDato.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+        txtDato.setEnabled(false);
+        
+        jdcFecha = new JDateChooser();
+        jdcFecha.setDateFormatString("d MMM y");
+        jdcFecha.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+        
+        PanelDato.add(txtDato, "txtDato");
+        PanelDato.add(jdcFecha, "jdcFecha");
+        
+        jrbCurp.addActionListener(e -> {
+            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
+            txtDato.setEnabled(true);
+            txtDato.setText("");
+        });
+        jrbNacimiento.addActionListener(e -> {
+            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "jdcFecha");
+            jdcFecha.setDate(null);
+        });
+        jrbNombre.addActionListener(e -> {
+            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
+            txtDato.setEnabled(true);
+            txtDato.setText("");
+        });
+        
+        
         jListPersonas.setModel(modeloLista);
         jListPersonas.setVisible(true);
         scrollPane.setVisible(true);
@@ -486,7 +513,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
         validarDatoBusqueda();
         btnBuscar.setEnabled(false);
         
-        //jListPersonas.setModel(modeloLista);
         
     }
     
@@ -497,6 +523,8 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
     public void reiniciarPanel() {
         limpiarDatos();
+        txtDato.setEnabled(false);
+        ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
         
     }
     
@@ -510,6 +538,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CampoDeInformacion;
     private javax.swing.JPanel ContenedorDeTabla;
+    private javax.swing.JPanel PanelDato;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -530,6 +559,5 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private javax.swing.JRadioButton jrbNombre;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable tblPersonas;
-    private javax.swing.JTextField txtDato;
     // End of variables declaration//GEN-END:variables
 }
