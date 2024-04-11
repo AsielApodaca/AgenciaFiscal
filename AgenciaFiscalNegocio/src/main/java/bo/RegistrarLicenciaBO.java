@@ -15,6 +15,7 @@ import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 import negocioDTO.PersonaDTO;
@@ -67,8 +68,9 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
         }
-        
-        TramiteLicencia tramite=new TramiteLicencia(tramiteLicencia.getFechaEmision(), 
+        Calendar fecha=tramiteLicencia.getFechaEmision();
+        fecha.set(Calendar.MONTH, fecha.get(Calendar.MONTH) - 1);
+        TramiteLicencia tramite=new TramiteLicencia(fecha, 
                 tramiteLicencia.getCostoMxn(),
                 Estado.VIGENTE,
                 persona
@@ -140,10 +142,14 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
             persona=personaDao.obtenerPersona(new Persona(personaTramite.getRfc()));
             Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
             if(tramite == null) return null;
-            TramiteLicencia tramiteLicencia=(TramiteLicencia)tramite;
-            TramiteLicenciaDTO t= new TramiteLicenciaDTO(tramiteLicencia.getVigencia(),tramiteLicencia.getFechaEmision(),
+            TramiteLicencia tramiteLicencia = (TramiteLicencia) tramite;
+            //System.out.println(tramiteLicencia.toString());
+            //tramiteLicencia.setFechaCaducidad(((TramiteLicencia)tramiteLicencia).getFechaCaducidad());
+            TramiteLicenciaDTO t = new TramiteLicenciaDTO(tramiteLicencia.getVigencia(), tramiteLicencia.getFechaEmision(),
                     tramiteLicencia.getCostoMxn(), EstadoDTO.ACTIVO);
             t.setPersona(personaTramite);
+            t.setFechaCaducidad(tramiteLicencia.getFechaCaducidad());
+            t.setNumLicencia(tramiteLicencia.getNumLicencia());
             return t;
         } catch (PersistenciaException e) {
             throw new NegocioException(e.getMessage());
@@ -161,17 +167,19 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
 
-//    @Override
-//    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
-//        ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
-//        try{
-//            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
-//            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
-//            return t.actualizarFechaVencimiento((TramiteLicencia)tramite);
-//        }catch(PersistenciaException p){
-//            throw new NegocioException(p.getMessage());
-//        }
-//    }
+    @Override
+    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
+        ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
+        try{
+            Persona persona = personaDao.obtenerPersona(new Persona(tramiteLicencia.getPersona().getRfc()));
+            Object tramite = tramiteLicenciaDao.obtenerTramite(persona, "licencia");
+            TramiteLicencia tramiteL=(TramiteLicencia)tramite;
+            tramiteL.setFechaCaducidad(tramiteLicencia.getFechaCaducidad());
+            return t.actualizarFechaVencimiento(tramiteL);
+        }catch(PersistenciaException p){
+            throw new NegocioException(p.getMessage());
+        }
+    }
     
     class ValidacionesRegistrarLicencia{
         public boolean validarRfcPersona(String rfc){

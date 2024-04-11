@@ -16,4 +16,5 @@ public interface iRegistrarLicenciaBO {
     public List<PersonaDTO> obtenerPersonasRegistradas() throws NegocioException;
     public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) throws NegocioException;
     public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException;
+    public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia)throws NegocioException;
 }
