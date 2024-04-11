@@ -373,29 +373,22 @@ public class ModuloReportes extends javax.swing.JPanel {
         PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
         documento.open();
 
-        PdfPTable tabla = new PdfPTable(8);
-        tabla.addCell("ID Trámite");
+        PdfPTable tabla = new PdfPTable(4);
+        tabla.addCell("Nombre Completo");
         tabla.addCell("Tipo");
         tabla.addCell("Costo MXN");
-        tabla.addCell("Estado");
         tabla.addCell("Fecha Emisión");
-        tabla.addCell("ID Persona");
-        tabla.addCell("Nombre Completo");
-        tabla.addCell("CURP");
+
 
         TramiteDAO tramiteDAO = new TramiteDAO();
         List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
         tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
 
         for (Tramite tramite : tramites) {
-            tabla.addCell(String.valueOf(tramite.getId()));
+            tabla.addCell(tramite.getPersona().getNombreCompleto());
             tabla.addCell(tramite.getClass().getSimpleName());
             tabla.addCell(String.valueOf(tramite.getCostoMxn()));
-            tabla.addCell(tramite.getEstado().toString());
             tabla.addCell(tramite.getFechaEmisionString());
-            tabla.addCell(String.valueOf(tramite.getPersona().getId()));
-            tabla.addCell(tramite.getPersona().getNombreCompleto());
-            tabla.addCell(tramite.getPersona().getCurp());
         }
 
         documento.add(tabla);
