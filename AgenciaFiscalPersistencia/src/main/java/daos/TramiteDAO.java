@@ -105,6 +105,33 @@ public class TramiteDAO implements ITramiteDAO{
     }
     
     @Override
+    public List<Tramite> obtenerTramitePorTipo(String tipoTramite) throws PersistenciaException {
+        CriteriaQuery criteria;
+        Root root;
+        if (tipoTramite.equalsIgnoreCase("licencia")) {
+            criteria = cb.createQuery(TramiteLicencia.class);
+            root = criteria.from(TramiteLicencia.class);
+        } else {
+            criteria = cb.createQuery(TramitePlacas.class);
+            root = criteria.from(TramitePlacas.class);
+        }
+
+        criteria.select(root);
+
+        TypedQuery query = em.createQuery(criteria);
+        List lista;
+        try {
+            lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener los tramites");
+        }
+    }
+
+    
+    
+    @Override
     public boolean registrarTramite(Tramite tramite) throws PersistenciaException{
         Long id_persona=tramite.getPersona().getId();
         Persona p=em.find(Persona.class, id_persona);

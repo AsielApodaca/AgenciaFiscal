@@ -16,6 +16,7 @@ import java.util.List;
 public interface ITramiteDAO {
     public List<Tramite> obtenerTramites(Persona personaTramite)throws PersistenciaException;
     public Tramite obtenerTramite(Persona personaTramite, String tipoTramite)throws PersistenciaException;
+    public List<Tramite> obtenerTramitePorTipo(String tipoTramite) throws PersistenciaException;
     public boolean registrarTramite(Tramite tramite)throws PersistenciaException;
     public boolean actualizarEstadoTramite(Tramite tramite)throws PersistenciaException;
     //public void cerrarConexion();
