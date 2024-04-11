@@ -11,6 +11,7 @@ import entidades.TramiteLicencia;
 import entidades.TramitePlacas;
 import excepciones.PersistenciaException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,6 +111,9 @@ public class TramiteDAO implements ITramiteDAO{
         if(p!=null){
             try{
                 em.getTransaction().begin();
+                Calendar fecha=tramite.getFechaEmision();
+                fecha.set(Calendar.MONTH, fecha.get(Calendar.MONTH)-1);
+                tramite.setFechaEmision(fecha);
                 em.persist(tramite);
                 //p.agregarTramite(tramite);
                 em.getTransaction().commit();
@@ -169,12 +173,13 @@ public class TramiteDAO implements ITramiteDAO{
         try{
             tramite=query.getSingleResult();
             return tramite;
-        }catch(NoResultException ex){
-            System.out.println(ex.getMessage());
+        }catch(NoResultException nre){
+            System.out.println(nre.getMessage());
             return null;
-        }catch(Exception e){
+        }
+        catch(Exception e){
             System.out.println("error:");
-            System.out.println(e.fillInStackTrace());
+            //System.out.println(e.fillInStackTrace());
             LOG.log(Level.SEVERE, e.getMessage(), e);
             throw new PersistenciaException("Ocurrio un error al obtener el tramite");
         }
