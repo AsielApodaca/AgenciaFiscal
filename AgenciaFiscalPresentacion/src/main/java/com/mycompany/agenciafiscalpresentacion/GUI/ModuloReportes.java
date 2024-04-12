@@ -32,6 +32,10 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.text.BadLocationException;
 import negocioDTO.PersonaDTO;
@@ -46,7 +50,9 @@ import negocioDTO.TramiteLicenciaDTO;
 public class ModuloReportes extends javax.swing.JPanel {
 
     private static final Logger LOG = Logger.getLogger(ModuloReportes.class.getName());
+    private static PersonaDTO personaSeleccionLista;
     private List<PersonaDTO> personasEncontradas;
+    private List<PersonaDTO> personasEncontradasCopia;
     private DefaultListModel<String> modeloLista;
     private List<TramiteDTO> tramites;
     private Calendar fechaDesde;
@@ -457,11 +463,14 @@ public class ModuloReportes extends javax.swing.JPanel {
         
         if(!txtNombre.getText().isBlank() && persona == null) {
             JOptionPane.showMessageDialog(null, "No se encontró a la persona, proceso cancelado.");
+            limpiarTabla();
             return;
         }
         
         tipoTramite = (String) cmbTipoTramite.getSelectedItem();
         if(tipoTramite.equalsIgnoreCase("Todos")) tipoTramite = null;
+        
+        
         
         try {
             tramites = Ventanas.generarReporte.obtenerTramites(fechaDesde, fechaHasta, tipoTramite, persona);
@@ -528,6 +537,7 @@ public class ModuloReportes extends javax.swing.JPanel {
     private void iniciar() {
         Ventanas.generarReporte = new GenerarReporteBO();
         personasEncontradas = new ArrayList<>();
+        personasEncontradasCopia = new ArrayList<>();
         modeloLista = new DefaultListModel<>();
         tramites = null;
         fechaDesde = null;
@@ -536,47 +546,95 @@ public class ModuloReportes extends javax.swing.JPanel {
         persona = null;
         
         
-        scrollPane.setVisible(false);
-        txtNombre.setEnabled(false);
-        txtNombre.setEditable(false);
-        
-        validarDatoBusqueda();
-    }
-    
-    private void validarDatoBusqueda(){
         javax.swing.text.Document doc = txtNombre.getDocument();
-        doc.addDocumentListener(new javax.swing.event.DocumentListener() {
+        
+        DocumentListener validarNombre = new DocumentListener() {
             @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+            public void insertUpdate(DocumentEvent e) {
                 validar(e);
             }
 
             @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+            public void removeUpdate(DocumentEvent e) {
                 validar(e);
             }
 
             @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+            public void changedUpdate(DocumentEvent e) {
                 validar(e);
             }
 
-            private void validar(javax.swing.event.DocumentEvent e) {
+            private void validar(DocumentEvent e) {
                 try {
                     javax.swing.text.Document doc = e.getDocument();
                     String texto = doc.getText(0, doc.getLength());
-                    if (texto.isBlank()) {
+                    if (texto.isBlank() && personasEncontradas != null) {
                         personasEncontradas.clear();
                     } else if (texto.matches("^[A-Za-z ]+$")) {
                         buscarPersonasPorNombre(texto);
                     }
+                    persona = null;
                     actualizarJList();
                 } catch (BadLocationException ex) {
                     Logger.getLogger(ModuloConsultas.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+            }
+        };
+        
+        doc.addDocumentListener(validarNombre);
+        
+        
+        jListPersonas.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    //List<PersonaDTO> personasEncontradasCopiaa=personasEncontradas;
+                    if (personasEncontradasCopia.isEmpty()) {
+                        System.out.println("is empty");
+                    }
+                    String nombrePersonaSeleccionada = jListPersonas.getSelectedValue();
+                    if (nombrePersonaSeleccionada != null) {
+                        System.out.println("persona sel: " + nombrePersonaSeleccionada);
+                        
+                        // Se remueve el documentListener para poder editar el campo de texto
+                        doc.removeDocumentListener(validarNombre);
+                        
+                        txtNombre.setText(nombrePersonaSeleccionada);
+                        
+                        // Se vuelve a añadir
+                        
+                        doc.addDocumentListener(validarNombre);
+
+                        persona = getPersonaDTOSeleccionada(nombrePersonaSeleccionada);
+                        System.out.println(persona.toString());
+                        
+                        scrollPane.setVisible(false);
+                    }
+                }
             }
         });
+        
+        jListPersonas.setModel(modeloLista);
+        jListPersonas.setVisible(true);
+        scrollPane.setVisible(true);
+        actualizarJList();
+        txtNombre.setEnabled(false);
+        txtNombre.setEditable(false);
+        scrollPane.setVisible(false);
+    }
+    
+    
+    
+    private PersonaDTO getPersonaDTOSeleccionada(String nombrePersona){
+        if(!personasEncontradasCopia.isEmpty()){
+            for (PersonaDTO persona : personasEncontradasCopia) {
+                //System.out.println("getPersonaDTO: "+persona.getNombreCompleto().equals(nombrePersona));
+                if (persona.getNombreCompleto().equals(nombrePersona)) {
+                    return persona;
+                }
+            }  
+        }System.out.println("esta vacia la copia de personas enc");
+        return null;
     }
     
     private void actualizarJList() {
@@ -611,11 +669,20 @@ public class ModuloReportes extends javax.swing.JPanel {
         try {
             personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"nombre");
             if(personasEncontradas!=null){
-                System.out.println(scrollPane.isVisible());
-                System.out.println("-------se encontraron personas-------");
-                for (PersonaDTO p : personasEncontradas) {
-                    System.out.println(p.getNombreCompleto());
+//                System.out.println(scrollPane.isVisible());
+                personasEncontradasCopia.clear();
+                for(PersonaDTO p: personasEncontradas){
+                    personasEncontradasCopia.add(p);
+//                    System.out.println(p);
                 }
+//                System.out.println("-------se encontraron personas-------");
+//                for (PersonaDTO p : personasEncontradas) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
+//                System.out.println("personas encontradas copia");
+//                for (PersonaDTO p : personasEncontradasCopia) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
             }else System.out.println("Lista vacia");
             
         } catch (NegocioException e) {
