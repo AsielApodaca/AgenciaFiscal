@@ -23,6 +23,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,9 +31,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import javax.swing.text.BadLocationException;
 import negocioDTO.PersonaDTO;
 import negocioDTO.TramiteDTO;
+import negocioDTO.TramiteLicenciaDTO;
 
 
 /**
@@ -141,7 +145,7 @@ public class ModuloReportes extends javax.swing.JPanel {
         jLabel4.setText("Tipo tramite:");
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 20));
 
-        tblTramites.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
+        tblTramites.setFont(new java.awt.Font("Avenir", 0, 12)); // NOI18N
         tblTramites.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -246,7 +250,7 @@ public class ModuloReportes extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Fecha tramite", "Tipo tramite", "Costo"
+                "Nombre", "Tipo tramite", "Fecha tramite", "Costo"
             }
         ));
         jScrollPane2.setViewportView(tblTramites);
@@ -462,16 +466,58 @@ public class ModuloReportes extends javax.swing.JPanel {
             tramites = null;
         }
     }
-    
+
     private void mostrarTramites() {
-        if(tramites == null) {
+        if (tramites == null || tramites.isEmpty()) {
             System.out.println("No hay tramites");
             return;
         }
-        for(TramiteDTO tramite : tramites) {
-            System.out.println(tramite.getClass().getSimpleName());
+
+        DefaultTableModel modelo = (DefaultTableModel) tblTramites.getModel();
+        // Limpiar la tabla antes de agregar nuevas filas
+        modelo.setRowCount(0);
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+
+        // Obtener el ancho máximo de cada columna
+        int[] anchosMaximos = new int[4];
+        for (TramiteDTO tramite : tramites) {
+            Object[] fila = new Object[4];
+
+            String tipo;
+            if (tramite instanceof TramiteLicenciaDTO) {
+                tipo = "Trámite de licencia";
+            } else {
+                tipo = "Trámite de placas";
+            }
+
+            fila[0] = tramite.getPersona().getNombreCompleto();
+            fila[1] = tipo;
+            fila[2] = formatoFecha.format(tramite.getFechaEmision().getTime());
+            fila[3] = "$" + tramite.getCostoMxn();
+
+            modelo.addRow(fila);
+
+            // Actualizar el ancho máximo de cada columna
+            for (int i = 0; i < fila.length; i++) {
+                String valorCelda = fila[i].toString();
+                int anchoCelda = valorCelda.length() * 7; // Aproximación del ancho en píxeles
+                anchosMaximos[i] = Math.max(anchosMaximos[i], anchoCelda);
+            }
         }
+
+        // Ajustar el ancho de las columnas
+        for (int i = 0; i < tblTramites.getColumnCount(); i++) {
+            TableColumn columna = tblTramites.getColumnModel().getColumn(i);
+            columna.setPreferredWidth(anchosMaximos[i]);
+        }
+
+        tblTramites.setModel(modelo);
     }
+
+
+
+
     
     
     private void iniciar() {
