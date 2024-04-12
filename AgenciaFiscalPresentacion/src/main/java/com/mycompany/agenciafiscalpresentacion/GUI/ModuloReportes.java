@@ -440,9 +440,11 @@ public class ModuloReportes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, """
                                                 Las fechas introducidas no son v\u00e1lidas. 
                                                 No se aplicar\u00e1 el filtro de fechas.""");
-        } finally {
             fechaDesde = null;
             fechaHasta = null;
+            jdcDesde.setDate(null);
+            jdcHasta.setDate(null);
+        
         }
         
         if(!txtNombre.getText().isBlank() && persona == null) {
