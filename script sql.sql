@@ -45,17 +45,17 @@ end $$
 delimiter ;
 
 delimiter $$
-create procedure sp_buscar_personas_curp(in curp varchar(100))
+create procedure sp_buscar_personas_curp(in curpB varchar(100))
 begin
-    set @pat=concat('%',curp,'%');
+    set @pat=concat('%',curpB,'%');
 	select * from personas where curp like @pat;
 end $$
 delimiter ;
 
 delimiter $$
-create procedure sp_buscar_personas_fecha(in fecha_nacimiento date)
+create procedure sp_buscar_personas_fecha(in fechaNacimiento date)
 begin
-    set @pat=concat('%',fecha_nacimiento,'%');
+    set @pat=concat('%',fechaNacimiento,'%');
 	select * from personas where fecha_nacimiento like @pat;
 end $$
 delimiter ;
