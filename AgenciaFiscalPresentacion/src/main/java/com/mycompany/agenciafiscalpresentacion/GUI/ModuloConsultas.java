@@ -6,6 +6,7 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.ConsultasBO;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JYearChooser;
 import excepciones.NegocioException;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
@@ -40,6 +41,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private DefaultListModel<String> modeloLista;
     private JTextField txtDato;
     private JDateChooser jdcFecha;
+    private JYearChooser jycAnio;
     private static PersonaDTO personaSeleccionada;
     /**
      * Creates new form ModuloConsultas
@@ -431,33 +433,20 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
     private void jrbNombreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNombreStateChanged
         // TODO add your handling code here:
-        tblPersonas.setModel(new DefaultTableModel());
+        //tblPersonas.setModel(new DefaultTableModel());
     }//GEN-LAST:event_jrbNombreStateChanged
 
     private void jrbNacimientoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNacimientoStateChanged
         // TODO add your handling code here:
-        tblPersonas.setModel(new DefaultTableModel());
+        //tblPersonas.setModel(new DefaultTableModel());
     }//GEN-LAST:event_jrbNacimientoStateChanged
 
     private void jrbCurpStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbCurpStateChanged
         // TODO add your handling code here:
-        tblPersonas.setModel(new DefaultTableModel());
+       // tblPersonas.setModel(new DefaultTableModel());
     }//GEN-LAST:event_jrbCurpStateChanged
 
-    private void setListenerDateChooser(){
-        jdcFecha.addPropertyChangeListener(new PropertyChangeListener(){
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                Calendar fecha=jdcFecha.getCalendar();
-                if(fecha!=null){
-                    buscarPersonasPorFechaNacimiento(fecha);
-                    actualizarJList();
-                }
-            }
-            
-        });
-    }
-    
+
     private void validarDatoBusqueda(){
         Document doc = txtDato.getDocument();
         doc.addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -496,6 +485,16 @@ public class ModuloConsultas extends javax.swing.JPanel {
                                 personasEncontradas.clear();
                         } else{
                             buscarPersonasPorCurp(texto);
+                        }
+                        actualizarJList();
+                    }else if(jrbNacimiento.isSelected()){
+                        if (texto.isBlank()) {
+                            if(personasEncontradas!=null)
+                                personasEncontradas.clear();
+                        }else if (texto.matches("\\d{1,4}")) {
+                            Calendar fecha = Calendar.getInstance();
+                            fecha.set(Calendar.YEAR, Integer.parseInt(texto));
+                            buscarPersonasPorAnio(fecha);
                         }
                         actualizarJList();
                     }
@@ -581,12 +580,12 @@ public class ModuloConsultas extends javax.swing.JPanel {
         return nombres;
     }
     
-    private void buscarPersonasPorFechaNacimiento(Calendar fecha){
+    private void buscarPersonasPorAnio(Calendar fecha){
         PersonaDTO persona = new PersonaDTO();
         persona.setFechaNacimiento(fecha);
         //personasEncontradas.clear();
         try {
-            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"fechaNacimiento");
+            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"anioNacimiento");
             if(personasEncontradas!=null){
                 System.out.println(scrollPane.isVisible());
                 personasEncontradasCopia.clear();
@@ -693,39 +692,54 @@ public class ModuloConsultas extends javax.swing.JPanel {
         
         txtDato = new JTextField();
         txtDato.setSize(PanelDato.getWidth(), PanelDato.getHeight());
-        txtDato.setEnabled(false);
+        //txtDato.setEnabled(true);
         
-        jdcFecha = new JDateChooser();
-        jdcFecha.setDateFormatString("d MMM y");
-        jdcFecha.setSize(PanelDato.getWidth(), PanelDato.getHeight());
-        jdcFecha.addPropertyChangeListener(new PropertyChangeListener(){
+        jycAnio=new JYearChooser();
+        jycAnio.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+        jycAnio.addPropertyChangeListener(new PropertyChangeListener(){
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Calendar fecha=jdcFecha.getCalendar();
-                if(fecha!=null){
-                    buscarPersonasPorFechaNacimiento(fecha);
-                    actualizarJList();
-                }
+                int anio=jycAnio.getYear();
+                Calendar fecha=Calendar.getInstance();
+                fecha.set(Calendar.YEAR, anio);
+                buscarPersonasPorAnio(fecha);
+                actualizarJList();
             }
             
         });
+//        
+//        jdcFecha = new JDateChooser();
+//        jdcFecha.setDateFormatString("d MMM y");
+//        jdcFecha.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+//       
         
         PanelDato.add(txtDato, "txtDato");
-        PanelDato.add(jdcFecha, "jdcFecha");
+//        PanelDato.add(jdcFecha, "jdcFecha");
+//        PanelDato.add(jycAnio, "jycAnio");
         
         jrbCurp.addActionListener(e -> {
-            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
-            txtDato.setEnabled(true);
+            ((DefaultTableModel)tblPersonas.getModel()).setRowCount(0);
             txtDato.setText("");
+//            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
+//            txtDato.setEnabled(true);
+//            txtDato.setText("");
         });
+//        jrbNacimiento.addActionListener(e -> {
+//            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "jdcFecha");
+//            jdcFecha.setDate(null);
+//        });
         jrbNacimiento.addActionListener(e -> {
-            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "jdcFecha");
-            jdcFecha.setDate(null);
+            ((DefaultTableModel)tblPersonas.getModel()).setRowCount(0);
+            txtDato.setText("");
+//            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "jycAnio");
+//            jycAnio.setYear(2024);
         });
         jrbNombre.addActionListener(e -> {
-            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
-            txtDato.setEnabled(true);
+            ((DefaultTableModel)tblPersonas.getModel()).setRowCount(0);
             txtDato.setText("");
+//            ((CardLayout) PanelDato.getLayout()).show(PanelDato, "txtDato");
+//            txtDato.setEnabled(true);
+//            txtDato.setText("");
         });
         
         
@@ -735,8 +749,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
         actualizarJList();
         validarDatoBusqueda();
         btnBuscar.setEnabled(false);
-        
-        
     }
     
     private void regresarMenu() {

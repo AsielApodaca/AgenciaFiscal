@@ -130,12 +130,13 @@ public class PersonaDAO implements IPersonaDAO{
     }
 
     @Override
-    public List<Persona> buscarPersonasPorFechaNac(Persona persona) throws PersistenciaException {
-        System.out.println("consulta personas por fecha nacimiento");
-        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_fecha",Persona.class);
-        spc.registerStoredProcedureParameter("fechaNacimiento", Calendar.class, ParameterMode.IN);
-        Parameter<Calendar> fechaNac=spc.getParameter("fechaNacimiento", Calendar.class);
-        spc.setParameter(fechaNac, persona.getFechaNacimiento(),TemporalType.DATE);
+    public List<Persona> buscarPersonasPorAnioNac(Persona persona) throws PersistenciaException {
+        System.out.println("consulta personas por año nacimiento");
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_anio",Persona.class);
+        spc.registerStoredProcedureParameter("anioNacimiento", Integer.class, ParameterMode.IN);
+        Calendar f=persona.getFechaNacimiento();
+        int anio=f.get(Calendar.YEAR);
+        spc.setParameter("anioNacimiento", anio);
         try{
             if (spc.execute()) {
                 List<Persona> personasObtenidas = spc.getResultList();

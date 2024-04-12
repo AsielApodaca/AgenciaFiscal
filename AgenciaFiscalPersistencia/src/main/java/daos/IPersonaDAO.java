@@ -17,6 +17,6 @@ public interface IPersonaDAO {
     public List<Persona> agregarPersonas()throws PersistenciaException;
     public List<Persona> buscarPersonasPorNombre(Persona persona)throws PersistenciaException;
     public List<Persona> buscarPersonasPorCURP(Persona persona)throws PersistenciaException;
-    public List<Persona> buscarPersonasPorFechaNac(Persona persona)throws PersistenciaException;
+    public List<Persona> buscarPersonasPorAnioNac(Persona persona)throws PersistenciaException;
     public Persona actualizarPersona(Persona persona)throws PersistenciaException;
 }

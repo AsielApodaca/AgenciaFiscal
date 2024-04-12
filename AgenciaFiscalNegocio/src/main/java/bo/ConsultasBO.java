@@ -53,9 +53,9 @@ public class ConsultasBO implements IConsultasBO {
                     p.setCurp(persona.getCurp());
                     personas=personaDAO.buscarPersonasPorCURP(p);
                 }
-                case "fechaNacimiento" -> {
+                case "anioNacimiento" -> {
                     p.setFechaNacimiento(persona.getFechaNacimiento());
-                    personas=personaDAO.buscarPersonasPorFechaNac(p);
+                    personas=personaDAO.buscarPersonasPorAnioNac(p);
                 }
             }
         }catch(PersistenciaException e){
