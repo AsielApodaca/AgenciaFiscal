@@ -38,11 +38,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
 
     private List<PersonaDTO> personasEncontradas;
     private List<PersonaDTO> personasEncontradasCopia;
+    private List<TramiteDTO> tramites;
     private DefaultListModel<String> modeloLista;
     private JTextField txtDato;
-    private JDateChooser jdcFecha;
-    private JYearChooser jycAnio;
-    private static PersonaDTO personaSeleccionada;
+    private static PersonaDTO personaSeleccionLista;
+    private static PersonaDTO personaSeleccionTabla;
     /**
      * Creates new form ModuloConsultas
      */
@@ -423,8 +423,8 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         //PersonaDTO persona=getPersonaDTOSeleccionada();
-        if(personaSeleccionada!=null){
-            setTablaTramites(personaSeleccionada);
+        if(personaSeleccionLista!=null){
+            setTablaTramites(personaSeleccionLista);
         }else{
             System.out.println("no persona seleccionada");
             
@@ -467,7 +467,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
             }
 
             private void validar(javax.swing.event.DocumentEvent e) {
-                personaSeleccionada=null;
+                personaSeleccionLista=null;
                 try {
                     Document doc = e.getDocument();
                     String texto = doc.getText(0, doc.getLength());
@@ -507,7 +507,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
     }
     
     private void setTablaTramites(PersonaDTO persona){
-        List<TramiteDTO> tramites;
+        //List<TramiteDTO> tramites;
         try {
             tramites = Ventanas.consultas.consultarTramitesPorPersona(persona);
         } catch (NegocioException e) {
@@ -682,8 +682,8 @@ public class ModuloConsultas extends javax.swing.JPanel {
                         System.out.println("persona sel: " + nombrePersonaSeleccionada);
                         txtDato.setText(nombrePersonaSeleccionada);
 
-                        personaSeleccionada = getPersonaDTOSeleccionada(nombrePersonaSeleccionada);
-                        System.out.println(personaSeleccionada.toString());
+                        personaSeleccionLista = getPersonaDTOSeleccionada(nombrePersonaSeleccionada);
+                        System.out.println(personaSeleccionLista.toString());
                         btnBuscar.setEnabled(true);
                     }
                 }
@@ -694,19 +694,19 @@ public class ModuloConsultas extends javax.swing.JPanel {
         txtDato.setSize(PanelDato.getWidth(), PanelDato.getHeight());
         //txtDato.setEnabled(true);
         
-        jycAnio=new JYearChooser();
-        jycAnio.setSize(PanelDato.getWidth(), PanelDato.getHeight());
-        jycAnio.addPropertyChangeListener(new PropertyChangeListener(){
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                int anio=jycAnio.getYear();
-                Calendar fecha=Calendar.getInstance();
-                fecha.set(Calendar.YEAR, anio);
-                buscarPersonasPorAnio(fecha);
-                actualizarJList();
-            }
-            
-        });
+//        jycAnio=new JYearChooser();
+//        jycAnio.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+//        jycAnio.addPropertyChangeListener(new PropertyChangeListener(){
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                int anio=jycAnio.getYear();
+//                Calendar fecha=Calendar.getInstance();
+//                fecha.set(Calendar.YEAR, anio);
+//                buscarPersonasPorAnio(fecha);
+//                actualizarJList();
+//            }
+//            
+//        });
 //        
 //        jdcFecha = new JDateChooser();
 //        jdcFecha.setDateFormatString("d MMM y");
@@ -716,7 +716,21 @@ public class ModuloConsultas extends javax.swing.JPanel {
         PanelDato.add(txtDato, "txtDato");
 //        PanelDato.add(jdcFecha, "jdcFecha");
 //        PanelDato.add(jycAnio, "jycAnio");
-        
+        tblPersonas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int fila=tblPersonas.getSelectedRow();
+                    if(fila>=0){
+                        for(TramiteDTO t:tramites){
+                            if(tramites.indexOf(t)==fila)
+                                System.out.println(t.toString());
+                        }
+                    }
+                }
+            }
+            
+        });
         jrbCurp.addActionListener(e -> {
             ((DefaultTableModel)tblPersonas.getModel()).setRowCount(0);
             txtDato.setText("");

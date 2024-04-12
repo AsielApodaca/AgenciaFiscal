@@ -24,13 +24,12 @@ import javax.persistence.criteria.Root;
  */
 public class VehiculoDAO implements IVehiculoDAO {
 
-    private EntityManagerFactory emf;
+    //private EntityManagerFactory emf;
     private EntityManager em;
     private final static Logger LOG= Logger.getLogger(VehiculoDAO.class.getName());
     
     public VehiculoDAO() {
-        emf=Persistence.createEntityManagerFactory("conexionPU");
-        em=emf.createEntityManager();
+        em=ClaseConexion.getEntityManager();
     }
     
 //    @Override
