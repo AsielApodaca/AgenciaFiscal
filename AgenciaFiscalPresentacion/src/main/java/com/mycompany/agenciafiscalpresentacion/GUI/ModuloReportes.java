@@ -1,5 +1,6 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import bo.GenerarReporteBO;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +32,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.BadLocationException;
 import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteDTO;
 
 
 /**
@@ -41,10 +43,11 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     private List<PersonaDTO> personasEncontradas;
     private DefaultListModel<String> modeloLista;
+    private List<TramiteDTO> tramites;
     private Calendar fechaDesde;
     private Calendar fechaHasta;
     private String tipoTramite;
-    private String nombrePersona;
+    private PersonaDTO persona;
     
     /**
      * Creates new form ModuloReportes
@@ -424,16 +427,25 @@ public class ModuloReportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        mostrarTramites();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void mostrarTramites() {
+        try {
+            
+        } catch (Exception e) {
+        }
+    }
+    
     private void iniciar() {
+        Ventanas.generarReporte = new GenerarReporteBO();
         personasEncontradas = new ArrayList<>();
         modeloLista = new DefaultListModel<>();
+        tramites = null;
         fechaDesde = null;
         fechaHasta = null;
         tipoTramite = null;
-        nombrePersona = null;
+        persona = null;
         
         
         scrollPane.setVisible(false);
@@ -532,10 +544,11 @@ public class ModuloReportes extends javax.swing.JPanel {
         jdcDesde.setCalendar(null);
         jdcHasta.setCalendar(null);
         
+        tramites = null;
         fechaDesde = null;
         fechaHasta = null;
         tipoTramite = null;
-        nombrePersona = null;
+        persona = null;
     }
     
     public void limpiarTabla(){
