@@ -12,7 +12,6 @@ import daos.TramiteDAO;
 import entidades.Persona;
 import entidades.Tramite;
 import daos.TramiteDAO;
-import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
@@ -22,14 +21,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.text.BadLocationException;
-import negocioDTO.PersonaDTO;
 
 
 /**
@@ -38,14 +33,11 @@ import negocioDTO.PersonaDTO;
  */
 public class ModuloReportes extends javax.swing.JPanel {
 
-    private List<PersonaDTO> personasEncontradas;
-    private DefaultListModel<String> modeloLista;
     /**
      * Creates new form ModuloReportes
      */
     public ModuloReportes() {
         initComponents();
-        iniciar();
     }
 
     /**
@@ -70,13 +62,11 @@ public class ModuloReportes extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblTramites = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        scrollPane = new javax.swing.JScrollPane();
-        jListPersonas = new javax.swing.JList<>();
+        btnBuscar = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cbxBuscarNombre = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        btnBuscar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -102,23 +92,20 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Filtros de busqueda");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 140, -1));
 
         jLabel2.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Desde:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Hasta:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
         add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
 
         cmbTipoTramite.setFont(new java.awt.Font("Avenir Next", 1, 13)); // NOI18N
-        cmbTipoTramite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Licencia", "Placas" }));
+        cmbTipoTramite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Licencia", "Placas" }));
         cmbTipoTramite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipoTramiteActionPerformed(evt);
@@ -127,9 +114,8 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tipo tramite:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, 20));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         tblTramites.setFont(new java.awt.Font("Avenir Next", 0, 13)); // NOI18N
         tblTramites.setModel(new javax.swing.table.DefaultTableModel(
@@ -244,60 +230,67 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 360, 220));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jListPersonas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        scrollPane.setViewportView(jListPersonas);
-
-        jPanel1.add(scrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 230, 60));
+        btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
 
         txtNombre.setEditable(false);
         txtNombre.setText(" ");
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 230, -1));
 
         jLabel5.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Ingrese nombre de la persona:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnBuscar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, 100));
 
         cbxBuscarNombre.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
-        cbxBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         cbxBuscarNombre.setText("Buscar por nombre");
         cbxBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxBuscarNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(cbxBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
-
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 250, 140));
+        add(cbxBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(138, 47, 47));
-
-        btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBuscar)
-                .addContainerGap(558, Short.MAX_VALUE))
+            .addGap(0, 640, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBuscar)
-                .addContainerGap(8, Short.MAX_VALUE))
+            .addGap(0, 40, Short.MAX_VALUE)
         );
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 640, 40));
@@ -322,7 +315,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(138, 47, 47));
 
         btnRegresar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnRegresar.setForeground(new java.awt.Color(0, 0, 0));
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,7 +342,6 @@ public class ModuloReportes extends javax.swing.JPanel {
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnGenerar.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
-        btnGenerar.setForeground(new java.awt.Color(0, 0, 0));
         btnGenerar.setText("Generar PDF");
         btnGenerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,151 +361,51 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     private void cbxBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxBuscarNombreActionPerformed
         txtNombre.setEditable(cbxBuscarNombre.isSelected());
-        txtNombre.setEnabled(cbxBuscarNombre.isSelected());
-        if(!cbxBuscarNombre.isSelected()) {
-            txtNombre.setText("");
-            personasEncontradas.clear();
-            scrollPane.setVisible(false);
-        }
+        if(!cbxBuscarNombre.isSelected()) txtNombre.setText("");
     }//GEN-LAST:event_cbxBuscarNombreActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+    
 
-        Document documento = new Document();
-        try {
-            String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
-            documento.open();
+     Document documento = new Document();
+    try {
+        String ruta = System.getProperty("user.home");
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
+        documento.open();
 
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.addCell("Nombre Completo");
-            tabla.addCell("Tipo");
-            tabla.addCell("Costo MXN");
-            tabla.addCell("Fecha Emisión");
+        PdfPTable tabla = new PdfPTable(4);
+        tabla.addCell("Nombre Completo");
+        tabla.addCell("Tipo");
+        tabla.addCell("Costo MXN");
+        tabla.addCell("Fecha Emisión");
 
-            TramiteDAO tramiteDAO = new TramiteDAO();
-            List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
-            tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
 
-            for (Tramite tramite : tramites) {
-                tabla.addCell(tramite.getPersona().getNombreCompleto());
-                tabla.addCell(tramite.getClass().getSimpleName());
-                tabla.addCell(String.valueOf(tramite.getCostoMxn()));
-                tabla.addCell(tramite.getFechaEmisionString());
-            }
+        TramiteDAO tramiteDAO = new TramiteDAO();
+        List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
+        tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
 
-            documento.add(tabla);
-            documento.close();
-            JOptionPane.showMessageDialog(null, "Reporte creado");
+        for (Tramite tramite : tramites) {
+            tabla.addCell(tramite.getPersona().getNombreCompleto());
+            tabla.addCell(tramite.getClass().getSimpleName());
+            tabla.addCell(String.valueOf(tramite.getCostoMxn()));
+            tabla.addCell(tramite.getFechaEmisionString());
+        }
 
-        } catch (DocumentException | HeadlessException | FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e);
-        } catch (PersistenciaException ex) {
+        documento.add(tabla);
+        documento.close();
+        JOptionPane.showMessageDialog(null, "Reporte creado");
+        
+    } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+        JOptionPane.showMessageDialog(null, e);
+    }   catch (PersistenciaException ex) {
             Logger.getLogger(ModuloReportes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnGenerarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void iniciar() {
-        personasEncontradas = new ArrayList<>();
-        modeloLista = new DefaultListModel<>();
-        
-        
-        scrollPane.setVisible(false);
-        txtNombre.setEnabled(false);
-        txtNombre.setEditable(false);
-        
-        validarDatoBusqueda();
-    }
-    
-    private void validarDatoBusqueda(){
-        javax.swing.text.Document doc = txtNombre.getDocument();
-        doc.addDocumentListener(new javax.swing.event.DocumentListener() {
-            @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                validar(e);
-            }
-
-            @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                validar(e);
-            }
-
-            @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                validar(e);
-            }
-
-            private void validar(javax.swing.event.DocumentEvent e) {
-                try {
-                    javax.swing.text.Document doc = e.getDocument();
-                    String texto = doc.getText(0, doc.getLength());
-                    if (texto.isBlank()) {
-                        personasEncontradas.clear();
-                    } else if (texto.matches("^[A-Za-z ]+$")) {
-                        buscarPersonasPorNombre(texto);
-                    }
-                    actualizarJList();
-                } catch (BadLocationException ex) {
-                    Logger.getLogger(ModuloConsultas.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-        });
-    }
-    
-    private void actualizarJList() {
-        modeloLista.clear();
-        if(personasEncontradas!=null && !personasEncontradas.isEmpty()){
-            List<String> lista = nombresPersonas();
-            for (String nombrePersona : lista) {
-                modeloLista.addElement(nombrePersona);
-            }
-            jListPersonas.setModel(modeloLista);
-            scrollPane.setVisible(true);
-            jListPersonas.setVisible(true);
-        }else{
-            
-            scrollPane.setVisible(false);
-        }
-            
-    }
-    
-    private List<String> nombresPersonas(){
-        List<String> nombres = new ArrayList<>();
-        for (PersonaDTO p : personasEncontradas) {
-            nombres.add(p.getNombreCompleto());
-        }
-        return nombres;
-    }
-    
-    private void buscarPersonasPorNombre(String nombreABuscar){
-        PersonaDTO persona = new PersonaDTO();
-        persona.setNombreCompleto(nombreABuscar);
-        //personasEncontradas.clear();
-        try {
-            personasEncontradas = Ventanas.consultas.consultarPersonasPorNombre(persona);
-            if(personasEncontradas!=null){
-                System.out.println(scrollPane.isVisible());
-                System.out.println("-------se encontraron personas-------");
-                for (PersonaDTO p : personasEncontradas) {
-                    System.out.println(p.getNombreCompleto());
-                }
-            }else System.out.println("Lista vacia");
-            
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-    
     public void reiniciarPanel(){
         cmbTipoTramite.setSelectedIndex(0);
         txtNombre.setText("");
-        txtNombre.setEnabled(false);
         cbxBuscarNombre.setSelected(false);
         limpiarTabla();
         jdcDesde.setCalendar(null);
@@ -550,7 +441,6 @@ public class ModuloReportes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<String> jListPersonas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -561,7 +451,6 @@ public class ModuloReportes extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private com.toedter.calendar.JDateChooser jdcDesde;
     private com.toedter.calendar.JDateChooser jdcHasta;
-    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable tblTramites;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
