@@ -7,6 +7,7 @@ package daos;
 import entidades.Persona;
 import entidades.Tramite;
 import excepciones.PersistenciaException;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public interface ITramiteDAO {
     public List<Tramite> obtenerTramites(Persona personaTramite)throws PersistenciaException;
+    public List<Tramite> obtenerTramites(Calendar fechaDesde, Calendar fechaHasta, String tipoTramite, Persona personaTramite) throws PersistenciaException;
     public Tramite obtenerTramite(Persona personaTramite, String tipoTramite)throws PersistenciaException;
     public List<Tramite> obtenerTramitePorTipo(String tipoTramite) throws PersistenciaException;
     public boolean registrarTramite(Tramite tramite)throws PersistenciaException;

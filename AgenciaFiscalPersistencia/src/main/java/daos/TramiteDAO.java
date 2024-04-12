@@ -25,6 +25,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -79,6 +80,56 @@ public class TramiteDAO implements ITramiteDAO{
         throw new PersistenciaException("La persona no tiene tramites Registrados");
     }
 
+    
+    public List<Tramite> obtenerTramites(Calendar fechaDesde, Calendar fechaHasta, String tipoTramite, Persona personaTramite) throws PersistenciaException {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tramite> criteria = cb.createQuery(Tramite.class);
+        Root<Tramite> root = criteria.from(Tramite.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        // Filtro por fecha desde, si se proporciona
+        if (fechaDesde != null) {
+            predicates.add(cb.greaterThanOrEqualTo(root.get("fechaEmision"), fechaDesde));
+        }
+
+        // Filtro por fecha hasta, si se proporciona
+        if (fechaHasta != null) {
+            predicates.add(cb.lessThanOrEqualTo(root.get("fechaEmision"), fechaHasta));
+        }
+
+        // Filtro por tipo de trámite, si se proporciona
+        if (tipoTramite != null && !tipoTramite.isEmpty()) {
+            Predicate tipoPredicate = cb.equal(root.type(),
+                    cb.literal(tipoTramite.equals("licencia") ? TramiteLicencia.class : TramitePlacas.class));
+            predicates.add(tipoPredicate);
+        }
+
+
+        // Filtro por nombre de la persona, si se proporciona
+        if (personaTramite != null) {
+            predicates.add(cb.equal(root.get("persona").get("rfc"),personaTramite.getRfc()));
+        }
+
+        criteria.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
+
+        TypedQuery<Tramite> query = em.createQuery(criteria);
+        List<Tramite> tramites;
+        try {
+            tramites = query.getResultList();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrió un error al obtener los trámites");
+        }
+
+        if (!tramites.isEmpty()) {
+            return tramites;
+        }
+
+        throw new PersistenciaException("No se encontraron trámites con los filtros proporcionados");
+    }
+
+    
     private List<Tramite> obtenerTramitePorTipo(List<Long>ids,String tipoTramite)throws PersistenciaException{
         CriteriaQuery criteria;
         Root root;
