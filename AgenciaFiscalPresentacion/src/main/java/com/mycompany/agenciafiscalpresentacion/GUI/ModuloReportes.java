@@ -41,6 +41,7 @@ import negocioDTO.TramiteDTO;
  */
 public class ModuloReportes extends javax.swing.JPanel {
 
+    private static final Logger LOG = Logger.getLogger(ModuloReportes.class.getName());
     private List<PersonaDTO> personasEncontradas;
     private DefaultListModel<String> modeloLista;
     private List<TramiteDTO> tramites;
@@ -427,15 +428,49 @@ public class ModuloReportes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        obtenerTramites();
         mostrarTramites();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void mostrarTramites() {
+    private void obtenerTramites() {
         try {
-            
+            fechaDesde = jdcDesde.getCalendar();
+            fechaHasta = jdcHasta.getCalendar();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, """
+                                                Las fechas introducidas no son v\u00e1lidas. 
+                                                No se aplicar\u00e1 el filtro de fechas.""");
+        } finally {
+            fechaDesde = null;
+            fechaHasta = null;
+        }
+        
+        if(!txtNombre.getText().isBlank() && persona == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró a la persona, proceso cancelado.");
+            return;
+        }
+        
+        tipoTramite = (String) cmbTipoTramite.getSelectedItem();
+        if(tipoTramite.equalsIgnoreCase("Todos")) tipoTramite = null;
+        
+        try {
+            tramites = Ventanas.generarReporte.obtenerTramites(fechaDesde, fechaHasta, tipoTramite, persona);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ModuloReportes.class.getName()).log(Level.SEVERE, null, ex);
+            tramites = null;
         }
     }
+    
+    private void mostrarTramites() {
+        if(tramites == null) {
+            System.out.println("No hay tramites");
+            return;
+        }
+        for(TramiteDTO tramite : tramites) {
+            System.out.println(tramite.getClass().getSimpleName());
+        }
+    }
+    
     
     private void iniciar() {
         Ventanas.generarReporte = new GenerarReporteBO();
