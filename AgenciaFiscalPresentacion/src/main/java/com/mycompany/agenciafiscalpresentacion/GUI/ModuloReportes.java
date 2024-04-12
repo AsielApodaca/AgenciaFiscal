@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,11 @@ public class ModuloReportes extends javax.swing.JPanel {
 
     private List<PersonaDTO> personasEncontradas;
     private DefaultListModel<String> modeloLista;
+    private Calendar fechaDesde;
+    private Calendar fechaHasta;
+    private String tipoTramite;
+    private String nombrePersona;
+    
     /**
      * Creates new form ModuloReportes
      */
@@ -422,6 +428,10 @@ public class ModuloReportes extends javax.swing.JPanel {
     private void iniciar() {
         personasEncontradas = new ArrayList<>();
         modeloLista = new DefaultListModel<>();
+        fechaDesde = null;
+        fechaHasta = null;
+        tipoTramite = null;
+        nombrePersona = null;
         
         
         scrollPane.setVisible(false);
@@ -519,6 +529,11 @@ public class ModuloReportes extends javax.swing.JPanel {
         limpiarTabla();
         jdcDesde.setCalendar(null);
         jdcHasta.setCalendar(null);
+        
+        fechaDesde = null;
+        fechaHasta = null;
+        tipoTramite = null;
+        nombrePersona = null;
     }
     
     public void limpiarTabla(){
