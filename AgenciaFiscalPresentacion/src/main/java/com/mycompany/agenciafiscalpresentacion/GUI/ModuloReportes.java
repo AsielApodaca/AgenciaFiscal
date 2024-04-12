@@ -395,6 +395,7 @@ public class ModuloReportes extends javax.swing.JPanel {
             PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
             documento.open();
 
+
             PdfPTable tabla = new PdfPTable(4);
             tabla.addCell("Nombre Completo");
             tabla.addCell("Tipo");
@@ -402,8 +403,9 @@ public class ModuloReportes extends javax.swing.JPanel {
             tabla.addCell("Fecha Emisión");
 
             TramiteDAO tramiteDAO = new TramiteDAO();
-            List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
-            tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
+            List<Tramite> tramites = tramiteDAO.obtenerTramites();
+//            List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
+//            tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
 
             for (Tramite tramite : tramites) {
                 tabla.addCell(tramite.getPersona().getNombreCompleto());
@@ -519,7 +521,7 @@ public class ModuloReportes extends javax.swing.JPanel {
         persona.setNombreCompleto(nombreABuscar);
         //personasEncontradas.clear();
         try {
-            personasEncontradas = Ventanas.consultas.consultarPersonasPorNombre(persona);
+            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"nombre");
             if(personasEncontradas!=null){
                 System.out.println(scrollPane.isVisible());
                 System.out.println("-------se encontraron personas-------");

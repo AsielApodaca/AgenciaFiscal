@@ -5,7 +5,9 @@
 package bo;
 
 import daos.IPersonaDAO;
+import daos.ITramiteDAO;
 import daos.PersonaDAO;
+import daos.TramiteLicenciaDAO;
 import entidades.Estado;
 import entidades.Persona;
 import entidades.Tramite;
@@ -28,18 +30,34 @@ import negocioDTO.TramitePlacasDTO;
  */
 public class ConsultasBO implements IConsultasBO {
     private static IPersonaDAO personaDAO;
-    
+    private static ITramiteDAO tramiteDAO;
+
     public ConsultasBO(){
         personaDAO=new PersonaDAO();
+        tramiteDAO=new TramiteLicenciaDAO();
     }
 
     @Override
-    public List<PersonaDTO> consultarPersonasPorNombre(PersonaDTO persona)throws NegocioException {
+    public List<PersonaDTO> consultarPersonasPorCriterio(PersonaDTO persona, String criterio)throws NegocioException {
         Persona p=new Persona();
+        
         p.setNombreCompleto(persona.getNombreCompleto());
-        List<Persona> personas;
+        List<Persona> personas=new ArrayList<>();
         try{
-            personas=personaDAO.buscarPersonasPorNombre(p);
+            switch (criterio) {
+                case "nombre" -> {
+                    p.setNombreCompleto(persona.getNombreCompleto());
+                    personas=personaDAO.buscarPersonasPorNombre(p);
+                }
+                case "curp" -> {
+                    p.setCurp(persona.getCurp());
+                    personas=personaDAO.buscarPersonasPorCURP(p);
+                }
+                case "fechaNacimiento" -> {
+                    p.setFechaNacimiento(persona.getFechaNacimiento());
+                    personas=personaDAO.buscarPersonasPorFechaNac(p);
+                }
+            }
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
         }
@@ -100,5 +118,21 @@ public class ConsultasBO implements IConsultasBO {
         }
         
         return tramitesDTO;
+    }
+
+    @Override
+    public List<TramiteDTO> consultarTramitesPorPersona(PersonaDTO persona) throws NegocioException {
+        Persona personaBO=new Persona();
+        personaBO.setNombreCompleto(persona.getNombreCompleto());
+        personaBO.setRfc(persona.getRfc());
+        try{
+            List<Tramite> tramites=tramiteDAO.obtenerTramitesPorPersona(personaBO);
+            if(!tramites.isEmpty()){
+                return tramiteBoToDTO(tramites);
+            }
+            return null;
+        }catch(PersistenciaException e){
+            throw new NegocioException(e.getMessage());
+        }
     }
 }

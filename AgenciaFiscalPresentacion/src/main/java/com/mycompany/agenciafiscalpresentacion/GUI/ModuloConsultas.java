@@ -8,17 +8,26 @@ import bo.ConsultasBO;
 import com.toedter.calendar.JDateChooser;
 import excepciones.NegocioException;
 import java.awt.CardLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteDTO;
 
 /**
  *
@@ -27,9 +36,11 @@ import negocioDTO.PersonaDTO;
 public class ModuloConsultas extends javax.swing.JPanel {
 
     private List<PersonaDTO> personasEncontradas;
+    private List<PersonaDTO> personasEncontradasCopia;
     private DefaultListModel<String> modeloLista;
     private JTextField txtDato;
     private JDateChooser jdcFecha;
+    private static PersonaDTO personaSeleccionada;
     /**
      * Creates new form ModuloConsultas
      */
@@ -160,6 +171,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jrbCurp.setText("CURP");
         jrbCurp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jrbCurp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jrbCurp.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrbCurpStateChanged(evt);
+            }
+        });
         jrbCurp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbCurpActionPerformed(evt);
@@ -173,6 +189,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jrbNacimiento.setText("Año de nacimiento");
         jrbNacimiento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jrbNacimiento.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jrbNacimiento.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrbNacimientoStateChanged(evt);
+            }
+        });
         jrbNacimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbNacimientoActionPerformed(evt);
@@ -186,6 +207,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jrbNombre.setText("Nombre de persona");
         jrbNombre.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jrbNombre.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jrbNombre.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrbNombreStateChanged(evt);
+            }
+        });
         jPanel7.add(jrbNombre);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -207,6 +233,11 @@ public class ModuloConsultas extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Avenir Next", 1, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         PanelDato.setBackground(new java.awt.Color(255, 102, 102));
         PanelDato.setMinimumSize(new java.awt.Dimension(20, 20));
@@ -386,6 +417,46 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         regresarMenu();
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        //PersonaDTO persona=getPersonaDTOSeleccionada();
+        if(personaSeleccionada!=null){
+            setTablaTramites(personaSeleccionada);
+        }else{
+            System.out.println("no persona seleccionada");
+            
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jrbNombreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNombreStateChanged
+        // TODO add your handling code here:
+        tblPersonas.setModel(new DefaultTableModel());
+    }//GEN-LAST:event_jrbNombreStateChanged
+
+    private void jrbNacimientoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNacimientoStateChanged
+        // TODO add your handling code here:
+        tblPersonas.setModel(new DefaultTableModel());
+    }//GEN-LAST:event_jrbNacimientoStateChanged
+
+    private void jrbCurpStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbCurpStateChanged
+        // TODO add your handling code here:
+        tblPersonas.setModel(new DefaultTableModel());
+    }//GEN-LAST:event_jrbCurpStateChanged
+
+    private void setListenerDateChooser(){
+        jdcFecha.addPropertyChangeListener(new PropertyChangeListener(){
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Calendar fecha=jdcFecha.getCalendar();
+                if(fecha!=null){
+                    buscarPersonasPorFechaNacimiento(fecha);
+                    actualizarJList();
+                }
+            }
+            
+        });
+    }
     
     private void validarDatoBusqueda(){
         Document doc = txtDato.getDocument();
@@ -398,6 +469,7 @@ public class ModuloConsultas extends javax.swing.JPanel {
             @Override
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 validar(e);
+                //personaSeleccionada=null;
             }
 
             @Override
@@ -406,21 +478,26 @@ public class ModuloConsultas extends javax.swing.JPanel {
             }
 
             private void validar(javax.swing.event.DocumentEvent e) {
+                personaSeleccionada=null;
                 try {
                     Document doc = e.getDocument();
                     String texto = doc.getText(0, doc.getLength());
                     if (jrbNombre.isSelected()) {
                         if (texto.isBlank()) {
-                            personasEncontradas.clear();
+                            if(personasEncontradas!=null)
+                                personasEncontradas.clear();
                         } else if (texto.matches("^[A-Za-z ]+$")) {
                             buscarPersonasPorNombre(texto);
                         }
                         actualizarJList();
-                        
-                    } else if (jrbNacimiento.isSelected()) {
-                        
                     } else if (jrbCurp.isSelected()) {
-                        
+                        if (texto.isBlank()) {
+                            if(personasEncontradas!=null)
+                                personasEncontradas.clear();
+                        } else{
+                            buscarPersonasPorCurp(texto);
+                        }
+                        actualizarJList();
                     }
                 } catch (BadLocationException ex) {
                     Logger.getLogger(ModuloConsultas.class.getName()).log(Level.SEVERE, null, ex);
@@ -428,6 +505,56 @@ public class ModuloConsultas extends javax.swing.JPanel {
                 
             }
         });
+    }
+    
+    private void setTablaTramites(PersonaDTO persona){
+        List<TramiteDTO> tramites;
+        try {
+            tramites = Ventanas.consultas.consultarTramitesPorPersona(persona);
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return;
+        }
+        List<List<String>> datos=new ArrayList<>();
+        List<String> registros;
+        for(TramiteDTO t : tramites) {
+            registros=new ArrayList<>();
+            registros.add(t.getClass().getSimpleName());
+            registros.add(String.valueOf(t.getCostoMxn()));
+            registros.add(t.getEstado().toString());
+            registros.add(t.fechaToString(t.getFechaEmision()));
+            datos.add(registros);
+        }
+        Object[][] filas = new Object[datos.size()][4];
+        int contador = 0;
+        for (List<String> lista : datos) {
+            filas[contador][0]=lista.get(0);
+            filas[contador][1]=lista.get(1);
+            filas[contador][2]=lista.get(2);
+            filas[contador][3]=lista.get(3);
+            contador++;
+        }
+        List<String> columnas = new ArrayList<>();
+        columnas.add("Tramite");
+        columnas.add("Costo");
+        columnas.add("Estado");
+        columnas.add("Fecha emision");
+
+        DefaultTableModel modeloTabla = new DefaultTableModel(filas, columnas.toArray());
+        tblPersonas.setModel(modeloTabla);
+
+    }
+    
+    private PersonaDTO getPersonaDTOSeleccionada(String nombrePersona){
+        if(!personasEncontradasCopia.isEmpty()){
+            for (PersonaDTO persona : personasEncontradasCopia) {
+                //System.out.println("getPersonaDTO: "+persona.getNombreCompleto().equals(nombrePersona));
+                if (persona.getNombreCompleto().equals(nombrePersona)) {
+                    return persona;
+                }
+            }  
+        }System.out.println("esta vacia la copia de personas enc");
+        return null;
     }
     
     private void actualizarJList() {
@@ -441,7 +568,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
             scrollPane.setVisible(true);
             jListPersonas.setVisible(true);
         }else{
-            
             scrollPane.setVisible(false);
         }
             
@@ -455,18 +581,83 @@ public class ModuloConsultas extends javax.swing.JPanel {
         return nombres;
     }
     
+    private void buscarPersonasPorFechaNacimiento(Calendar fecha){
+        PersonaDTO persona = new PersonaDTO();
+        persona.setFechaNacimiento(fecha);
+        //personasEncontradas.clear();
+        try {
+            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"fechaNacimiento");
+            if(personasEncontradas!=null){
+                System.out.println(scrollPane.isVisible());
+                personasEncontradasCopia.clear();
+                for(PersonaDTO p: personasEncontradas){
+                    personasEncontradasCopia.add(p);
+                    System.out.println(p);
+                }
+                System.out.println("-------se encontraron personas-------");
+                for (PersonaDTO p : personasEncontradas) {
+                    System.out.println(p.fechaToString());
+                }
+//                System.out.println("personas encontradas copia");
+//                for (PersonaDTO p : personasEncontradasCopia) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
+            }else System.out.println("Lista vacia");
+            
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
+    private void buscarPersonasPorCurp(String curp){
+        PersonaDTO persona = new PersonaDTO();
+        persona.setCurp(curp);
+        //personasEncontradas.clear();
+        try {
+            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"curp");
+            if(personasEncontradas!=null){
+//                System.out.println(scrollPane.isVisible());
+                personasEncontradasCopia.clear();
+                for(PersonaDTO p: personasEncontradas){
+                    personasEncontradasCopia.add(p);
+                    System.out.println(p);
+                }
+//                System.out.println("-------se encontraron personas-------");
+//                for (PersonaDTO p : personasEncontradas) {
+//                    System.out.println(p.getCurp());
+//                }
+//                System.out.println("personas encontradas copia");
+//                for (PersonaDTO p : personasEncontradasCopia) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
+            }else System.out.println("Lista vacia");
+            
+        } catch (NegocioException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
     private void buscarPersonasPorNombre(String nombreABuscar){
         PersonaDTO persona = new PersonaDTO();
         persona.setNombreCompleto(nombreABuscar);
         //personasEncontradas.clear();
         try {
-            personasEncontradas = Ventanas.consultas.consultarPersonasPorNombre(persona);
+            personasEncontradas = Ventanas.consultas.consultarPersonasPorCriterio(persona,"nombre");
             if(personasEncontradas!=null){
-                System.out.println(scrollPane.isVisible());
-                System.out.println("-------se encontraron personas-------");
-                for (PersonaDTO p : personasEncontradas) {
-                    System.out.println(p.getNombreCompleto());
+//                System.out.println(scrollPane.isVisible());
+                personasEncontradasCopia.clear();
+                for(PersonaDTO p: personasEncontradas){
+                    personasEncontradasCopia.add(p);
+//                    System.out.println(p);
                 }
+//                System.out.println("-------se encontraron personas-------");
+//                for (PersonaDTO p : personasEncontradas) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
+//                System.out.println("personas encontradas copia");
+//                for (PersonaDTO p : personasEncontradasCopia) {
+//                    System.out.println(p.getNombreCompleto());
+//                }
             }else System.out.println("Lista vacia");
             
         } catch (NegocioException e) {
@@ -478,6 +669,27 @@ public class ModuloConsultas extends javax.swing.JPanel {
         Ventanas.consultas = new ConsultasBO();
         personasEncontradas = new ArrayList<>();
         modeloLista = new DefaultListModel<>();
+        personasEncontradasCopia=new ArrayList<>();
+        jListPersonas.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    //List<PersonaDTO> personasEncontradasCopiaa=personasEncontradas;
+                    if (personasEncontradasCopia.isEmpty()) {
+                        System.out.println("is empty");
+                    }
+                    String nombrePersonaSeleccionada = jListPersonas.getSelectedValue();
+                    if (nombrePersonaSeleccionada != null) {
+                        System.out.println("persona sel: " + nombrePersonaSeleccionada);
+                        txtDato.setText(nombrePersonaSeleccionada);
+
+                        personaSeleccionada = getPersonaDTOSeleccionada(nombrePersonaSeleccionada);
+                        System.out.println(personaSeleccionada.toString());
+                        btnBuscar.setEnabled(true);
+                    }
+                }
+            }
+        });
         
         txtDato = new JTextField();
         txtDato.setSize(PanelDato.getWidth(), PanelDato.getHeight());
@@ -486,6 +698,17 @@ public class ModuloConsultas extends javax.swing.JPanel {
         jdcFecha = new JDateChooser();
         jdcFecha.setDateFormatString("d MMM y");
         jdcFecha.setSize(PanelDato.getWidth(), PanelDato.getHeight());
+        jdcFecha.addPropertyChangeListener(new PropertyChangeListener(){
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                Calendar fecha=jdcFecha.getCalendar();
+                if(fecha!=null){
+                    buscarPersonasPorFechaNacimiento(fecha);
+                    actualizarJList();
+                }
+            }
+            
+        });
         
         PanelDato.add(txtDato, "txtDato");
         PanelDato.add(jdcFecha, "jdcFecha");

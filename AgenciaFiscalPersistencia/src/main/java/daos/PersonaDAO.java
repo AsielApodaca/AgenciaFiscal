@@ -6,6 +6,7 @@ package daos;
 
 import entidades.Persona;
 import excepciones.PersistenciaException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javax.persistence.Parameter;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -113,8 +115,8 @@ public class PersonaDAO implements IPersonaDAO{
     public List<Persona> buscarPersonasPorCURP(Persona persona) throws PersistenciaException {
         System.out.println("consulta personas por curp");
         StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_curp",Persona.class);
-        spc.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
-        spc.setParameter("nombre", persona.getNombreCompleto());
+        spc.registerStoredProcedureParameter("curpB", String.class, ParameterMode.IN);
+        spc.setParameter("curpB", persona.getCurp());
         try{
             if (spc.execute()) {
                 List<Persona> personasObtenidas = spc.getResultList();
@@ -129,10 +131,11 @@ public class PersonaDAO implements IPersonaDAO{
 
     @Override
     public List<Persona> buscarPersonasPorFechaNac(Persona persona) throws PersistenciaException {
-        System.out.println("consulta personas por curp");
-        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_curp",Persona.class);
-        spc.registerStoredProcedureParameter("nombre", String.class, ParameterMode.IN);
-        spc.setParameter("nombre", persona.getNombreCompleto());
+        System.out.println("consulta personas por fecha nacimiento");
+        StoredProcedureQuery spc=em.createStoredProcedureQuery("sp_buscar_personas_fecha",Persona.class);
+        spc.registerStoredProcedureParameter("fechaNacimiento", Calendar.class, ParameterMode.IN);
+        Parameter<Calendar> fechaNac=spc.getParameter("fechaNacimiento", Calendar.class);
+        spc.setParameter(fechaNac, persona.getFechaNacimiento(),TemporalType.DATE);
         try{
             if (spc.execute()) {
                 List<Persona> personasObtenidas = spc.getResultList();

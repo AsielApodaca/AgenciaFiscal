@@ -104,13 +104,15 @@ public class Prueba {
         IPersonaDAO p=new PersonaDAO();
         Persona per=new Persona();
         per.setNombreCompleto("er");
+        per.setCurp("mam");
         List<Persona> personas=new ArrayList<>();
+        List<Persona> personasCurp=new ArrayList<>();
         try {
             personas=p.buscarPersonasPorNombre(per);
+            personasCurp=p.buscarPersonasPorCURP(per);
         } catch (PersistenciaException e) {
             System.out.println(e);
         }
-        
         if (!personas.isEmpty()) {
             for (Persona pers : personas) {
                 System.out.println(pers.toString());
@@ -118,7 +120,40 @@ public class Prueba {
         } else {
             System.out.println("se obtuvo una lista vacia");
         }
+        System.out.println("---------------");
+        if (!personasCurp.isEmpty()) {
+            for (Persona pers : personasCurp) {
+                System.out.println(pers.toString());
+            }
+        } else {
+            System.out.println("se obtuvo una lista vacia");
+        }
+        
 
+
+//        IPersonaDAO p=new PersonaDAO();
+//        ITramiteDAO tramiteDAO= new TramiteLicenciaDAO();
+//        try{
+//            Persona persona=p.obtenerPersona(new Persona("LOPS9705122RQ"));
+//            List<Tramite> tramitesP=tramiteDAO.obtenerTramitesPorPersona(persona);
+//            List<Tramite> tramites=tramiteDAO.obtenerTramites();
+//            if(!tramitesP.isEmpty()){
+//                System.out.println("tramimtes por persona");
+//                for(Tramite t: tramitesP){
+//                    System.out.println(t.getClass().getSimpleName());
+//                    System.out.println(t.toString());
+//                }
+//            }
+//            if(!tramites.isEmpty()){
+//                System.out.println("todos los tramites ");
+//                for(Tramite t: tramites){
+//                    System.out.println(t.getClass().getSimpleName());
+//                    System.out.println(t.toString());
+//                }
+//            }
+//        }catch(PersistenciaException e){
+//            System.out.println(e.getMessage());
+//        }
         ClaseConexion.cerrarConexion();
 //        Persona persona=new Persona("GALA850730M78");
 //        persona=p.obtenerPersona(persona);
