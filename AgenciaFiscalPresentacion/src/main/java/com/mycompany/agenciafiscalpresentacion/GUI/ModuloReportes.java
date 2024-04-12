@@ -403,42 +403,20 @@ public class ModuloReportes extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxBuscarNombreActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-
-        Document documento = new Document();
+        if(tramites == null || tramites.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Primero debes buscar trámites existentes.");
+            return;
+        }
+        
         try {
-            String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
-            documento.open();
-
-
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.addCell("Nombre Completo");
-            tabla.addCell("Tipo");
-            tabla.addCell("Costo MXN");
-            tabla.addCell("Fecha Emisión");
-
-            TramiteDAO tramiteDAO = new TramiteDAO();
-            List<Tramite> tramites = tramiteDAO.obtenerTramites();
-//            List<Tramite> tramites = tramiteDAO.obtenerTramitePorTipo("licencia");
-//            tramites.addAll(tramiteDAO.obtenerTramitePorTipo("placas"));
-
-            for (Tramite tramite : tramites) {
-                tabla.addCell(tramite.getPersona().getNombreCompleto());
-                tabla.addCell(tramite.getClass().getSimpleName());
-                tabla.addCell(String.valueOf(tramite.getCostoMxn()));
-                tabla.addCell(tramite.getFechaEmisionString());
+            if(Ventanas.generarReporte.generarPDF(tramites)) {
+                JOptionPane.showMessageDialog(null, "Reporte creado en escritorio.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo generar el reporte");
             }
-
-            documento.add(tabla);
-            documento.close();
-            JOptionPane.showMessageDialog(null, "Reporte creado");
-
-        } catch (DocumentException | HeadlessException | FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e);
-        } catch (PersistenciaException ex) {
+        } catch (NegocioException ex) {
             Logger.getLogger(ModuloReportes.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

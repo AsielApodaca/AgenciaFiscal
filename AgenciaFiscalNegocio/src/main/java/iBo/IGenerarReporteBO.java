@@ -12,4 +12,5 @@ import negocioDTO.TramiteDTO;
  */
 public interface IGenerarReporteBO {
     public List<TramiteDTO> obtenerTramites(Calendar fechaDesde, Calendar fechaHasta, String tipoTramite, PersonaDTO personaTramiteDTO) throws NegocioException;
+    public Boolean generarPDF(List<TramiteDTO> tramites) throws NegocioException;
 }
