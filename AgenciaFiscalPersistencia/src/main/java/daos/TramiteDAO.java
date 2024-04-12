@@ -103,7 +103,7 @@ public class TramiteDAO implements ITramiteDAO{
         // Filtro por tipo de trámite, si se proporciona
         if (tipoTramite != null && !tipoTramite.isEmpty()) {
             Predicate tipoPredicate = cb.equal(root.type(),
-                    cb.literal(tipoTramite.equals("licencia") ? TramiteLicencia.class : TramitePlacas.class));
+                    cb.literal(tipoTramite.equalsIgnoreCase("licencia") ? TramiteLicencia.class : TramitePlacas.class));
             predicates.add(tipoPredicate);
         }
 
@@ -128,7 +128,7 @@ public class TramiteDAO implements ITramiteDAO{
             return tramites;
         }
 
-        throw new PersistenciaException("No se encontraron trámites con los filtros proporcionados");
+        return null;
     }
 
     

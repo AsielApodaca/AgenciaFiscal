@@ -113,7 +113,9 @@ public class ModuloReportes extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+
+        jdcDesde.setDateFormatString("d/MM/y");
+        add(jdcDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 120, -1));
 
         jLabel1.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -128,8 +130,10 @@ public class ModuloReportes extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Hasta:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
-        add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, -1, -1));
+
+        jdcHasta.setDateFormatString("d/MM/y");
+        add(jdcHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 120, -1));
 
         cmbTipoTramite.setFont(new java.awt.Font("Avenir Next", 1, 13)); // NOI18N
         cmbTipoTramite.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Licencia", "Placas" }));
@@ -138,7 +142,7 @@ public class ModuloReportes extends javax.swing.JPanel {
                 cmbTipoTramiteActionPerformed(evt);
             }
         });
-        add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 230, -1));
+        add(cmbTipoTramite, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 250, -1));
 
         jLabel4.setFont(new java.awt.Font("Avenir Next", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -468,15 +472,16 @@ public class ModuloReportes extends javax.swing.JPanel {
     }
 
     private void mostrarTramites() {
-        if (tramites == null || tramites.isEmpty()) {
-            System.out.println("No hay tramites");
-            return;
-        }
-
         DefaultTableModel modelo = (DefaultTableModel) tblTramites.getModel();
         // Limpiar la tabla antes de agregar nuevas filas
         modelo.setRowCount(0);
-
+        
+        if (tramites == null || tramites.isEmpty()) {
+            System.out.println("No hay tramites");
+            tblTramites.setModel(modelo);
+            return;
+        }
+        
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
         // Obtener el ancho máximo de cada columna

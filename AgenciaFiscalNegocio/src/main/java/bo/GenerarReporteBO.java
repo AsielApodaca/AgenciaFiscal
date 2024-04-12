@@ -37,6 +37,7 @@ public class GenerarReporteBO implements IGenerarReporteBO{
                 personaTramite = new Persona(personaTramiteDTO.getRfc());
             }
             List<Tramite> tramites = tramiteDAO.obtenerTramites(fechaDesde, fechaHasta, tipoTramite, personaTramite);
+            if(tramites == null) return null;
             
             List<TramiteDTO> tramitesDTO = new ArrayList<>();
             
