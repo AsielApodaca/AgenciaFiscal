@@ -47,7 +47,7 @@ public class TramiteDAO implements ITramiteDAO{
     }
     
     @Override
-    public List<Tramite> obtenerTramites(Persona personaTramite)throws PersistenciaException {
+    public List<Tramite> obtenerTramitesPorPersona(Persona personaTramite)throws PersistenciaException {
         CriteriaQuery<Tramite> criteria=cb.createQuery(Tramite.class);
         Root<Tramite> root=criteria.from(Tramite.class);
         
@@ -64,25 +64,27 @@ public class TramiteDAO implements ITramiteDAO{
             throw new PersistenciaException("Ocurrio un error al obtener los tramites" );
         }
         if(!tramites.isEmpty()){
-            List<Long> ids=new ArrayList<>();
-            for(Tramite t:tramites){
-                ids.add(t.getId());
-            }
-            List<Tramite> tramitesObtenidos=new ArrayList<>();
-            for(Tramite t:obtenerTramitePorTipo(ids, "licencia")){
-                tramitesObtenidos.add(t);
-            }
-            for(Tramite t:obtenerTramitePorTipo(ids, "placas")){
-                tramitesObtenidos.add(t);
-            }
-            return tramitesObtenidos;
+            
+//            List<Long> ids=new ArrayList<>();
+//            for(Tramite t:tramites){
+//                ids.add(t.getId());
+//            }
+//            List<Tramite> tramitesObtenidos=new ArrayList<>();
+//            for(Tramite t:obtenerTramitePorTipo(ids, "licencia")){
+//                tramitesObtenidos.add(t);
+//            }
+//            for(Tramite t:obtenerTramitePorTipo(ids, "placas")){
+//                tramitesObtenidos.add(t);
+//            }
+            return tramites;
         }
         throw new PersistenciaException("La persona no tiene tramites Registrados");
     }
 
     
+    @Override
     public List<Tramite> obtenerTramites(Calendar fechaDesde, Calendar fechaHasta, String tipoTramite, Persona personaTramite) throws PersistenciaException {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        //CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Tramite> criteria = cb.createQuery(Tramite.class);
         Root<Tramite> root = criteria.from(Tramite.class);
 
@@ -156,16 +158,9 @@ public class TramiteDAO implements ITramiteDAO{
     }
     
     @Override
-    public List<Tramite> obtenerTramitePorTipo(String tipoTramite) throws PersistenciaException {
-        CriteriaQuery criteria;
-        Root root;
-        if (tipoTramite.equalsIgnoreCase("licencia")) {
-            criteria = cb.createQuery(TramiteLicencia.class);
-            root = criteria.from(TramiteLicencia.class);
-        } else {
-            criteria = cb.createQuery(TramitePlacas.class);
-            root = criteria.from(TramitePlacas.class);
-        }
+    public List<Tramite> obtenerTramites() throws PersistenciaException {
+        CriteriaQuery<Tramite> criteria=cb.createQuery(Tramite.class);
+        Root root=criteria.from(Tramite.class);
 
         criteria.select(root);
 
@@ -262,4 +257,5 @@ public class TramiteDAO implements ITramiteDAO{
             throw new PersistenciaException("Ocurrio un error al obtener el tramite");
         }
     }
+
 }
