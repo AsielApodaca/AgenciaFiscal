@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package iBo;
+
+import excepciones.NegocioException;
+import java.util.Calendar;
+import java.util.List;
+import negocioDTO.PersonaDTO;
+import negocioDTO.TramiteDTO;
 
 /**
  *
  * @author asielapodaca
  */
 public interface IGenerarReporteBO {
-    
+    public List<TramiteDTO> obtenerTramites(Calendar fechaDesde, Calendar fechaHasta, String tipoTramite, PersonaDTO personaTramiteDTO) throws NegocioException;
 }
