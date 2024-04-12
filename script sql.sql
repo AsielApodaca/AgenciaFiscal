@@ -53,9 +53,9 @@ end $$
 delimiter ;
 
 delimiter $$
-create procedure sp_buscar_personas_fecha(in fechaNacimiento date)
+create procedure sp_buscar_personas_anio(in anioNacimiento int)
 begin
-    set @pat=concat('%',fechaNacimiento,'%');
+    set @pat=concat(anioNacimiento,'%');
 	select * from personas where fecha_nacimiento like @pat;
 end $$
 delimiter ;
