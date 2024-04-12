@@ -9,6 +9,7 @@ import java.util.Calendar;
 public class TramiteLicencia extends Tramite{
     private Integer vigencia; 
     private Calendar fechaCaducidad;
+    private String numLicencia;
 
     public TramiteLicencia() {
         super();
@@ -23,6 +24,14 @@ public class TramiteLicencia extends Tramite{
         this.vigencia = vigencia;
     }
 
+    public String getNumLicencia() {
+        return numLicencia;
+    }
+
+    public void setNumLicencia(String numLicencia) {
+        this.numLicencia = numLicencia;
+    }
+    
     public Integer getVigencia() {
         return vigencia;
     }
