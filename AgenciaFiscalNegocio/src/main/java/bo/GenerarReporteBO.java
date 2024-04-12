@@ -2,7 +2,15 @@ package bo;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfNumber;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import daos.ITramiteDAO;
 import daos.TramiteDAO;
@@ -83,45 +91,74 @@ public class GenerarReporteBO implements IGenerarReporteBO{
     }
     
     @Override
-    public Boolean generarPDF(List<TramiteDTO> tramites) throws NegocioException {
-        Document documento = new Document();
-        try {
-            String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/ConsultaGenerada.pdf"));
-            documento.open();
+public Boolean generarPDF(List<TramiteDTO> tramites) throws NegocioException {
+    Document documento = new Document();
+    try {
+        String ruta = System.getProperty("user.home");
+        String nombreArchivo = ruta + "/Desktop/ConsultaGenerada.pdf";
 
+        // Agregar metadatos
+        documento.addTitle("Consulta Generada");
+        documento.addCreationDate();
+        documento.addAuthor("Tu Nombre");
 
-            PdfPTable tabla = new PdfPTable(4);
-            tabla.addCell("Nombre Completo");
-            tabla.addCell("Tipo");
-            tabla.addCell("Fecha Emisión");
-            tabla.addCell("Costo MXN");
-          
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-            
-            for (TramiteDTO tramite : tramites) {
-                
-                String tipo;
-                if (tramite instanceof TramiteLicenciaDTO) {
-                    tipo = "Trámite de licencia";
-                } else {
-                    tipo = "Trámite de placas";
-                }
-                
-                tabla.addCell(tramite.getPersona().getNombreCompleto());
-                tabla.addCell(tipo);
-                tabla.addCell(formatoFecha.format(tramite.getFechaEmision().getTime()));
-                tabla.addCell("$" + tramite.getCostoMxn());
+        // Crear un objeto PdfWriter para escribir en el documento
+        PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(nombreArchivo));
+
+        // Agregar título, fecha y número de páginas al principio del documento
+        writer.setPageEvent(new PdfPageEventHelper() {
+            @Override
+            public void onEndPage(PdfWriter writer, Document document) {
+                PdfNumber pageNumber = new PdfNumber(writer.getPageNumber());
+                writer.getDirectContent().saveState();
+                String texto = "Página " + writer.getPageNumber();
+                float distancia = 20;
+                float fontSize = 12;
+                float width = document.getPageSize().getWidth();
+                float height = document.getPageSize().getTop();
+                PdfContentByte canvas = writer.getDirectContent();
+                ColumnText.showTextAligned(canvas, Element.ALIGN_RIGHT, new Phrase(texto, new Font(Font.FontFamily.HELVETICA, fontSize)), width - distancia, distancia, 0);
+                canvas.restoreState();
+            }
+        });
+
+        documento.open();
+        documento.add(new Paragraph("Reportes de trámites"));
+        documento.add(new Paragraph("Fecha de creación: " + formatoFecha.format(Calendar.getInstance().getTime())));
+        documento.add(new Paragraph(" "));
+        
+        PdfPTable tabla = new PdfPTable(4);
+        tabla.addCell("Nombre Completo");
+        tabla.addCell("Tipo");
+        tabla.addCell("Fecha Emisión");
+        tabla.addCell("Costo MXN");
+
+        for (TramiteDTO tramite : tramites) {
+            String tipo;
+            if (tramite instanceof TramiteLicenciaDTO) {
+                tipo = "Trámite de licencia";
+            } else {
+                tipo = "Trámite de placas";
             }
 
-            documento.add(tabla);
-            documento.close();
-            return true;
-        } catch (DocumentException | HeadlessException | FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e);
-            return false;
+            tabla.addCell(tramite.getPersona().getNombreCompleto());
+            tabla.addCell(tipo);
+            tabla.addCell(formatoFecha.format(tramite.getFechaEmision().getTime()));
+            tabla.addCell("$" + tramite.getCostoMxn());
         }
+
+        documento.add(tabla);
+        documento.close();
+        return true;
+    } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+        JOptionPane.showMessageDialog(null, e);
+        return false;
     }
+}
+
+
+
 
 }
