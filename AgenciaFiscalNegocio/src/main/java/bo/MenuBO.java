@@ -16,7 +16,7 @@ public class MenuBO implements IMenuBO{
     }
     
     @Override
-    public Boolean verificarExistenciaDeEntidades() {
+    public boolean verificarExistenciaDeEntidades() {
         return entidadesDAO.seCrearonEntidades();
     }
 }
