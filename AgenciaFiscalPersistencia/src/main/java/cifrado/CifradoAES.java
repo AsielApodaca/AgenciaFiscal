@@ -11,25 +11,19 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  *
- * @author Asiel Apodaca Monge
+ * author Asiel Apodaca Monge
  */
 public class CifradoAES implements Serializable{
 
-    private final String password;
-    private byte[] keyBytes;
-    private SecretKey secretKey;
-
-    public CifradoAES() {
-        this.password = "12345678";
+    private static final String password =  "12345678";
+    private static byte[] keyBytes;
+    private static SecretKey secretKey;
+    
+    static {
         iniciar();
     }
 
-    public CifradoAES(String password) {
-        this.password = password;
-        iniciar();
-    }
-
-    private void iniciar() {
+    private static void iniciar() {
         try {
             // Derivar una clave de longitud fija a partir de la entrada del usuario
             keyBytes = generateKey(password);
@@ -41,7 +35,7 @@ public class CifradoAES implements Serializable{
     }
 
     // Método para cifrar un texto usando AES
-    public String encrypt(String plaintext) throws Exception {
+    public static String encrypt(String plaintext) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] ciphertext = cipher.doFinal(plaintext.getBytes());
@@ -49,7 +43,7 @@ public class CifradoAES implements Serializable{
     }
 
     // Método para descifrar un texto cifrado usando AES
-    public String decrypt(String ciphertext) throws Exception {
+    public static String decrypt(String ciphertext) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(ciphertext));
