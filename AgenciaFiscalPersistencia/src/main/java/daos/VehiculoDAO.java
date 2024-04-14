@@ -12,8 +12,9 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- *
- * @author luiis
+ * Esta clase implementa la interfaz IVehiculoDAO y proporciona métodos para acceder a los datos de los vehículos en la base de datos.
+ * 
+ * author luiis
  */
 public class VehiculoDAO implements IVehiculoDAO {
 
@@ -39,6 +40,14 @@ public class VehiculoDAO implements IVehiculoDAO {
 //        return false;
 //    }
 
+    
+    /**
+     * Obtiene un vehículo de la base de datos según su número de serie.
+     * 
+     * @param vehiculo El vehículo con el número de serie a buscar.
+     * @return Un objeto Vehiculo correspondiente al número de serie proporcionado, o null si no se encontró.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public Vehiculo obtenerVehiculo(Vehiculo vehiculo)throws PersistenciaException {
         CriteriaBuilder cb=em.getCriteriaBuilder();

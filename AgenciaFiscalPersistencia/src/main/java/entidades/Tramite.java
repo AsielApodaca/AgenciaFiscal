@@ -19,7 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Clase que representa un trámite en el sistema.
+ * 
  * @author luiis
  */
 @Entity
@@ -47,49 +48,99 @@ public class Tramite implements Serializable {
     @JoinColumn(name="id_persona",nullable=false)
     private Persona persona;
 
+    /**
+     * Devuelve la persona asociada al trámite.
+     * @return Persona asociada al trámite.
+     */
     public Persona getPersona() {
         return persona;
     }
 
+    /**
+     * Establece la persona asociada al trámite.
+     * @param persona Persona asociada al trámite.
+     */
     public void setPersona(Persona persona) {
         this.persona = persona;
     }
     
+    /**
+     * Devuelve la fecha de emisión del trámite.
+     * @return Fecha de emisión del trámite.
+     */
     public Calendar getFechaEmision() {
         return fechaEmision;
     }
 
+    /**
+     * Establece la fecha de emisión del trámite.
+     * @param fechaEmision Fecha de emisión del trámite.
+     */
     public void setFechaEmision(Calendar fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
+    /**
+     * Devuelve el costo en MXN del trámite.
+     * @return Costo en MXN del trámite.
+     */
     public Float getCostoMxn() {
         return costoMxn;
     }
 
+    /**
+     * Establece el costo en MXN del trámite.
+     * @param costoMxn Costo en MXN del trámite.
+     */
     public void setCostoMxn(Float costoMxn) {
         this.costoMxn = costoMxn;
     }
 
+    /**
+     * Devuelve el estado del trámite.
+     * @return Estado del trámite.
+     */
     public Estado getEstado() {
         return estado;
     }
 
+    /**
+     * Establece el estado del trámite.
+     * @param estado Estado del trámite.
+     */
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
     
+    /**
+     * Devuelve el ID del trámite.
+     * @return ID del trámite.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Establece el ID del trámite.
+     * @param id ID del trámite.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Constructor por defecto de la clase Tramite.
+     */
     public Tramite() {
     }
 
+    /**
+     * Constructor de la clase Tramite con todos los atributos.
+     * @param fechaEmision Fecha de emisión del trámite.
+     * @param costoMxn Costo en MXN del trámite.
+     * @param estado Estado del trámite.
+     * @param persona Persona asociada al trámite.
+     */
     public Tramite(Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
         this.fechaEmision = fechaEmision;
         this.costoMxn = costoMxn;
@@ -97,11 +148,19 @@ public class Tramite implements Serializable {
         this.persona=persona;
     }
     
+    /**
+     * Convierte la fecha de emisión a una cadena en el formato "yyyy-MM-dd".
+     * @return Fecha de emisión en formato de cadena.
+     */
     public String getFechaEmisionString() {
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-    return formatoFecha.format(fechaEmision.getTime());
-}
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        return formatoFecha.format(fechaEmision.getTime());
+    }
 
+    /**
+     * Método toString para la clase Tramite.
+     * @return Representación en cadena del trámite.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -115,6 +174,11 @@ public class Tramite implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Convierte una fecha a una cadena en el formato "yyyy-MM-dd".
+     * @param fecha Fecha a convertir.
+     * @return Fecha en formato de cadena.
+     */
     public String fechaToString(Calendar fecha){
         SimpleDateFormat formatoFecha=new SimpleDateFormat("yyyy-MM-dd");
         return formatoFecha.format(fecha.getTime());

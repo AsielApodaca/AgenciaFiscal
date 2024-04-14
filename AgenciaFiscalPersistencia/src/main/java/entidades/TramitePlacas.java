@@ -12,7 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Clase que representa un trámite de placas en el sistema.
+ * Extiende la clase Tramite.
+ * 
  * @author luiis
  */
 @Entity
@@ -26,10 +28,17 @@ public class TramitePlacas extends Tramite implements Serializable {
     @JoinColumn(name = "id_vehiculo", nullable = false)
     private Vehiculo vehiculo;
 
+    /**
+     * Devuelve la matrícula asociada al trámite de placas.
+     * @return La matrícula del vehículo.
+     */
     public String getMatricula() {
         return matricula;
     }
 
+    /**
+     * Genera una matrícula aleatoria y la establece.
+     */
     public void setMatricula() {
         char[] letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
         // Generador de números aleatorios
@@ -53,27 +62,54 @@ public class TramitePlacas extends Tramite implements Serializable {
         this.matricula = sb.toString();
     }
     
+    /**
+     * Establece la matrícula asociada al trámite de placas.
+     * @param matricula La matrícula del vehículo.
+     */
     public void setMatricula(String matricula){
-        this.matricula=matricula;
+        this.matricula = matricula;
     }
 
+    /**
+     * Devuelve el vehículo asociado al trámite de placas.
+     * @return El vehículo asociado al trámite.
+     */
     public Vehiculo getVehiculo() {
         return vehiculo;
     }
 
+    /**
+     * Establece el vehículo asociado al trámite de placas.
+     * @param vehiculo El vehículo asociado al trámite.
+     */
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
 
+    /**
+     * Constructor por defecto de la clase TramitePlacas.
+     */
     public TramitePlacas() {
     }
     
     
+    /**
+     * Constructor de la clase TramitePlacas con todos los atributos.
+     * @param vehiculo Vehículo asociado al trámite.
+     * @param fechaEmision Fecha de emisión del trámite.
+     * @param costoMxn Costo en MXN del trámite.
+     * @param estado Estado del trámite.
+     * @param persona Persona asociada al trámite.
+     */
     public TramitePlacas(Vehiculo vehiculo, Calendar fechaEmision, Float costoMxn, Estado estado, Persona persona) {
         super(fechaEmision, costoMxn, estado, persona);
         this.vehiculo = vehiculo;
     }
 
+    /**
+     * Método toString para la clase TramitePlacas.
+     * @return Representación en cadena del trámite de placas.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -85,6 +121,10 @@ public class TramitePlacas extends Tramite implements Serializable {
         return sb.toString();
     }
     
+    /**
+     * Devuelve una representación reducida en cadena del trámite de placas.
+     * @return Representación reducida en cadena del trámite de placas.
+     */
     public String toStringReducido(){
         StringBuilder sb = new StringBuilder();
         sb.append("{matricula=").append(matricula);

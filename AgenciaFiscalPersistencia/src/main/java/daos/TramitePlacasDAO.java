@@ -16,8 +16,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- *
- * @author luiis
+ * Esta clase implementa la interfaz ITramitePlacasDAO y proporciona métodos para 
+ * acceder a los datos de los trámites de placas en la base de datos.
+ * 
+ * author luiis
  */
 public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
 
@@ -25,6 +27,13 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         super();
     }
     
+    /**
+     * Obtiene una lista de trámites de placas de la base de datos asociados a una persona.
+     * 
+     * @param personaTramite La persona asociada a los trámites de placas a buscar.
+     * @return Una lista de trámites de placas asociados a la persona proporcionada.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public List<TramitePlacas> obtenerTramitesPlacas(Persona personaTramite)throws PersistenciaException {
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
@@ -46,6 +55,13 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         }
     }
 
+    /**
+     * Obtiene trámites de placas de la base de datos según la serie del vehículo.
+     * 
+     * @param vehiculo El vehículo asociado a las placas a buscar.
+     * @return Un trámite de placas correspondiente a la serie del vehículo proporcionado, o null si no se encontró.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public TramitePlacas obtenerPlacasPorSerieAuto(Vehiculo vehiculo) throws PersistenciaException{
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
@@ -63,7 +79,6 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             tramite=query.getSingleResult();
             return tramite;
         }catch(NoResultException ex){
-            System.out.println(ex.getMessage());
             return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -71,6 +86,13 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         }
     }
 
+    /**
+     * Renueva las placas de un vehículo en la base de datos.
+     * 
+     * @param tramite El trámite de placas que contiene la información de las nuevas placas.
+     * @return Verdadero si las placas se renovaron correctamente, falso si ocurrió un error.
+     * @throws PersistenciaException Si ocurre un error durante la actualización en la base de datos.
+     */
     @Override
     public boolean renovarPlacas(TramitePlacas tramite)throws PersistenciaException {
         try {
@@ -81,10 +103,17 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
             LOG.log(Level.SEVERE, e.getMessage(), e);
-            throw new PersistenciaException("Ocurrio un error al renovar las placas");
+            return false;
         }
     }
 
+    /**
+     * Obtiene trámites de placas de la base de datos según la matrícula.
+     * 
+     * @param placas El trámite de placas con la matrícula a buscar.
+     * @return Un trámite de placas correspondiente a la matrícula proporcionada, o null si no se encontró.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public TramitePlacas obtenerPlacasPorMatricula(TramitePlacas placas)throws PersistenciaException {
         CriteriaQuery<TramitePlacas> criteria=cb.createQuery(TramitePlacas.class);
@@ -103,7 +132,6 @@ public class TramitePlacasDAO extends TramiteDAO implements ITramitePlacasDAO {
             tramite=query.getSingleResult();
             return tramite;
         }catch(NoResultException ex){
-            System.out.println(ex.getMessage());
             return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);

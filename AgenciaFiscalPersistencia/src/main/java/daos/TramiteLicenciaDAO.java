@@ -14,8 +14,10 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- *
- * @author luiis
+ * Esta clase implementa la interfaz ITramiteLicenciaDAO y proporciona métodos para 
+ * acceder a los datos de los trámites de licencia en la base de datos.
+ * 
+ * author luiis
  */
 public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDAO{
 
@@ -24,6 +26,13 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
         super();
     }
 
+    /**
+     * Obtiene una lista de trámites de licencia de la base de datos asociados a una persona.
+     * 
+     * @param personaTramite La persona asociada a los trámites de licencia a buscar.
+     * @return Una lista de trámites de licencia asociados a la persona proporcionada.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite)throws PersistenciaException{
         CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
@@ -45,12 +54,17 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
         }
     }
 
+    /**
+     * Obtiene una licencia de conducir vigente de la base de datos según el número de licencia.
+     * 
+     * @param licencia La licencia de conducir a buscar.
+     * @return La licencia de conducir vigente correspondiente al número proporcionado, o null si no se encontró.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia)throws PersistenciaException {
         CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
         Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
-        //Join<Tramite,TramiteLicencia> joinTramiteL=root.join("id");
-        //Join<Tramite,Persona> joinPersona=root.join("persona");
         
         Predicate equal=cb.equal(root.get("numLicencia"),licencia.getNumLicencia());
         Predicate predicado=cb.and(equal,cb.equal(root.<Estado>get("estado"), Estado.VIGENTE));
@@ -62,19 +76,24 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
             tramiteLicencia=query.getSingleResult();
             return tramiteLicencia;
         }catch(NoResultException ex){
-            System.out.println(ex.getMessage());
             return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
             throw new PersistenciaException("Ocurrio un error al obtener la licencia");
         }
     }
+    
+    /**
+     * Obtiene una licencia de conducir de la base de datos según el número de licencia.
+     * 
+     * @param licencia La licencia de conducir a buscar.
+     * @return La licencia de conducir correspondiente al número proporcionado, o null si no se encontró.
+     * @throws PersistenciaException Si ocurre un error durante la búsqueda en la base de datos.
+     */
     @Override
     public TramiteLicencia obtenerLicencia(TramiteLicencia licencia)throws PersistenciaException {
         CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
         Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
-        //Join<Tramite,TramiteLicencia> joinTramiteL=root.join("id");
-        //Join<Tramite,Persona> joinPersona=root.join("persona");
         
         Predicate equal=cb.equal(root.get("numLicencia"),licencia.getNumLicencia());
         criteria.select(root).where(equal);
@@ -85,7 +104,6 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
             tramiteLicencia=query.getSingleResult();
             return tramiteLicencia;
         }catch(NoResultException ex){
-            System.out.println(ex.getMessage());
             return null;
         }catch(Exception e){
             LOG.log(Level.SEVERE, e.getMessage(), e);
@@ -93,17 +111,19 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
         }
     }
     
-    
-
+    /**
+     * Actualiza la fecha de vencimiento de una licencia de conducir en la base de datos.
+     * 
+     * @param licencia La licencia de conducir cuya fecha de vencimiento se actualizará.
+     * @return Verdadero si la fecha de vencimiento se actualizó correctamente, falso si ocurrió un error.
+     * @throws PersistenciaException Si ocurre un error durante la actualización en la base de datos.
+     */
     @Override
     public boolean actualizarFechaVencimiento(TramiteLicencia licencia) throws PersistenciaException {
         try{
-            System.out.println("no se: "+licencia.toString());
             TramiteLicencia tl=em.find(TramiteLicencia.class, licencia.getId());
-            System.out.println(tl.toString());
             em.getTransaction().begin();
             tl.setFechaCaducidad(licencia.getFechaCaducidad());
-            tl.toString();
             em.getTransaction().commit();
             return true;
         }catch(Exception e){
