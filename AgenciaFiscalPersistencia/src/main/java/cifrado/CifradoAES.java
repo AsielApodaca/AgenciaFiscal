@@ -1,5 +1,6 @@
 package cifrado;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.logging.Level;
@@ -12,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
  *
  * @author Asiel Apodaca Monge
  */
-public class CifradoAES {
+public class CifradoAES implements Serializable{
 
     private final String password;
     private byte[] keyBytes;
