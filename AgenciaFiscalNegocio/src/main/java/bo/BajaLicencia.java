@@ -29,11 +29,12 @@ public class BajaLicencia implements IBajaLicencia {
         try {
             licenciaConsultada = new TramiteLicencia();
             licenciaConsultada.setNumLicencia(licencia.getNumLicencia());
-            licenciaConsultada = TramiteLicenciaDao.obtenerLicenciaVigente(licenciaConsultada);
+            licenciaConsultada = TramiteLicenciaDao.obtenerLicencia(licenciaConsultada);
         } catch (PersistenciaException pe) {
             throw new NegocioException(pe.getMessage());
         }
 
+        
         TramiteLicenciaDTO licenciaDTO = new TramiteLicenciaDTO();
         PersonaDTO persona = new PersonaDTO();
         EstadoDTO estado;
@@ -48,6 +49,9 @@ public class BajaLicencia implements IBajaLicencia {
         licenciaDTO.setNumLicencia(licenciaConsultada.getNumLicencia());
         licenciaDTO.setEstado(estado);
         licenciaDTO.setPersona(persona);
+        licenciaDTO.setId(licenciaConsultada.getId());
+        
+        System.out.println(licenciaDTO.getId());
 
         return licenciaDTO;
     }
@@ -58,8 +62,8 @@ public class BajaLicencia implements IBajaLicencia {
             TramiteLicencia licenciaADarDeBaja = new TramiteLicencia();
             licenciaADarDeBaja.setNumLicencia(licencia.getNumLicencia());
             licenciaADarDeBaja.setEstado(Estado.CADUCO);
-            TramiteLicenciaDao.actualizarEstadoTramite(licenciaADarDeBaja);
-            return true;
+            licenciaADarDeBaja.setId(licencia.getId());
+            return TramiteLicenciaDao.actualizarEstadoTramite(licenciaADarDeBaja);
         } catch (PersistenciaException pe) {
             throw new NegocioException(pe.getMessage());
         }

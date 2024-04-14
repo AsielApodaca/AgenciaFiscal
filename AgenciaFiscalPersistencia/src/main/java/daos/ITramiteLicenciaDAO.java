@@ -17,5 +17,6 @@ import java.util.List;
 public interface ITramiteLicenciaDAO extends ITramiteDAO{
     public List<TramiteLicencia> obtenerTramitesLicencia(Persona personaTramite)throws PersistenciaException;
     public TramiteLicencia obtenerLicenciaVigente(TramiteLicencia licencia)throws PersistenciaException;
+    public TramiteLicencia obtenerLicencia(TramiteLicencia licencia)throws PersistenciaException;
     public boolean actualizarFechaVencimiento(TramiteLicencia licencia)throws PersistenciaException;
 }

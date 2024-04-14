@@ -131,7 +131,7 @@ public class ModuloBajaLicencia extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 250, 160));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 250, 190));
 
         jLabel3.setFont(new java.awt.Font("Avenir Next", 1, 14)); // NOI18N
         jLabel3.setText("Ingrese su licencia vigente");
@@ -258,7 +258,7 @@ public class ModuloBajaLicencia extends javax.swing.JPanel {
                 btnDarDeBaja.setEnabled(true);
                 lblAdvertencia.setVisible(false);
             }
-            this.TramiteLicenciaDTO = TramiteLicenciaDTO;
+            this.TramiteLicenciaDTO = licenciaDTO;
         } catch (NegocioException ne) {
             LOG.log(Level.WARNING, ne.getMessage());
             txtTitular.setText("");
@@ -271,9 +271,12 @@ public class ModuloBajaLicencia extends javax.swing.JPanel {
     private void darDeBajaLicencia() {
         if (this.TramiteLicenciaDTO != null) {
             try {
+                System.out.println(TramiteLicenciaDTO.getId());
                 if (bajaLicencia.darDeBajaLicencia(this.TramiteLicenciaDTO)) {
                     JOptionPane.showMessageDialog(this, "La licencia se dio de baja exitosamente.");
                     reiniciarPanel();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se pudo dar de baja.");
                 }
             } catch (NegocioException ne) {
                 LOG.log(Level.WARNING, ne.getMessage());

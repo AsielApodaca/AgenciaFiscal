@@ -223,7 +223,7 @@ public class TramiteDAO implements ITramiteDAO{
             System.out.println(e.getCause());
             em.getTransaction().rollback();
             LOG.log(Level.SEVERE, e.getMessage(), e);
-            throw new PersistenciaException("Ocurrio un error al actualizar el tramite");
+            return false;
         }
     }
 

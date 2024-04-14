@@ -73,6 +73,31 @@ public class TramiteLicenciaDAO extends TramiteDAO implements ITramiteLicenciaDA
             throw new PersistenciaException("Ocurrio un error al obtener la licencia");
         }
     }
+    @Override
+    public TramiteLicencia obtenerLicencia(TramiteLicencia licencia)throws PersistenciaException {
+        CriteriaQuery<TramiteLicencia> criteria=cb.createQuery(TramiteLicencia.class);
+        Root<TramiteLicencia> root=criteria.from(TramiteLicencia.class);
+        //Join<Tramite,TramiteLicencia> joinTramiteL=root.join("id");
+        //Join<Tramite,Persona> joinPersona=root.join("persona");
+        
+        Predicate equal=cb.equal(root.get("numLicencia"),licencia.getNumLicencia());
+        criteria.select(root).where(equal);
+        
+        TypedQuery<TramiteLicencia> query=em.createQuery(criteria);
+        TramiteLicencia tramiteLicencia;
+        try{
+            tramiteLicencia=query.getSingleResult();
+            return tramiteLicencia;
+        }catch(NoResultException ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+            throw new PersistenciaException("Ocurrio un error al obtener la licencia");
+        }
+    }
+    
+    
 
     @Override
     public boolean actualizarFechaVencimiento(TramiteLicencia licencia) throws PersistenciaException {
