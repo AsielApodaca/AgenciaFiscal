@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package daos;
 
 import entidades.Persona;
-import entidades.Tramite;
 import entidades.TramiteLicencia;
 import excepciones.PersistenciaException;
 import java.util.List;

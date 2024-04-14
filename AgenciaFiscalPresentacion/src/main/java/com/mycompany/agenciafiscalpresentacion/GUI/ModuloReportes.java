@@ -4,25 +4,7 @@ import bo.GenerarReporteBO;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-//imports de itext5 (para genearar PDF)
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import daos.TramiteDAO;
-import entidades.Persona;
-import entidades.Tramite;
-import daos.TramiteDAO;
 import excepciones.NegocioException;
-import excepciones.PersistenciaException;
-import java.awt.HeadlessException;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -48,9 +29,6 @@ import negocioDTO.TramiteLicenciaDTO;
  * @author luiis
  */
 public class ModuloReportes extends javax.swing.JPanel {
-
-    private static final Logger LOG = Logger.getLogger(ModuloReportes.class.getName());
-    private static PersonaDTO personaSeleccionLista;
     private List<PersonaDTO> personasEncontradas;
     private List<PersonaDTO> personasEncontradasCopia;
     private DefaultListModel<String> modeloLista;

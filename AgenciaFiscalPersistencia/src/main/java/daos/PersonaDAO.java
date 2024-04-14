@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
 import entidades.Persona;
@@ -11,17 +7,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Parameter;
 import javax.persistence.ParameterMode;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -32,8 +23,8 @@ import javax.persistence.criteria.Root;
 public class PersonaDAO implements IPersonaDAO{
 
 //    private EntityManagerFactory emf;
-    private EntityManager em;
-    private CriteriaBuilder cb;
+    private final EntityManager em;
+    private final CriteriaBuilder cb;
     private final static Logger LOG= Logger.getLogger(PersonaDAO.class.getName());
     
     public PersonaDAO(){

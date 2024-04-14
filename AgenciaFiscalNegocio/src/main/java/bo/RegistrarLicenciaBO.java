@@ -1,6 +1,5 @@
 package bo;
 
-import daos.ClaseConexion;
 import daos.IPersonaDAO;
 import daos.ITramiteDAO;
 import daos.ITramiteLicenciaDAO;
@@ -9,7 +8,6 @@ import daos.TramiteLicenciaDAO;
 import negocioDTO.EstadoDTO;
 import entidades.Persona;
 import entidades.Estado;
-import entidades.Tramite;
 import entidades.TramiteLicencia;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
@@ -29,12 +27,10 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
 
     private static IPersonaDAO personaDao;
     private static ITramiteDAO tramiteLicenciaDao;
-    private ValidacionesRegistrarLicencia validaciones;
     
     public RegistrarLicenciaBO() {
         personaDao=new PersonaDAO();
         tramiteLicenciaDao=new TramiteLicenciaDAO();
-        validaciones=new ValidacionesRegistrarLicencia();
     }
     
     @Override

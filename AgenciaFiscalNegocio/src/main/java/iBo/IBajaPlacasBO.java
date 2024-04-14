@@ -1,4 +1,3 @@
-
 package iBo;
 
 import excepciones.NegocioException;

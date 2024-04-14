@@ -2,8 +2,6 @@ package bo;
 
 import daos.ITramitePlacasDAO;
 import daos.TramitePlacasDAO;
-import entidades.Tramite;
-import entidades.Estado;
 import entidades.TramitePlacas;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;

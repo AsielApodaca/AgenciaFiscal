@@ -2,13 +2,10 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.MenuBO;
 import excepciones.NegocioException;
-import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import negocioDTO.PersonaDTO;
 
 /**
@@ -189,17 +186,8 @@ public class MenuJpanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModuloLicenciasActionPerformed
 
     private void btnModuloPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModuloPlacasActionPerformed
-        // TODO add your handling code here:
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-//                | UnsupportedLookAndFeelException e) {
-//            e.printStackTrace();
-//        }
-
         
         desplegarOperacionesPlacas();
-        //((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
     }//GEN-LAST:event_btnModuloPlacasActionPerformed
 
     private void habilitarBotones() {

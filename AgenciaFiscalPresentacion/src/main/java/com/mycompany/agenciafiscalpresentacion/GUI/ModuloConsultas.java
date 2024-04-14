@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.ConsultasBO;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JYearChooser;
 import excepciones.NegocioException;
 import java.awt.CardLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,8 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -42,7 +32,6 @@ public class ModuloConsultas extends javax.swing.JPanel {
     private DefaultListModel<String> modeloLista;
     private JTextField txtDato;
     private static PersonaDTO personaSeleccionLista;
-    private static PersonaDTO personaSeleccionTabla;
     /**
      * Creates new form ModuloConsultas
      */

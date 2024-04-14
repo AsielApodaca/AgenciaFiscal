@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
 import entidades.Estado;
@@ -16,16 +12,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -35,13 +25,11 @@ import javax.persistence.criteria.Root;
  */
 public class TramiteDAO implements ITramiteDAO{
 
-//    protected static EntityManagerFactory emf;
     static EntityManager em;
     static CriteriaBuilder cb;
     protected final static Logger LOG= Logger.getLogger(TramiteDAO.class.getName());
     
     public TramiteDAO(){
-//        emf=Persistence.createEntityManagerFactory("conexionPU");
         em=ClaseConexion.getEntityManager();
         cb=em.getCriteriaBuilder();
     }
@@ -59,23 +47,10 @@ public class TramiteDAO implements ITramiteDAO{
         try{
             tramites=query.getResultList();
         }catch(Exception e){
-            //System.out.println(e.getMessage());
             LOG.log(Level.SEVERE,e.getMessage() , e);
             throw new PersistenciaException("Ocurrio un error al obtener los tramites" );
         }
         if(!tramites.isEmpty()){
-            
-//            List<Long> ids=new ArrayList<>();
-//            for(Tramite t:tramites){
-//                ids.add(t.getId());
-//            }
-//            List<Tramite> tramitesObtenidos=new ArrayList<>();
-//            for(Tramite t:obtenerTramitePorTipo(ids, "licencia")){
-//                tramitesObtenidos.add(t);
-//            }
-//            for(Tramite t:obtenerTramitePorTipo(ids, "placas")){
-//                tramitesObtenidos.add(t);
-//            }
             return tramites;
         }
         throw new PersistenciaException("La persona no tiene tramites Registrados");

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 /**
@@ -10,7 +6,6 @@ package com.mycompany.agenciafiscalpresentacion.GUI;
  */
 
 import bo.BajaLicencia;
-import entidades.TramiteLicencia;
 import excepciones.NegocioException;
 import iBo.IBajaLicencia;
 import java.util.logging.Level;

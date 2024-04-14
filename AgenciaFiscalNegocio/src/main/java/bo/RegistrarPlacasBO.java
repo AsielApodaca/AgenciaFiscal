@@ -1,23 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bo;
 
-import daos.ClaseConexion;
 import daos.IPersonaDAO;
-import daos.ITramiteDAO;
 import daos.ITramiteLicenciaDAO;
 import daos.ITramitePlacasDAO;
 import daos.IVehiculoDAO;
 import daos.PersonaDAO;
-import daos.TramiteDAO;
 import daos.TramiteLicenciaDAO;
 import daos.TramitePlacasDAO;
 import daos.VehiculoDAO;
 import entidades.Estado;
 import entidades.Persona;
-import entidades.Tramite;
 import entidades.TramiteLicencia;
 import entidades.TramitePlacas;
 import entidades.Vehiculo;

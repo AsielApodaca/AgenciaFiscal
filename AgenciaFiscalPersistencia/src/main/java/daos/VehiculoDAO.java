@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package daos;
 
-import entidades.Persona;
 import entidades.Vehiculo;
 import excepciones.PersistenciaException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,7 +17,6 @@ import javax.persistence.criteria.Root;
  */
 public class VehiculoDAO implements IVehiculoDAO {
 
-    //private EntityManagerFactory emf;
     private EntityManager em;
     private final static Logger LOG= Logger.getLogger(VehiculoDAO.class.getName());
     
@@ -67,10 +59,4 @@ public class VehiculoDAO implements IVehiculoDAO {
         }
     }
 
-//    @Override
-//    public void cerrarConexion() {
-//        em.close();
-//        emf.close();
-//    }
-    
 }

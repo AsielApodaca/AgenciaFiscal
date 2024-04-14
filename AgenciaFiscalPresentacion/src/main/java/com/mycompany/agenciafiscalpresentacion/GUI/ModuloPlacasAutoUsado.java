@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.RegistrarPlacasBO;
@@ -12,10 +8,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.Document;
 import negocioDTO.EstadoDTO;
 import negocioDTO.PersonaDTO;
-import negocioDTO.TramiteDTO;
 import negocioDTO.TramiteLicenciaDTO;
 import negocioDTO.TramitePlacasDTO;
-import negocioDTO.VehiculoDTO;
 
 /**
  *
