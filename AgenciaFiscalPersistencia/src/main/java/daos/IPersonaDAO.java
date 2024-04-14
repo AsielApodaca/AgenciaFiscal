@@ -19,4 +19,5 @@ public interface IPersonaDAO {
     public List<Persona> buscarPersonasPorCURP(Persona persona)throws PersistenciaException;
     public List<Persona> buscarPersonasPorAnioNac(Persona persona)throws PersistenciaException;
     public Persona actualizarPersona(Persona persona)throws PersistenciaException;
+    public boolean tablaPersonasEstaVacia() throws PersistenciaException;
 }

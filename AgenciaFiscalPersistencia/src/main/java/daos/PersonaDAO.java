@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Parameter;
 import javax.persistence.ParameterMode;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
@@ -147,6 +148,13 @@ public class PersonaDAO implements IPersonaDAO{
             LOG.log(Level.SEVERE, e.getMessage(), e);
         }
         throw new PersistenciaException("Ocurrio un error al realizar la consulta");
+    }
+    
+    @Override
+    public boolean tablaPersonasEstaVacia() throws PersistenciaException{
+        Query query = em.createQuery("SELECT COUNT(p) FROM Persona p");
+        Long count = (Long) query.getSingleResult();
+        return count == 0;
     }
 
 }
