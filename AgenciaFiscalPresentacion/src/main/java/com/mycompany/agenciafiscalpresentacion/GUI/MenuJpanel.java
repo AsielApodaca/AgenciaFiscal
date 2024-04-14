@@ -1,5 +1,7 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
+import bo.MenuBO;
+import daos.EntidadesDAO;
 import excepciones.NegocioException;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
@@ -22,7 +24,10 @@ public class MenuJpanel extends javax.swing.JPanel {
      */
     public MenuJpanel() {
         initComponents();
+        Ventanas.menu = new MenuBO();
         personasRegistradas=new ArrayList<>();
+        
+        habilitarBotones();
     }
 
     /**
@@ -198,6 +203,21 @@ public class MenuJpanel extends javax.swing.JPanel {
         //((Ventanas) SwingUtilities.getWindowAncestor(MenuJpanel.this)).mostrarVentana("ModuloLicenciasJpanel");
     }//GEN-LAST:event_btnModuloPlacasActionPerformed
 
+    private void habilitarBotones() {
+        if(Ventanas.menu.verificarExistenciaDeEntidades()) {
+            btnInsertarUsuarios.setEnabled(false);
+            btnModuloLicencias.setEnabled(true);
+            btnConsultas.setEnabled(true);
+            btnModuloPlacas.setEnabled(true);
+            btnReportes.setEnabled(true);
+        } else {
+            btnModuloLicencias.setEnabled(false);
+            btnConsultas.setEnabled(false);
+            btnModuloPlacas.setEnabled(false);
+            btnReportes.setEnabled(false);
+        }
+    }
+    
     private void desplegarOperacionesPlacas() {
         // Mensaje e información personalizada
         String mensaje = "Tipo de operación";
@@ -275,6 +295,8 @@ public class MenuJpanel extends javax.swing.JPanel {
     private void btnInsertarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarUsuariosActionPerformed
         // TODO add your handling code here:
         obtenerPersonasAgregadas();
+        
+        habilitarBotones();
     }//GEN-LAST:event_btnInsertarUsuariosActionPerformed
 
     private void obtenerPersonasAgregadas(){
