@@ -21,7 +21,7 @@ public class MenuBO implements IMenuBO{
     @Override
     public boolean verificarExistenciaDeEntidades() {
         try {
-            return personaDAO.tablaPersonasEstaVacia();
+            return !personaDAO.tablaPersonasEstaVacia();
         } catch (PersistenciaException ex) {
             Logger.getLogger(MenuBO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
