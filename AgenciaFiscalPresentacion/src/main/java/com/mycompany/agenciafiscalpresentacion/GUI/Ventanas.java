@@ -16,6 +16,7 @@ public class Ventanas extends JFrame {
     protected static IConsultasBO consultas;
     protected static IBajaPlacasBO bajaPlacas;
     protected static IGenerarReporteBO generarReporte;
+    protected static IMenuBO menu;
     private IServicioConexion servicio;
     
     public Ventanas() {
