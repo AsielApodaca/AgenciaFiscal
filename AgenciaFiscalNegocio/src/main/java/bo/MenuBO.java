@@ -1,22 +1,30 @@
 package bo;
 
-import daos.EntidadesDAO;
-import daos.IEntidadesDAO;
+import daos.IPersonaDAO;
+import daos.PersonaDAO;
+import excepciones.PersistenciaException;
 import iBo.IMenuBO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Asiel Apodaca Monge
  */
 public class MenuBO implements IMenuBO{
-    private static IEntidadesDAO entidadesDAO;
+    private static IPersonaDAO personaDAO;
     
     public MenuBO() {
-        this.entidadesDAO = new EntidadesDAO();
+        this.personaDAO = new PersonaDAO();
     }
     
     @Override
     public boolean verificarExistenciaDeEntidades() {
-        return entidadesDAO.seCrearonEntidades();
+        try {
+            return personaDAO.tablaPersonasEstaVacia();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(MenuBO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }
