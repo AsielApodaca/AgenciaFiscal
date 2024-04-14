@@ -4,11 +4,14 @@
  */
 package entidades;
 
+import cifrado.CifradoAES;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +30,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="personas")
 public class Persona implements Serializable {
+    
+    private CifradoAES cifrado = new CifradoAES();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,11 +111,21 @@ public class Persona implements Serializable {
     }
 
     public String getTelefono() {
-        return telefono;
+        try {
+            return cifrado.decrypt(telefono);
+        } catch (Exception ex) {
+            Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        try {
+            this.telefono = cifrado.encrypt(telefono);
+        } catch (Exception ex) {
+            Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
+            this.telefono = null;
+        }
     }
 
     public Calendar getFechaNacimiento() {
