@@ -20,7 +20,10 @@ import negocioDTO.PersonaDTO;
 import negocioDTO.TramiteLicenciaDTO;
 
 /**
- *
+ * Implementación de la interfaz iRegistrarLicenciaBO para realizar operaciones relacionadas con el registro de licencias.
+ * Esta clase se encarga de realizar operaciones como consultar personas por RFC, registrar licencias, actualizar discapacidad de persona, obtener personas registradas,
+ * obtener trámite de licencia, actualizar estado de licencia y modificar fecha de vencimiento de licencia.
+ * Además, contiene una clase interna para realizar validaciones relacionadas con el registro de licencias.
  * @author Asiel Apodaca Monge
  */
 public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
@@ -28,11 +31,20 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
     private static IPersonaDAO personaDao;
     private static ITramiteDAO tramiteLicenciaDao;
     
+    /**
+     * Constructor por defecto que inicializa los objetos de acceso a datos para personas y trámites de licencia.
+     */
     public RegistrarLicenciaBO() {
         personaDao=new PersonaDAO();
         tramiteLicenciaDao=new TramiteLicenciaDAO();
     }
     
+    /**
+     * Consulta una persona por su RFC.
+     * @param persona Datos de la persona a consultar, con el RFC especificado.
+     * @return Los datos de la persona consultada.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public PersonaDTO consultarPersonaPorRfc(PersonaDTO persona)  throws NegocioException{
 //        if(!validaciones.validarRfcPersona(persona.getRfc())){
@@ -55,6 +67,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         return personaDto;
     }
 
+    /**
+     * Registra una licencia en el sistema.
+     * @param tramiteLicencia Datos del trámite de licencia a registrar.
+     * @return Los datos del trámite de licencia registrado.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante el registro.
+     */
     @Override
     public TramiteLicenciaDTO registrarLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException{
         PersonaDTO personaEnviada=tramiteLicencia.getPersona();
@@ -85,6 +103,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
 
+    /**
+     * Actualiza la discapacidad de una persona en el sistema.
+     * @param persona Datos de la persona cuya discapacidad se actualizará.
+     * @return Los datos de la persona actualizada.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la actualización.
+     */
     @Override
     public PersonaDTO actualizarDiscapacidadPersona(PersonaDTO persona) throws NegocioException {
         Persona personaAModificar;
@@ -109,6 +133,11 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         );
     }
 
+    /**
+     * Obtiene una lista de personas registradas en el sistema.
+     * @return Una lista de personas registradas.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public List<PersonaDTO> obtenerPersonasRegistradas()throws NegocioException {
         List<Persona> personas;
@@ -131,6 +160,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         return personasDTO;
     }
 
+    /**
+     * Obtiene el trámite de licencia asociado a una persona.
+     * @param personaTramite Datos de la persona para la cual se consultará el trámite de licencia.
+     * @return Los datos del trámite de licencia asociado a la persona, o null si no existe.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public TramiteLicenciaDTO obtenerTramiteLicencia(PersonaDTO personaTramite) throws NegocioException{ 
         Persona persona;
@@ -152,6 +187,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
 
+    /**
+     * Actualiza el estado de una licencia en el sistema.
+     * @param tramiteLicencia Datos del trámite de licencia cuyo estado se actualizará.
+     * @return true si la actualización se realiza con éxito, false en caso contrario.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la actualización.
+     */
     @Override
     public boolean actualizarEstadoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
         try{
@@ -163,6 +204,12 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
 
+    /**
+     * Modifica la fecha de vencimiento de una licencia en el sistema.
+     * @param tramiteLicencia Datos del trámite de licencia cuya fecha de vencimiento se modificará.
+     * @return true si la modificación se realiza con éxito, false en caso contrario.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la modificación.
+     */
     @Override
     public boolean modificarFechaVencimientoLicencia(TramiteLicenciaDTO tramiteLicencia) throws NegocioException {
         ITramiteLicenciaDAO t=new TramiteLicenciaDAO();
@@ -177,7 +224,15 @@ public class RegistrarLicenciaBO implements iRegistrarLicenciaBO{
         }
     }
     
+    /**
+     * Clase interna para realizar validaciones relacionadas con el registro de licencias.
+     */
     class ValidacionesRegistrarLicencia{
+        /**
+         * Valida el RFC de una persona según ciertos criterios.
+         * @param rfc El RFC a validar.
+         * @return true si el RFC cumple con los criterios de validación, false en caso contrario.
+         */
         public boolean validarRfcPersona(String rfc){
             String nombre=rfc.substring(0, 4);
             String fechaN=rfc.substring(4, 10);

@@ -24,8 +24,10 @@ import negocioDTO.TramitePlacasDTO;
 import negocioDTO.VehiculoDTO;
 
 /**
- *
- * @author luiis
+ * Implementación de la interfaz IRegistrarPlacasBO para realizar operaciones relacionadas con el registro de placas.
+ * Esta clase se encarga de realizar operaciones como registrar placas, obtener placas por serie de auto, obtener licencia vigente,
+ * obtener placas por matrícula, actualizar estado de placas anteriores y renovar placas.
+ * @author Luiis
  */
 public class RegistrarPlacasBO implements IRegistrarPlacasBO {
 
@@ -34,6 +36,9 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
     private static IPersonaDAO personaDAO;
     private static IVehiculoDAO vehiculoDAO;
     
+    /**
+     * Constructor por defecto que inicializa los objetos de acceso a datos para trámites de placas, trámites de licencia, personas y vehículos.
+     */
     public RegistrarPlacasBO(){
         tramitePlacasDAO=new TramitePlacasDAO();
         tramiteLicenciaDAO=new TramiteLicenciaDAO();
@@ -41,6 +46,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         vehiculoDAO=new VehiculoDAO();
     }
     
+    /**
+     * Registra placas nuevas en el sistema.
+     * @param tramite Datos del trámite de placas a registrar.
+     * @return Los datos del trámite de placas registrado.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante el registro.
+     */
     @Override
     public TramitePlacasDTO registrarPlacas(TramitePlacasDTO tramite) throws NegocioException{
         Persona p=new Persona(tramite.getPersona().getRfc());
@@ -77,6 +88,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         }
     }
 
+    /**
+     * Obtiene un trámite de placas por serie de auto.
+     * @param vehiculoDTO Datos del vehículo para el cual se consultará el trámite de placas.
+     * @return Los datos del trámite de placas asociado al vehículo, o null si no existe.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public TramitePlacasDTO obtenerPlacasPorSerieAuto(VehiculoDTO vehiculoDTO) throws NegocioException{
         Vehiculo vehiculo=new Vehiculo();
@@ -106,6 +123,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         return placasDTO;
     }
 
+    /**
+     * Obtiene una licencia de conducir vigente.
+     * @param tramite Datos del trámite de licencia para el cual se buscará la licencia vigente.
+     * @return Los datos del trámite de licencia vigente asociado al trámite, o null si no existe.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public TramiteLicenciaDTO obtenerLicenciaVigente(TramiteLicenciaDTO tramite)throws NegocioException {
         TramiteLicencia licenciaBuscada=new TramiteLicencia();
@@ -131,6 +154,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         return (TramiteLicenciaDTO) licenciaEncontrada;
     }
 
+    /**
+     * Obtiene un trámite de placas por matrícula.
+     * @param placasAnteriores Datos del trámite de placas para el cual se buscará la información.
+     * @return Los datos del trámite de placas asociado a la matrícula, o null si no existe.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public TramitePlacasDTO obtenerPlacasPorMatricula(TramitePlacasDTO placasAnteriores) throws NegocioException{
         TramitePlacas tramite=new TramitePlacas();
@@ -158,9 +187,14 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         return placasObtenidasDTO;
     }
 
+    /**
+     * Actualiza el estado de trámites de placas anteriores.
+     * @param placasAnteriores Datos del trámite de placas para el cual se actualizará el estado.
+     * @return true si la actualización se realiza con éxito, false en caso contrario.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la actualización.
+     */
     @Override
     public boolean actualizarEstadoPlacasAnteriores(TramitePlacasDTO placasAnteriores) throws NegocioException{
-        //Persona personaTramite=new Persona(placasAnteriores.getPersona().getRfc());
         TramitePlacas placas=new TramitePlacas();
         placas.setMatricula(placasAnteriores.getMatricula());
         TramitePlacas tramite;
@@ -172,6 +206,12 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         }
     }
 
+    /**
+     * Renueva placas en el sistema.
+     * @param placas Datos del trámite de placas a renovar.
+     * @return Los datos del trámite de placas renovadas.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la renovación.
+     */
     @Override
     public TramitePlacasDTO renovarPlacas(TramitePlacasDTO placas)throws NegocioException {
         PersonaDTO persona=placas.getPersona();
@@ -208,7 +248,6 @@ public class RegistrarPlacasBO implements IRegistrarPlacasBO {
         }catch(PersistenciaException e){
             throw new NegocioException(e.getMessage());
         }
-        //placasViejas=tramitePlacasDAO.obtenerPlacasPorMatricula(placasViejas);
     }
     
 }

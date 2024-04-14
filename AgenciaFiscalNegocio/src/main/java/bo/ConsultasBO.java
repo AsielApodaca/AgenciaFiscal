@@ -21,18 +21,29 @@ import negocioDTO.TramiteLicenciaDTO;
 import negocioDTO.TramitePlacasDTO;
 
 /**
- *
+ * Implementación de la interfaz IConsultasBO que proporciona métodos para realizar consultas relacionadas con personas y trámites.
+ * Esta clase se encarga de manejar las operaciones de negocio relacionadas con la consulta de personas y trámites.
  * @author luiis
  */
 public class ConsultasBO implements IConsultasBO {
     private static IPersonaDAO personaDAO;
     private static ITramiteDAO tramiteDAO;
 
+    /**
+     * Constructor por defecto que inicializa los objetos de acceso a datos para persona y trámite.
+     */
     public ConsultasBO(){
         personaDAO=new PersonaDAO();
         tramiteDAO=new TramiteLicenciaDAO();
     }
 
+    /**
+     * Consulta personas según un criterio especificado y un objeto de tipo PersonaDTO.
+     * @param persona Objeto de tipo PersonaDTO que contiene los datos de la persona a consultar.
+     * @param criterio Criterio de búsqueda utilizado para filtrar la consulta ("nombre", "curp" o "anioNacimiento").
+     * @return Una lista de objetos de tipo PersonaDTO que coinciden con el criterio de búsqueda especificado.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public List<PersonaDTO> consultarPersonasPorCriterio(PersonaDTO persona, String criterio)throws NegocioException {
         Persona p=new Persona();
@@ -64,6 +75,11 @@ public class ConsultasBO implements IConsultasBO {
         return null;
     }
     
+    /**
+     * Convierte una lista de objetos de tipo Persona a una lista de objetos de tipo PersonaDTO.
+     * @param personas Lista de objetos de tipo Persona a convertir.
+     * @return Una lista de objetos de tipo PersonaDTO.
+     */
     private List<PersonaDTO> personasBOToDTO(List<Persona> personas){
         PersonaDTO personaDTO;
         List<PersonaDTO> personasDTO=new ArrayList<>();
@@ -82,6 +98,11 @@ public class ConsultasBO implements IConsultasBO {
      return personasDTO;   
     }
     
+    /**
+     * Convierte una lista de objetos de tipo Tramite a una lista de objetos de tipo TramiteDTO.
+     * @param tramites Lista de objetos de tipo Tramite a convertir.
+     * @return Una lista de objetos de tipo TramiteDTO.
+     */
     private List<TramiteDTO> tramiteBoToDTO(List<Tramite> tramites){
         TramiteDTO tramiteDTO= null;
         EstadoDTO estado;
@@ -116,6 +137,12 @@ public class ConsultasBO implements IConsultasBO {
         return tramitesDTO;
     }
 
+    /**
+     * Consulta trámites realizados por una persona específica.
+     * @param persona Objeto de tipo PersonaDTO que contiene los datos de la persona cuyos trámites se desean consultar.
+     * @return Una lista de objetos de tipo TramiteDTO que representan los trámites realizados por la persona especificada.
+     * @throws NegocioException Si ocurre un error en la lógica de negocio durante la consulta.
+     */
     @Override
     public List<TramiteDTO> consultarTramitesPorPersona(PersonaDTO persona) throws NegocioException {
         Persona personaBO=new Persona();
