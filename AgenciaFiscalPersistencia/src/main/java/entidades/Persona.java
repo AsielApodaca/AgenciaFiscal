@@ -30,8 +30,6 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="personas")
 public class Persona implements Serializable {
-    
-    private CifradoAES cifrado = new CifradoAES();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -112,7 +110,7 @@ public class Persona implements Serializable {
 
     public String getTelefono() {
         try {
-            return cifrado.decrypt(telefono);
+            return CifradoAES.decrypt(telefono);
         } catch (Exception ex) {
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -121,7 +119,7 @@ public class Persona implements Serializable {
 
     public void setTelefono(String telefono) {
         try {
-            this.telefono = cifrado.encrypt(telefono);
+            this.telefono = CifradoAES.encrypt(telefono);
         } catch (Exception ex) {
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
             this.telefono = null;
