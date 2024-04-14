@@ -1,7 +1,6 @@
 package com.mycompany.agenciafiscalpresentacion.GUI;
 
 import bo.MenuBO;
-import daos.EntidadesDAO;
 import excepciones.NegocioException;
 import iBo.iRegistrarLicenciaBO;
 import java.util.ArrayList;
